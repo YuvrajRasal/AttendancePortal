@@ -1,6 +1,37 @@
 
-@media screen and (min-width: 800px) {
-    box.MuiGrid-root css-1hp6q6g-MuiGrid-root {
-      background-color: lavender;
+@media screen and (max-width: 1110px) {
+    .innerPaper {
+      /* */
+      /* display: flex;
+      align-items: center;
+      justify-content: center; */
+      max-width: "60%";
+      width: 30rem;
+
+
+    }
+    .rightGrid{
+      display: none !important;
+      /* flex-direction: column; */
+      background-color:red; 
+    }
+    .lrGrid{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex-direction: column;
+    }
+    /* .leftGrid{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    } */
+    .Paper{
+      width: 10rem;
+      border-radius: 50px;
+
     }
   }
+  

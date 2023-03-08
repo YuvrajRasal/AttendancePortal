@@ -3,6 +3,7 @@ import './App.css';
 import Login from './Login';
 import SignInSide from './form';
 import NewPage from './newPage';
+import LoginNew from './Newlogin';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Login/>
       {/* <SignInSide/> */}
       {/* <NewPage/> */}
+      {/* <LoginNew/> */}
     </div>
   );
 }
