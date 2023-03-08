@@ -22,7 +22,7 @@ import "./Login.css";
 //
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const paperStyle = {
-  display: "flex",
+  // display: "flex",
   alignItems: "center",
   justifyContent: "center",
   marginTop: "15px",
@@ -102,7 +102,7 @@ function Login() {
                 {/* ----inserted padding */}
                 <Box className="box">
                   <img
-                  className="libraryImage"
+                  className="logoImage"
                     src={logo}
                     style={{
                       width: "32%",
