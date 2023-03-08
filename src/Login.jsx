@@ -52,9 +52,10 @@ function Login() {
   return (
     <>
       <Box
+      className="OuterMostBox"
         style={{ display: "flex" }}
         sx={{
-          backgroundColor: "#1589FF",
+          // backgroundColor: "#1589FF",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -62,6 +63,7 @@ function Login() {
         }}
       >
         <Box
+        className="FirstBox"
           sx={{
             width: "40vw",
             height: "100vh",
@@ -69,6 +71,7 @@ function Login() {
           }}
         />
         <Box
+        className="SecondBox"
           sx={{
             width: "60vw",
             height: "100vh",
@@ -93,12 +96,13 @@ function Login() {
             alignItems="center"
             className="Paper"
           >
-            <Grid container spacing={2} className="lrGrid">
+            <Grid fluidContainer spacing={2} className="lrGrid">
               {/* left side starts */}
               <Grid item xs={5.5} sx={{ padding: "20px" }} className="leftGrid">
                 {/* ----inserted padding */}
-                <Box>
+                <Box className="box">
                   <img
+                  className="libraryImage"
                     src={logo}
                     style={{
                       width: "32%",
@@ -108,7 +112,7 @@ function Login() {
                       boxSizing: "border-box",
                     }}
                   ></img>
-                  <Typography sx={{ fontWeight: 800, fontSize: "2.5rem" }}>
+                  <Typography sx={{ fontWeight: 400, fontSize: "2.5rem" }}>
                     Welcome Back.
                   </Typography>
                   <form onSubmit={handleSubmit}>
@@ -119,6 +123,7 @@ function Login() {
                     <Box mb={1} mt={4}>
                       <Box mb={1}>
                         <Typography
+                        className="SapIdTypo"
                           sx={{
                             postition: "relative",
                             display: "flex",
@@ -131,6 +136,7 @@ function Login() {
                           Sap Id:
                         </Typography>
                         <TextField
+                        className="SapIdTF"
                           variant="outlined"
                           //  label='Sap Id'
                           autoComplete="Sap Id"
@@ -155,6 +161,7 @@ function Login() {
 
                       <Box mb={2}>
                         <Typography
+                        className="PasswordTypo"
                           sx={{
                             postition: "relative",
                             display: "flex",
@@ -168,6 +175,7 @@ function Login() {
                         </Typography>
                         {/* <box sx={{width:'65%'}} display="flex"> */}
                         <TextField
+                        className="PasswordTF"
                           variant="outlined"
                           type="Password"
                           placeholder="Password"
@@ -202,15 +210,16 @@ function Login() {
                     </Box>
                     <Box mb={2}>
                       <Button
+                      className="LoginBtn"
                         type="submit"
                         variant="contained"
                         sx={{ width: "80%" }}
                       >
-                        <strong>Login</strong>
+                        <Typography className="LoginBtnTypo" sx={{fontSize:'20px', fontFamily:'Roboto'}}>Login</Typography>
                       </Button>
                     </Box>
 
-                    <Typography>
+                    <Typography className="SignUp">
                       Are you a faculty?
                       <Link to="/" sx={{ color: "#0055d2" }}>
                         <strong>Signup</strong>
