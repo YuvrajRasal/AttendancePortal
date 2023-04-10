@@ -13,6 +13,18 @@
     padding-bottom: 35px !important;
 
   }
+  .SapIdTF{
+    width:98%!important;
+    border-radius: 10px!important;
+  }
+  .PasswordTF{
+    width:98%!important;
+    border-radius: 10px!important;
+  }
+  .LoginBtn{
+    width: 98% !important;
+    height: 3rem;
+  }
 
 }
 

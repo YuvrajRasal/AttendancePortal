@@ -1,31 +1,35 @@
 import React from 'react'
 
-const Validation = (inputs) => {
+export default function validateInfoNew(values, page){
 
     let errors={};
     let c=0;
 
-    if(inputs.sapid!=11)
-    {
-        errors.sapid= '*sap-id should be of 11 digits'
-    }
-    else
-    {
-        console.log("it matched");
-    }
+    
+    let regex3 = /^([0-9]){11}$/;
+    let str3 = values.username;
+  if (regex3.test(str3)) {
+    console.log("it matched");
+  } else {
+    errors.SapId = "sap-id should have 11 digits";
+    c++;
+  }
   
-    let regex4=  /^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-  let str4=inputs.password;
+    let regex4=  /^(?=.[0-9])(?=.[A-Z])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+  let str4=values.password;
   if (regex4.test(str4)) {
     console.log("it matched");
   } else {
-    errors.password = "*Password should have at least one Upper Case, one Digit and one Special Character";
+    errors.password = "1 UpperCase,1 Digit & 1 Special Character";
     c++;
  
   }
   
+  if(c==0)
+  {
+    alert('success');
+  }
     return errors;
 }
 
 
-export default Validation
