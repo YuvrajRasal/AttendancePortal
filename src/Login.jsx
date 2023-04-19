@@ -220,9 +220,12 @@ function Login() {
                             </Typography>
                           )}
 
-                          <Link to="/" sx={{ color: "#0056D2" }}>
+                          <Typography to="/" sx={{ color: "#0056D2" }}
+                           onClick={()=>{navigate('/forgotPassword')}} 
+                           id="ForgotPass"
+                           >
                             <strong>forgot password ?</strong>
-                          </Link>
+                          </Typography>
                         </div>
                         {/* </box> */}
 

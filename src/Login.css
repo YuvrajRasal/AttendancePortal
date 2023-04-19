@@ -25,6 +25,23 @@
     width: 98% !important;
     height: 3rem;
   }
+  #ForgotPass{
+    cursor: pointer;
+  }
+  /*For ForgotPassword*/
+  .EmailTF{
+    width:98%!important;
+    border-radius: 10px!important;
+  }
+  .SubmitBtn{
+    width: 98% !important;
+    height: 3rem;
+  }
+  #BackToLogin{
+    color: #0056D2;
+    cursor: pointer;
+
+  }
 
 }
 

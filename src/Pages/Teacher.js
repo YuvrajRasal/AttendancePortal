@@ -26,6 +26,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import LatestModal from '../Components/LatestModal';
 
 
 const drawerWidth=120
@@ -67,8 +68,8 @@ const Teacher = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 >
-                  {/* <Modall/> */}
-                  <DummyNew/>
+                  {/* <DummyNew/> */}
+                  <LatestModal/>
                 </Modal>
 
  <Nav/>

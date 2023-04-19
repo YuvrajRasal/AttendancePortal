@@ -50,5 +50,10 @@
   @media only screen and (max-width: 505px) {
     .MainBox {
         padding-right: 25px!important;
-        padding-left: 25px !important;    }
+        /* padding-left: 25px !important;     */
+        margin-left: 30px !important;
+      }
+      /* edit{
+        margin-right: 5px !important;
+      } */
   }

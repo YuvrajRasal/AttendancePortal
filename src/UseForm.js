@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const useForm = (callback, validate, page) => {
@@ -9,6 +10,10 @@ const useForm = (callback, validate, page) => {
     gender:'',
     DOB:''
   });
+
+  //Setting the user in useState
+  const [user, setUser] = useState();
+
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -25,6 +30,20 @@ const useForm = (callback, validate, page) => {
 
     setErrors(validate(values, page));
     setIsSubmitting(true);
+
+    const sap_id = e.target.username.value
+    const password = e.target.password.value
+
+    //Fetching the refresh and access tokens from the backend
+    axios.post("http://attendanceportal.pythonanywhere.com/accounts/login/",{
+      sap_id, password
+    })
+    .then(res => {
+      console.log(res.data);
+      setUser(res.data)
+      //Setting the tokens in localStorage
+      localStorage.setItem('user', res.data);
+    });
   
     
   };
