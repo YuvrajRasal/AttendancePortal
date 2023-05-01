@@ -1,17 +1,14 @@
-/* .date
-{
-    color: rgba(0, 86, 210, 1);
-    font-family: 'Montserrat' !important;
-    font-size: large !important;
-    margin-bottom: 10px !important;
-
-} */
+.Name {
+    /* font-family: 'Hanalei Fill', cursive;
+    font-family: 'Poppins', sans-serif; */
+    font-family: 'Roboto', sans-serif;
+  }
+ 
 .Card:hover{
     cursor:pointer;
 }
 .button{
     margin-right: 15px !important;
-    padding: 23px !important;
     /* background-color: #0056D2 !important; */
     /* background-color:blue !important */
 }

@@ -48,7 +48,7 @@ const txtStyle = {
 
 const TeacherNewData = () => {
   const current = new Date();
-  const date = `${current.getDate()}/${
+  const currentDate = `${current.getDate()}/${
     current.getMonth() + 1
   }/${current.getFullYear()}`;
   const [alignment, setAlignment] = React.useState("Upcoming");
@@ -72,15 +72,42 @@ const TeacherNewData = () => {
     setFilterData,
     setAll,
     all,
+
+    batch,
+    setBatch,
+    from,
+    setFrom,
+    to,
+    setTo,
+    freq,
+    setFreq,
+    room,
+    setRoom,
+    teacher,
+    setTeacher,
+    subject,
+    setSubject,
+    date,
+    setDate,
   } = useApp();
 
   const [superSearch, setSuperSearch] = useState("");
   console.log(superSearch);
   // const [search,setSearch] = useState('');
   // const [search,setSearch] = useState({});
-  console.log(data);
+
+  //IF we dont console log it keeps calling array even after we make chanes in modal
+  // console.log(data);
 
   const [item, setItem] = useState(data);
+
+  //To see all lectures
+  useEffect(() => {
+    const newItemAll = data.filter((data) => {
+      return all === true ? data : data[0];
+    });
+    setFilterData(newItemAll);
+  }, [all]);
 
   //upcoming lec taken attendance is false
   const filterItem1 = () => {
@@ -135,6 +162,24 @@ const TeacherNewData = () => {
   //   setFilterData(newFilterAll);
   // });
 
+  // POST FUNC THRO CREATEDLEC IN MODAL
+  /*
+  const newPost = {
+    userId: 1,
+    title: 'A new post',
+    body: 'This is the body of the new post'
+};
+
+const sendPostRequest = async () => {
+    try {
+        const resp = await axios.post('https://jsonplaceholder.typicode.com/posts', newPost);
+        console.log(resp.data);
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+};
+*/
   return (
     // <Box
     // component="main"
@@ -169,8 +214,9 @@ const TeacherNewData = () => {
       >
         <Toolbar />
         <Box sx={{ display: "flex", flexDirection: "row", flex: "1" }}>
-          <Box>
+          <Box sx={{ display: "flex", flexDirection: "row", flex: "1" }}>
             <ToggleButtonGroup
+              display="flex"
               color="primary"
               // class="btn btn-primary btn-lg active"
               value={alignment}
@@ -178,6 +224,7 @@ const TeacherNewData = () => {
               onChange={handleChange}
               aria-label="Platform"
               sx={{ top: "60", marginBottom: "27px", color: "#0056D2" }}
+              flex="1"
             >
               <ToggleButton
                 value="Upcoming"
@@ -222,14 +269,14 @@ const TeacherNewData = () => {
           }}
         >
           <Typography
-            className="date"
+            className="currentDate"
             style={txtStyle}
             sx={{ fontWeight: 700, color: "#0056D2" }}
           >
-            {date}
+            {currentDate}
           </Typography>
           <Typography
-            className="date"
+            className="currentDate"
             style={txtStyle}
             sx={{ fontWeight: 100, color: "#0056d2cf" }}
           >
@@ -258,7 +305,8 @@ const TeacherNewData = () => {
               borderRadius: "10px",
               border: "2px solid #DEDEDE",
               boxShadow: "none",
-              margin: "0.8rem",
+              // margin: "0.8rem",
+              marginTop: "0.8rem",
             }}
             className="Card"
             // onClick={()=>{navigate('/class')}}

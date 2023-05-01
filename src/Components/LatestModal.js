@@ -14,6 +14,9 @@ import "./LatestModal.css";
 import { useState } from "react";
 import DatePicker from "react-date-picker";
 
+// use context
+import { useApp } from "../context/app-context";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -42,15 +45,36 @@ const BoxStyle = {
 };
 
 function LatestModal() {
-  const [batch, setBatch] = React.useState("");
-  const [from, setFrom] = React.useState("");
-  const [to, setTo] = React.useState("");
-  const [freq, setFreq] = React.useState("");
-  const [room, setRoom] = React.useState("");
-  const [teacher, setTeacher] = React.useState("");
-  const [subject, setSubject] = React.useState("");
-  // const [startDate, setStartDate] = useState(new Date());
-  const [date, setDate] = React.useState("");
+  // const [batch, setBatch] = React.useState("");
+  // const [from, setFrom] = React.useState("");
+  // const [to, setTo] = React.useState("");
+  // const [freq, setFreq] = React.useState("");
+  // const [room, setRoom] = React.useState("");
+  // const [teacher, setTeacher] = React.useState("");
+  // const [subject, setSubject] = React.useState("");
+  // // const [startDate, setStartDate] = useState(new Date());
+  // const [date, setDate] = React.useState("");
+
+  const {
+    batch,
+    setBatch,
+    from,
+    setFrom,
+    to,
+    setTo,
+    freq,
+    setFreq,
+    room,
+    setRoom,
+    teacher,
+    setTeacher,
+    subject,
+    setSubject,
+    date,
+    setDate,
+    lecCreated,
+    setLecCreated,
+  } = useApp();
 
   //////////////////////////////////////////////
   const ModalSubmit = (e) => {
@@ -88,6 +112,76 @@ function LatestModal() {
     setFreq(event.target.value);
     console.log(freq);
   };
+  const funcLecCreated = (event) => {
+    // setLecCreated(true);
+    // console.log(lecCreated);
+    console.log(batch);
+    sendPostRequest();
+  };
+
+  const axios = require("axios").default;
+
+  const newPost = {
+    // userId: 1,
+    // title: "A new post",
+    // body: "This is the body of the new post",
+    room_number: room,
+    startTime: from,
+    endTime: to,
+    date: date,
+    note: freq,
+    attendance_taken: true,
+    teacher: teacher,
+    batch: batch,
+    subject: subject,
+  };
+
+  const sendPostRequest = async () => {
+    try {
+      // const resp = await axios.post(
+      //   "https://jsonplaceholder.typicode.com/posts",
+      //   newPost
+      // );
+      const resp = await axios.post(
+        "http://attendanceportal.pythonanywhere.com/attendance/lecture/",
+        newPost
+      );
+      console.log(newPost);
+      console.log(resp);
+    } catch (err) {
+      // Handle Error Here
+      console.error(err);
+    }
+  };
+
+  /*
+    {
+  "room_number": "1",
+  "startTime": "12:12",
+  "endTime": "12:25",
+  "date": "2023-04-28",
+  "note": "string",
+  "attendance_taken": true,
+  "teacher": 1,
+  "batch": 0,
+  "subject": 1
+}
+  const newPost = {
+    userId: 1,
+    title: 'A new post',
+    body: 'This is the body of the new post'
+};
+
+const sendPostRequest = async () => {
+    try {
+        const resp = await axios.post('https://jsonplaceholder.typicode.com/posts', newPost);
+        console.log(resp.data);
+    } catch (err) {
+        // Handle Error Here
+        console.error(err);
+    }
+};
+*/
 
   return (
     <>
@@ -124,7 +218,7 @@ function LatestModal() {
                 label="Batch."
                 variant="outlined"
                 value={batch}
-                onClick={handleChangeBatch}
+                onChange={handleChangeBatch}
                 sx={{
                   width: "13.562rem",
                   height: "50px",
@@ -143,7 +237,7 @@ function LatestModal() {
                 fullWidth
                 type="date"
                 className="BigBtn"
-                onClick={handleChangeDate}
+                onChange={handleChangeDate}
               />
             </Box>
             <Box style={BoxStyle}>
@@ -162,8 +256,10 @@ function LatestModal() {
                   id="FromId"
                   // value={from}
                   label="From"
-                  // placeholder="1111"
-                  onClick={handleChangeFrom}
+                  // placeholder="11-11"
+                  value="00:00"
+                  // disabled={true}
+                  onChange={handleChangeFrom}
                   sx={{
                     width: "13.562rem",
                     height: "50px",
@@ -265,6 +361,7 @@ function LatestModal() {
                     borderRadius: " 10px",
                     marginTop: "10px",
                   }}
+                  onClick={funcLecCreated}
                 >
                   <Typography style={txtStyle} sx={{ color: "#FFFFFF" }}>
                     Create Lecture

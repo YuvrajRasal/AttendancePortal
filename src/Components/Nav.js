@@ -139,6 +139,7 @@ const Nav = (props) => {
 
   const navigate = useNavigate();
 
+  //use context
   const { setSearch, setAll, all } = useApp();
 
   const drawer = (
@@ -191,6 +192,9 @@ const Nav = (props) => {
             display: "flex",
             flexDirection: "column",
           }}
+          onClick={() => {
+            navigate("/profile");
+          }}
         >
           <ListItemButton>
             <PermIdentityOutlinedIcon fontSize="large" />
@@ -229,9 +233,14 @@ const Nav = (props) => {
     // setSearch.(search);
   };
   const handleChangeAll = (event) => {
-    console.log(all);
-    setAll(true);
+    // setAll(true);
+    // console.log(all);
+    console.log(event.detail);
   };
+
+  // const handlechangeAllDouble = (event) => {
+  //   console.log("double click");
+  // };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -268,10 +277,19 @@ const Nav = (props) => {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
+                  display: "flex",
+                  flexDirection: "row",
                 }}
               >
-                <>
-                  <ListItem className="NavList" sx={{ marginLeft: "5px" }}>
+                <Box sx={{ display: "flex", flexBasis: "30%" }}>
+                  <ListItem
+                    className="NavList"
+                    sx={{
+                      marginLeft: "5px",
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
                     <Search>
                       <SearchIconWrapper>
                         <SearchIcon />
@@ -289,7 +307,6 @@ const Nav = (props) => {
                       />
                     </Search>
                   </ListItem>
-
                   <ListItem className="Filter">
                     <ListItemButton
                       sx={{
@@ -302,27 +319,29 @@ const Nav = (props) => {
                         pb: "12px",
                       }}
                       onClick={handleChangeAll}
+                      // onDoubleClick={handlechangeAllDouble}
                       value={true}
                     >
                       {/* <FilterAltIcon /> */}
                       <Typography style={txtStyle}>ALL</Typography>
                     </ListItemButton>
                   </ListItem>
-                </>
-
-                <ListItem className="header">
-                  <Typography>Name</Typography>
-                  <img
-                    src={x}
-                    style={{
-                      width: "5em",
-                      objectFit: "cover",
-                      borderRadius: "60px",
-                      padding: "1rem",
-                      boxSizing: "border-box",
-                    }}
-                  ></img>
-                </ListItem>
+                </Box>
+                <Box sx={{ display: "flex", flexBasis: "50%" }}>
+                  <ListItem className="header">
+                    <Typography>Name</Typography>
+                    <img
+                      src={x}
+                      style={{
+                        width: "5em",
+                        objectFit: "cover",
+                        borderRadius: "60px",
+                        padding: "1rem",
+                        boxSizing: "border-box",
+                      }}
+                    ></img>
+                  </ListItem>
+                </Box>
               </List>
             </Grid>
 

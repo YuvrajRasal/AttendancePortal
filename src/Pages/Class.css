@@ -1,3 +1,40 @@
+.font {
+  /* font-family: 'Hanalei Fill', cursive;
+  font-family: 'Poppins', sans-serif; */
+  font-family: 'Roboto', sans-serif;
+  /* color: red; */
+  color: black;
+}
+.Btnfont{
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  /* color: black; */
+
+}
+
+#ModalUpperBox{
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 45px;
+  padding-bottom: 45px;
+  /* background-color: aqua; */
+  
+}
+
+/* if we need to later change dimensions for mobile users */
+@media only screen and (max-width: 505px) {
+  .Btnfont {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    }
+
+}
+
+
 .buttonAttendance {
   background-color: #0056D2!important;
   color: white !important;
