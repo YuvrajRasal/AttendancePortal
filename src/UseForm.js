@@ -1,62 +1,75 @@
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppProvider, useApp } from "./context/app-context";
 
 const useForm = (callback, validate, page) => {
   const [values, setValues] = useState({
-    username: '',
-    email: '',
-    password: '',
-    password2: '',
-    gender:'',
-    DOB:''
+    username: "",
+    email: "",
+    password: "",
+    password2: "",
+    gender: "",
+    DOB: "",
   });
+
+  const navigate = useNavigate();
 
   //Setting the user in useState
   const [user, setUser] = useState();
+  const [loginStatus, setLoginStatus] = useState(false);
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({
       ...values,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     setErrors(validate(values, page));
     setIsSubmitting(true);
 
-    const sap_id = e.target.username.value
-    const password = e.target.password.value
+    const sap_id = e.target.SapId.value;
+    const password = e.target.password.value;
 
     //Fetching the refresh and access tokens from the backend
-    axios.post("http://attendanceportal.pythonanywhere.com/accounts/login/",{
-      sap_id, password
-    })
-    .then(res => {
-      console.log(res.data);
-      setUser(res.data)
-      //Setting the tokens in localStorage
-      localStorage.setItem('user', res.data);
-    });
-  
-    
+    axios
+      .post("http://attendanceportal.pythonanywhere.com/accounts/login/", {
+        sap_id,
+        password,
+      })
+      .then((res) => {
+        if (res.errors) {
+          console.log(res.errors);
+          setLoginStatus(false);
+        } else {
+          console.log("Login Success");
+          navigate("/teacher");
+          setLoginStatus(true);
+          //console.log(res.config.data);
+          setUser(res.config.data);
+          localStorage.setItem(
+            "refreshToken",
+            JSON.stringify(res.data.refresh)
+          );
+          localStorage.setItem("user", JSON.stringify(res.config.data));
+          //localStorage.setItem('user', JSON.stringify(user));
+        }
+      });
   };
-  
-  useEffect(
-    () => {
-    
-      if (Object.keys(errors).length === 0 && isSubmitting) {
-        callback();
-      }
-    },
-    [errors]
-  );
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && isSubmitting) {
+      callback();
+    }
+  }, [errors]);
 
   return { handleChange, handleSubmit, values, errors };
 };

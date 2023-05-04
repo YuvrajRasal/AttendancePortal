@@ -10,6 +10,7 @@ import { useState } from "react";
 import TeacherNewData from "./Pages/TeacherNewData";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Profile from "./Pages/Profile";
+import Attendance from "./Pages/Attendance";
 function App() {
   // const [superSearch,setSuperSearch] = useState({});
   // const [selectedNews, setSelectedNews] = useState({});
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/teacher" element={<TeacherNewData />}></Route>
         <Route exact path="/class/:publishedAt" element={<Class />}></Route>
         <Route exact path="/profile" element={<Profile />}></Route>
+        <Route exact path="/attendance" element={<Attendance />}></Route>
         <Route
           exact
           path="/forgotPassword"

@@ -257,7 +257,7 @@ const sendPostRequest = async () => {
                   // value={from}
                   label="From"
                   // placeholder="11-11"
-                  value="00:00"
+                  value={from}
                   // disabled={true}
                   onChange={handleChangeFrom}
                   sx={{
@@ -276,6 +276,7 @@ const sendPostRequest = async () => {
                   id="ToId"
                   // value={to}
                   // defaultValue="0000"
+                  value={to}
                   label="To"
                   onChange={handleChangeTo}
                   sx={{

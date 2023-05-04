@@ -11,6 +11,7 @@ import { useApp } from "../context/app-context";
 
 import Modal from "@mui/material/Modal";
 import LatestModal from "../Components/LatestModal";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -80,6 +81,8 @@ const Class = ({}) => {
   const [openDelete, setOpenDelete] = React.useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
+
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -293,7 +296,13 @@ const Class = ({}) => {
             </Typography>
           </Grid>
           <Grid Item xs={6} lg={2} md={6.5}>
-            <Button className="buttonAttendance" sx={{ width: "10px" }}>
+            <Button
+              className="buttonAttendance"
+              sx={{ width: "10px" }}
+              onClick={() => {
+                navigate("/attendance");
+              }}
+            >
               <Typography style={txtStyle}>Take attedance</Typography>
             </Button>
           </Grid>
