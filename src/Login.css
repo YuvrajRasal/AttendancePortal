@@ -90,6 +90,11 @@
     }
     .logoImage{
       width: 50% !important;
+    justify-content:center !important;
+
+    }
+    #ForgotPass{
+      font-size: 20px ;
     }
     
   }
@@ -148,6 +153,10 @@
       height:"40vh";
       background-color: white !important;
       /* flex:"1" */
+    }
+
+    #ForgotPass{
+      font-size: 15px ;
     }
   }
   

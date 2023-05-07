@@ -17,6 +17,8 @@ const useForm = (callback, validate, page) => {
 
   //Setting the user in useState
   const [user, setUser] = useState();
+  const [sap, setSap] = useState();
+
   const [loginStatus, setLoginStatus] = useState(false);
 
   const [errors, setErrors] = useState({});
@@ -55,10 +57,15 @@ const useForm = (callback, validate, page) => {
           setLoginStatus(true);
           //console.log(res.config.data);
           setUser(res.config.data);
+          console.log(user);
+          setSap(sap_id);
+          console.log(sap);
           localStorage.setItem(
             "refreshToken",
             JSON.stringify(res.data.refresh)
           );
+          localStorage.setItem("accessToken", JSON.stringify(res.data.access));
+          localStorage.setItem("accessToken", JSON.stringify(res.data.access));
           localStorage.setItem("user", JSON.stringify(res.config.data));
           //localStorage.setItem('user', JSON.stringify(user));
         }

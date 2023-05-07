@@ -22,8 +22,8 @@
   }
   @media screen and (max-width: 600px){
     .card{
-        margin-left: 60px !important;
-        margin-right: 5px !important;
+        margin-left: 45px !important;
+        margin-right: 45px !important;
 
         }
  
@@ -42,7 +42,13 @@
         margin-left: 0px !important;
         margin-right: 0px !important;
         /* padding: 0px !important; */
-
+    }
+  
+  }
+  @media screen and (max-width: 750px){
+    #CardHolder{
+        flex-direction: column;
+        
     }
   
   }

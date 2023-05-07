@@ -28,10 +28,11 @@ import LatestModal from "../Components/LatestModal";
 import { useEffect } from "react";
 import { useState } from "react";
 
-import { data } from "../Data/DummyData";
+// import { data } from "../Data/DummyData";
 import { useApp } from "../context/app-context";
 
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import axios from "axios";
 
 const drawerWidth = 120;
 
@@ -60,10 +61,11 @@ function Profile() {
     search,
     selectedLecture,
     setSelectedLecture,
-    filterData,
-    setFilterData,
+    // filterData,
+    // setFilterData,
     setAll,
     all,
+    data,
 
     batch,
     setBatch,
@@ -81,23 +83,56 @@ function Profile() {
     setSubject,
     date,
     setDate,
+
+    MyData,
+    SetMyData,
   } = useApp();
 
-  const [superSearch, setSuperSearch] = useState("");
-  console.log(superSearch);
+  // const [superSearch, setSuperSearch] = useState("");
+  // console.log(superSearch);
   // const [search,setSearch] = useState('');
   // const [search,setSearch] = useState({});
 
   //IF we dont console log it keeps calling array even after we make chanes in modal
   // console.log(data);
 
-  const [item, setItem] = useState(data);
+  // const [item, setItem] = useState(data);
+  // const [filterData, setFilterData] = useState(data);
 
+  const [filterData, setFilterData] = useState(MyData);
+  const [MyDataProfile, SetMyDataProfile] = useState([]);
+
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
+      headers: {
+        // 'Authorization': 'Bearer ${token}'
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNDg5MTEzLCJpYXQiOjE2ODM0MDI3MTMsImp0aSI6IjNiMjZmMzJhYjA2YzRhY2Q4MzczZTU5NzllZTUyMDg0IiwidXNlcl9pZCI6MX0.9CS2raXKdg1TDCgp1xVLSv2-2okHYiygVVT5SAGntrs",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+        SetMyDataProfile(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(MyDataProfile);
+    console.log(Array.isArray(MyDataProfile));
+  }, []);
   //previous code where we search through whole array
   {
     useEffect(() => {
-      const newFilter = data.filter((data) => {
-        return search === "" ? data : data?.subject?.includes(search);
+      const newFilter = MyData.filter((data) => {
+        return search.toUpperCase() === ""
+          ? data
+          : data?.subject.name?.includes(search.toUpperCase());
       });
       setFilterData(newFilter);
     }, [search]);
@@ -153,9 +188,8 @@ function Profile() {
         {/* <Paper elevation={1}> */}
         {/* <Link to="/class"> */}
 
-        {filterData.map((data) => (
-          //   data.map((data) =>(
-
+        {/* {filterData.map((data) => ( */}
+        {MyData.map((data) => (
           <Card
             sx={{
               maxWidth: "100%",
@@ -183,7 +217,7 @@ function Profile() {
                   sx={{ fontWeight: 450, fontSize: "30px" }}
                   className="Heading"
                 >
-                  Subject : {data.subject}
+                  Subject : {data.subject.name}
                 </Typography>
               </Box>
               <Box
@@ -203,7 +237,7 @@ function Profile() {
                   {data.startTime} - {data.endTime}
                 </Typography>
                 <Typography variant="body2" color="#000000ab" fontSize={"17px"}>
-                  Room No.{data.room_number}
+                  Batch.{data.batch.name}
                 </Typography>
               </Box>
             </CardContent>

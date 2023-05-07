@@ -75,7 +75,7 @@ const Attendance = ({}) => {
   const sendPostRequest = async () => {
     try {
       const resp = await axios.post(
-        "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+        "http://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/",
         newPost
       );
       console.log(newPost);
@@ -103,37 +103,33 @@ const Attendance = ({}) => {
   //     console.error(error);
   //   });
 
-  const [MyDataNew, SetMyDataNew] = useState([]);
+  const [MyData, SetMyData] = useState([]);
   const token = JSON.stringify(localStorage.getItem("accessToken"));
-  // console.log(token);
+  console.log(token);
+  let config = {
+    method: "get",
+    maxBodyLength: Infinity,
+    url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+    headers: {
+      // 'Authorization': 'Bearer ${token}'
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzMjg3MDMxLCJpYXQiOjE2ODMyMDA2MzEsImp0aSI6IjUyN2Q0MDhmZTE2NzQxNzg4ZjYwYTlkMWJiNDdlMjg2IiwidXNlcl9pZCI6MX0.Qy6jgZ6tzOMpGJAufucUpStVijwWRmVNjk2xm-SX1kc",
+    },
+  };
 
-  useEffect(() => {
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
-      headers: {
-        // 'Authorization': 'Bearer ${token}'
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNDg5MTEzLCJpYXQiOjE2ODM0MDI3MTMsImp0aSI6IjNiMjZmMzJhYjA2YzRhY2Q4MzczZTU5NzllZTUyMDg0IiwidXNlcl9pZCI6MX0.9CS2raXKdg1TDCgp1xVLSv2-2okHYiygVVT5SAGntrs",
-      },
-    };
+  axios
+    .request(config)
+    .then((response) => {
+      console.log(response.data.Lectures);
+      SetMyData(response.data.Lectures);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
-    axios
-      .request(config)
-      .then((response) => {
-        // console.log(response.data);
-        SetMyDataNew(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  // console.log(MyDataNew);
-  // console.log(Array.isArray(MyDataNew));
-
-  // const myArray = Array.from(MyDataNew);
+  console.log(MyData);
+  console.log(Array.isArray(MyData));
+  // const myArray = Array.from(MyData);
   // console.log(Array.isArray(myArray))
   // console.log(myArray)
 
@@ -169,22 +165,22 @@ const Attendance = ({}) => {
               Computer Networks
             </Typography>
 
-            {MyDataNew.length == 0 ? (
-              <div>NO DATA</div>
-            ) : (
-              MyDataNew?.map((values) => (
-                <>
-                  <Paper elevation={2}>
-                    <Grid container sx={{ mb: 1, mt: 1 }}>
+            <Paper elevation={2}>
+              {MyData.length == 0 ? (
+                <div></div>
+              ) : (
+                MyData?.map((values) => (
+                  <>
+                    <Grid container sx={{ mb: 1 }}>
                       <Grid item xs={6} sx={{ ml: 1 }} lg={7} key={values.id}>
                         <Typography
                           variant="h5"
                           sx={{ fontWeight: "bold" }}
                           value={"60004210031"}
                         >
-                          {values.id}
+                          {values.batch.name}
                         </Typography>
-                        <Typography variant="h6">{values.name}</Typography>
+                        <Typography variant="h6">{values.id}</Typography>
                       </Grid>
                       <Grid item lg={2} xs={0} md={0}></Grid>
                       <Grid item xs={2} lg={1.5}>
@@ -208,10 +204,10 @@ const Attendance = ({}) => {
                         />
                       </Grid>
                     </Grid>
-                  </Paper>
-                </>
-              ))
-            )}
+                  </>
+                ))
+              )}
+            </Paper>
           </Grid>
           <Grid item xs={12} md={0} lg={2}></Grid>
           <Grid item xs={12} md={4} lg={4}>

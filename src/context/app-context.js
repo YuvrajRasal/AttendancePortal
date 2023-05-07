@@ -25,6 +25,11 @@ export const AppProvider = ({ children }) => {
   const [date, setDate] = useState("");
   const [lecCreated, setLecCreated] = useState("");
 
+  const [MyData, SetMyData] = useState([]);
+  const [MyDataNew, SetMyDataNew] = useState([]);
+  const [MyDataProfile, SetMyDataProfile] = useState([]);
+  const [BatchData, SetBatchData] = useState([]);
+
   return (
     <AppContext.Provider
       value={{
@@ -61,6 +66,15 @@ export const AppProvider = ({ children }) => {
         setDate,
         lecCreated,
         setLecCreated,
+
+        MyData,
+        SetMyData,
+        MyDataNew,
+        SetMyDataNew,
+        BatchData,
+        SetBatchData,
+        MyDataProfile,
+        SetMyDataProfile,
       }}
     >
       {children}

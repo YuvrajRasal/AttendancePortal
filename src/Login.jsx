@@ -120,16 +120,17 @@ function Login() {
               {/* left side starts */}
               <Grid item xs={5.5} sx={{ padding: "20px" }} className="leftGrid">
                 {/* ----inserted padding */}
-                <Box className="box">
+                <Box className="box" >
                   <img
                   className="logoImage"
                     src={logo}
                     style={{
-                      width: "32%",
+                      width: "50%",
                       objectFit: "cover",
                       borderRadius: "60px",
                       padding: "1rem",
                       boxSizing: "border-box",
+                      display:"flex"
                     }}
                   ></img>
                   <Typography sx={{ fontWeight: 400, fontSize: "2.5rem" }}>
@@ -166,7 +167,7 @@ function Login() {
                           autoFocus
                           placeholder="60004210XXX"
                           // fullWidth required     -----previous code
-                          sx={{ width: "80%" }}
+                          sx={{ width: "100%" }}
                           width="80%"
                           name="SapId"
                           value={values.SapId}
@@ -205,7 +206,7 @@ function Login() {
                           label='Password'
                           autoComplete="password"
                           //  fullWidth required     -----previous code
-                          sx={{ width: "80%" ,mt:1,mb:1}}
+                          sx={{ width: "100%" ,mt:1,mb:1}}
                           name="password"
                           value={values.password}
                           onChange={handleChange}
@@ -239,7 +240,7 @@ function Login() {
                       className="LoginBtn"
                         type="submit"
                         variant="contained"
-                        sx={{ width: "80%" , backgroundColor:'#0056D2',
+                        sx={{ width: "100%" , backgroundColor:'#0056D2',
                         '&:hover': {
                             backgroundColor: 'white',
                             color: '#0056D2',
@@ -250,12 +251,12 @@ function Login() {
                       </Button>
                     </Box>
 
-                    <Typography className="SignUp">
+                    {/* <Typography className="SignUp">
                       Are you a faculty?
                       <Link to="/" sx={{ color: "#0056D2" }}>
                         <strong>Signup</strong>
                       </Link>
-                    </Typography>
+                    </Typography> */}
                     {/* </Container> */}
                   </form>
                 </Box>

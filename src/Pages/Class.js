@@ -12,6 +12,7 @@ import { useApp } from "../context/app-context";
 import Modal from "@mui/material/Modal";
 import LatestModal from "../Components/LatestModal";
 import { useNavigate } from "react-router-dom";
+import BatchModal from "../Components/BatchModal";
 
 const style = {
   position: "absolute",
@@ -62,10 +63,14 @@ const modalTxtStyle = {
   textAlign: "center",
 };
 const Class = ({}) => {
-  const { selectedLecture, data } = useApp();
+  const { selectedLecture, data, BatchData, SetBatchData } = useApp();
 
-  const lecture = data.find((element) => element.id === selectedLecture.id);
-  console.log(lecture.author);
+  SetBatchData(selectedLecture.batch);
+  // console.log(BatchData);
+
+  // const lecture = data.find((element) => element.id === selectedLecture.id);
+  const lecture = selectedLecture;
+  // console.log(lecture.id);
 
   const [openEdit, setOpenEdit] = React.useState(false);
   const handleOpenEdit = () => setOpenEdit(true);
@@ -81,6 +86,10 @@ const Class = ({}) => {
   const [openDelete, setOpenDelete] = React.useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
+
+  const [openBatchModal, setOpenBatchModal] = React.useState(false);
+  const handleOpenBatchModal = () => setOpenBatchModal(true);
+  const handleCloseBatchModal = () => setOpenBatchModal(false);
 
   const navigate = useNavigate();
 
@@ -270,6 +279,15 @@ const Class = ({}) => {
         {/* <DummyNew/> */}
         <LatestModal />
       </Modal>
+      <Modal
+        open={openBatchModal}
+        onClose={handleCloseBatchModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        {/* <DummyNew/> */}
+        <BatchModal />
+      </Modal>
       <Box
         component="main"
         className="MainBox"
@@ -286,7 +304,7 @@ const Class = ({}) => {
           <Grid item xs={12} lg={10} md={6}>
             <Typography variant="h3">
               {/* SE COMPUTER ENGINEERING -A3 */}
-              Subject {lecture.subject}
+              Subject {lecture.subject.name}
             </Typography>
             {/* <Typography variant="h4" sx={{ mt: 2 }}>
               Teacher: {lecture.teacher}
@@ -307,14 +325,17 @@ const Class = ({}) => {
             </Button>
           </Grid>
           <Grid item xs={12} lg={12} md={6} sx={{ mt: 1.5 }}>
-            <Typography variant="h6">Teacher</Typography>
+            <Box sx={{ display: "flex" }}>
+              <Typography variant="h6">Batch</Typography>
+              <Button onClick={handleOpenBatchModal}>View Batch</Button>
+            </Box>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              {lecture.teacher}
+              {lecture.batch.name}
             </Typography>
             <Grid sx={{ mb: 2 }}>
-              <Typography variant="h6">Room No.</Typography>
+              <Typography variant="h6">Semester</Typography>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                {lecture.room_number}
+                {lecture.batch.semester}
               </Typography>
             </Grid>
             <Grid sx={{ mb: 2 }}>

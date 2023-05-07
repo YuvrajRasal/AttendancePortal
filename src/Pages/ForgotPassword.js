@@ -150,7 +150,7 @@ function ForgotPassword() {
                           value={values.email}
                           onChange={handleChange}
                           placeholder="...@gmail.com"
-                          sx={{ width: "80%" }}
+                          sx={{ width: "100%" }}
                           width="80%"
                         />
                         {errors.email && (
@@ -170,7 +170,7 @@ function ForgotPassword() {
                         type="submit"
                         variant="contained"
                         sx={{
-                          width: "80%",
+                          width: "100%",
                           backgroundColor: "#0056D2",
                           "&:hover": {
                             backgroundColor: "white",

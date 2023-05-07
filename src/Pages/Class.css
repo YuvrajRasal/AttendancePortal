@@ -94,3 +94,24 @@
         margin-right: 5px !important;
       } */
   }
+
+  /* for BatchModal */
+
+  .BatchModalBox{
+    width: 25rem;
+    /* color: blue; */
+  }
+  /* @media only screen and (max-width: 505px) {
+
+    .BatchModalBox{
+      width: 25px;
+    }
+
+  } */
+  @media only screen and (max-width: 505px) {
+
+    .BatchModalBox{
+      width: 20rem ;
+    }
+
+  }

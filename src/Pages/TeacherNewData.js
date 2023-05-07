@@ -28,8 +28,12 @@ import LatestModal from "../Components/LatestModal";
 import { useEffect } from "react";
 import { useState } from "react";
 
-import { data } from "../Data/DummyData";
+// import { data } from "../Data/DummyData";
 import { useApp } from "../context/app-context";
+
+import axios from "axios";
+
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 const drawerWidth = 120;
 
@@ -89,29 +93,120 @@ const TeacherNewData = () => {
     setSubject,
     date,
     setDate,
+
+    MyData,
+    SetMyData,
+    MyDataNew,
+    SetMyDataNew,
+    MyDataProfile,
+    SetMyDataProfile,
   } = useApp();
 
   const [superSearch, setSuperSearch] = useState("");
-  console.log(superSearch);
+  // console.log(superSearch);
   // const [search,setSearch] = useState('');
   // const [search,setSearch] = useState({});
 
   //IF we dont console log it keeps calling array even after we make chanes in modal
   // console.log(data);
 
-  const [item, setItem] = useState(data);
+  // const [item, setItem] = useState(data);
 
-  //To see all lectures
+  // const [MyData, SetMyData] = useState([]);
+
+  // const token = JSON.stringify(localStorage.getItem("accessToken"));
+  // console.log(token);
+  const tokenNew =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNDg5MTEzLCJpYXQiOjE2ODM0MDI3MTMsImp0aSI6IjNiMjZmMzJhYjA2YzRhY2Q4MzczZTU5NzllZTUyMDg0IiwidXNlcl9pZCI6MX0.9CS2raXKdg1TDCgp1xVLSv2-2okHYiygVVT5SAGntrs";
   useEffect(() => {
-    const newItemAll = data.filter((data) => {
-      return all === true ? data : data[0];
-    });
-    setFilterData(newItemAll);
-  }, [all]);
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+      headers: {
+        // Authorization: "Bearer ${token}",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+      },
+      //   Authorization:
+      //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzMzc3Mjg4LCJpYXQiOjE2ODMyOTA4ODgsImp0aSI6IjZiMTQzMTE2YjJjMDRlNzBhNDA3ZGFiMDVmNDM4YjM2IiwidXNlcl9pZCI6MTF9.z0cUTQGB4MCNycsvQmJkFnhjQFml9qmWAoAwCPvetNc",
+      // },
+    };
 
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(response.data.Lectures);
+        SetMyData(response.data.Lectures);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error");
+      });
+  }, []);
+
+  // const [MyDataNew, SetMyDataNew] = useState([]);
+  // const token = JSON.stringify(localStorage.getItem("accessToken"));
+  // console.log(token);
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
+      headers: {
+        // 'Authorization': 'Bearer ${token}'
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+        SetMyDataNew(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log(MyDataNew);
+    console.log(Array.isArray(MyDataNew));
+  }, []);
+
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
+      headers: {
+        // 'Authorization': 'Bearer ${token}'
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+        SetMyDataProfile(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(MyDataProfile);
+    // console.log(Array.isArray(MyDataProfile));
+  }, []);
+
+  const filterItemLoad = () => {
+    const newItemL = MyData;
+    // setItem(newItem);
+    setFilterData(newItemL);
+  };
   //upcoming lec taken attendance is false
   const filterItem1 = () => {
-    const newItem1 = data.filter((data) => {
+    const newItem1 = MyData.filter((data) => {
       return data.attendance_taken === false ? data : data[0];
       // return data.attendance_taken === false ? data : data[0];doubt about part after :
       // if part one is getting accepted why does the answer change when i change part 2
@@ -123,7 +218,7 @@ const TeacherNewData = () => {
 
   //completed lec taken attendance is true
   const filterItem2 = () => {
-    const newItem2 = data.filter((data) => {
+    const newItem2 = MyData.filter((data) => {
       return data.attendance_taken === true ? data : data.attendance_taken;
       // return data.attendance_taken === true ? data : data.attendance_taken; doubt about part after :
       // is part one getting accepted
@@ -132,54 +227,15 @@ const TeacherNewData = () => {
     setFilterData(newItem2);
   };
 
-  //new code where we search through updated array through toggle buttons
-  //PROBLEM WITH THIS IS IF WE TYPE SOMETHING NOT PRESENT IN ARRAY IT WONT DISPLAY BACK THE FULL ARRAY
-  //WHEN WE BACKSPACE *******
-  //CLICK ON THE BUTTONS AGAIN TO SEE COMPLETED OR UPCOMING ARRAY
   useEffect(() => {
-    const newFilter = filterData.filter((filterData) => {
-      return search === "" ? filterData : filterData?.subject?.includes(search);
+    const newFilter = MyData.filter((filterData) => {
+      return search.toUpperCase() === ""
+        ? filterData
+        : filterData?.subject.name?.includes(search.toUpperCase());
     });
     setFilterData(newFilter);
   }, [search]);
 
-  //previous code where we search through whole array
-  {
-    /*
-  useEffect(() => {
-    const newFilter = data.filter((data) => {
-      return search === "" ? data : data?.subject?.includes(search);
-    });
-    setFilterData(newFilter);
-  }, [search]);
-  */
-  }
-  //func to display whole arrray
-  // useEffect(() => {
-  //   const newFilterAll = data.filter((data) => {
-  //     return all === true ? data : data[0];
-  //   });
-  //   setFilterData(newFilterAll);
-  // });
-
-  // POST FUNC THRO CREATEDLEC IN MODAL
-  /*
-  const newPost = {
-    userId: 1,
-    title: 'A new post',
-    body: 'This is the body of the new post'
-};
-
-const sendPostRequest = async () => {
-    try {
-        const resp = await axios.post('https://jsonplaceholder.typicode.com/posts', newPost);
-        console.log(resp.data);
-    } catch (err) {
-        // Handle Error Here
-        console.error(err);
-    }
-};
-*/
   return (
     // <Box
     // component="main"
@@ -229,7 +285,7 @@ const sendPostRequest = async () => {
               <ToggleButton
                 value="Upcoming"
                 className="button"
-                onClick={() => filterItem1(data.attendance_taken)}
+                onClick={() => filterItem1(MyData.attendance_taken)}
               >
                 Upcoming
               </ToggleButton>
@@ -237,9 +293,16 @@ const sendPostRequest = async () => {
               <ToggleButton
                 value="Completed"
                 className="button"
-                onClick={() => filterItem2(data.attendance_taken)}
+                onClick={() => filterItem2(MyData.attendance_taken)}
               >
                 Completed
+              </ToggleButton>
+              <ToggleButton
+                value="Load"
+                className="button"
+                onClick={() => filterItemLoad(MyData)}
+              >
+                Load
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
@@ -291,73 +354,112 @@ const sendPostRequest = async () => {
         {/* <Paper elevation={1}> */}
         {/* <Link to="/class"> */}
 
-        {filterData.map((data) => (
-          //   data.map((data) =>(
-
-          <Card
-            sx={{
-              maxWidth: "100%",
-              display: "flex",
-              position: "relative",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              variant: "outlined",
-              borderRadius: "10px",
-              border: "2px solid #DEDEDE",
-              boxShadow: "none",
-              // margin: "0.8rem",
-              marginTop: "0.8rem",
-            }}
-            className="Card"
-            // onClick={()=>{navigate('/class')}}
-            onClick={() => {
-              //   setSelectedNews(data);
-              setSelectedLecture(data);
-              navigate(`/class/${data.id}`);
-              // console.log(data);
-            }}
-          >
-            <CardContent>
-              <Box>
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                  style={txtStyle}
-                  sx={{ fontWeight: 450 }}
-                  className="Heading"
-                >
-                  Subject : {data.subject}
-                </Typography>
-              </Box>
-              <Box
+        {/* {filterData.map((data) => ( */}
+        {filterData.length == 0 ? (
+          <div></div>
+        ) : (
+          filterData?.map((data) => (
+            <>
+              <Card
                 sx={{
+                  maxWidth: "100%",
                   display: "flex",
+                  position: "relative",
                   flexDirection: "row",
-                  marginBottom: "2px",
+                  justifyContent: "space-between",
+                  variant: "outlined",
+                  borderRadius: "10px",
+                  border: "2px solid #DEDEDE",
+                  boxShadow: "none",
+                  // margin: "0.8rem",
+                  marginTop: "0.8rem",
                 }}
-                className="Detail"
+                className="Card"
+                // onClick={()=>{navigate('/class')}}
+                // onClick={() => {
+                //   //   setSelectedNews(data);
+                //   setSelectedLecture(data);
+                //   console.log(data);
+                //   navigate(`/class/${data.id}`);
+                //   // console.log(data);
+                // }}
+                key={data.id}
               >
-                <Typography
-                  variant="body2"
-                  color="#000000ab"
-                  fontSize={"17px"}
-                  marginRight={"10px"}
-                >
-                  {data.startTime} - {data.endTime}
-                </Typography>
-                <Typography variant="body2" color="#000000ab" fontSize={"17px"}>
-                  Room No.{data.room_number}
-                </Typography>
-              </Box>
-            </CardContent>
-            <CardActions sx={{ float: "right" }}>
-              <Button size="40rem">
-                {/* <CancelIcon fontSize="large" color="blue" variant="filled" /> */}
-              </Button>
-            </CardActions>
-          </Card>
-        ))}
+                <CardContent>
+                  <Box>
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="div"
+                      style={txtStyle}
+                      sx={{ fontWeight: 450 }}
+                      className="Heading"
+                    >
+                      Subject : {data.subject.name}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginBottom: "2px",
+                    }}
+                    className="Detail"
+                  >
+                    <Typography
+                      variant="body2"
+                      color="#000000ab"
+                      fontSize={"17px"}
+                      marginRight={"10px"}
+                    >
+                      {data.startTime} - {data.endTime}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="#000000ab"
+                      fontSize={"17px"}
+                    >
+                      Batch Name: {data.batch.name}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginBottom: "2px",
+                    }}
+                    className="Detail"
+                  >
+                    <Typography
+                      variant="body2"
+                      color="#000000ab"
+                      fontSize={"17px"}
+                    >
+                      Note: {data.note}
+                    </Typography>
+                  </Box>
+                </CardContent>
+                <CardActions sx={{ float: "right" }}>
+                  <Button
+                    size="40rem"
+                    onClick={() => {
+                      //   setSelectedNews(data);
+                      setSelectedLecture(data);
+                      navigate(`/class/${data.id}`);
+                      // console.log(data);
+                    }}
+                  >
+                    <ArrowCircleRightIcon
+                      fontSize="large"
+                      color="blue"
+                      variant="filled"
+                    />
+                  </Button>
+                </CardActions>
+              </Card>
+            </>
+          ))
+        )}
         {/* </Link> */}
         {/* </Paper> */}
       </Box>

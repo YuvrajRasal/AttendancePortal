@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -16,6 +16,7 @@ import DatePicker from "react-date-picker";
 
 // use context
 import { useApp } from "../context/app-context";
+import { Form } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -74,6 +75,13 @@ function LatestModal() {
     setDate,
     lecCreated,
     setLecCreated,
+
+    MyDataNew,
+    SetMyDataNew,
+    MyDataProfile,
+    SetMyDataProfile,
+    MyData,
+    SetMyData,
   } = useApp();
 
   //////////////////////////////////////////////
@@ -117,6 +125,7 @@ function LatestModal() {
     // console.log(lecCreated);
     console.log(batch);
     sendPostRequest();
+    console.log("func Executed");
   };
 
   const axios = require("axios").default;
@@ -142,16 +151,42 @@ function LatestModal() {
       //   "https://jsonplaceholder.typicode.com/posts",
       //   newPost
       // );
+      console.log(newPost);
       const resp = await axios.post(
         "http://attendanceportal.pythonanywhere.com/attendance/lecture/",
         newPost
       );
       console.log(newPost);
       console.log(resp);
+      getData();
     } catch (err) {
       // Handle Error Here
       console.error(err);
     }
+  };
+
+  const getData = () => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+      headers: {
+        // Authorization: "Bearer ${token}",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(response.data.Lectures);
+        SetMyData(response.data.Lectures);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error");
+      });
   };
 
   /*
@@ -182,6 +217,23 @@ const sendPostRequest = async () => {
     }
 };
 */
+  let items = [];
+  for (let index = 0; index < MyDataNew.length; index++) {
+    items.push(
+      <MenuItem value={MyDataNew[index].id}>
+        Batch {MyDataNew[index].name}
+      </MenuItem>
+    );
+  }
+
+  // let itemsSubject = [];
+  // for (let index = 0; index < MyDataProfile.subjects.length; index++) {
+  //   itemsSubject.push(
+  //     <MenuItem value={MyDataProfile.subjects[index].id}>
+  //       Batch {MyDataProfile.subjects[index].name}
+  //     </MenuItem>
+  //   );
+  // }
 
   return (
     <>
@@ -201,7 +253,8 @@ const sendPostRequest = async () => {
                 // id="From"
                 label="Subject"
                 variant="outlined"
-                value={subject}
+                // value={subject}
+                // defaultValue="car"
                 onChange={handleChangeSub}
                 sx={{
                   width: "13.562rem",
@@ -212,7 +265,7 @@ const sendPostRequest = async () => {
                   //   marginLeft: "10px",
                 }}
               />
-              <TextField
+              {/* <TextField
                 className="SmlBtn"
                 // id="To"
                 label="Batch."
@@ -227,7 +280,37 @@ const sendPostRequest = async () => {
                   // border: "2px solid #DEDEDE",
                   //   marginLeft: "10px",
                 }}
-              />
+              /> */}
+              <FormControl>
+                <InputLabel>Batch</InputLabel>
+                <Select
+                  className="SmlBtn"
+                  labelId="From-id"
+                  value={batch}
+                  label="Batch"
+                  onChange={handleChangeBatch}
+                  sx={{
+                    width: "13.562rem",
+                    height: "50px",
+                    background: "#FFFFFF",
+                    padding: "28px",
+                    // borderRadius: " 10px",
+                    // border: "2px solid #DEDEDE",
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {/* failed for loop so made one before return and then pushed data */}
+                  {/* for (let index = 0; index < MyDataNew.length; index++) {
+                  <MenuItem value={8}>Batch C</MenuItem>
+                  // <MenuItem value={9}>Batch A</MenuItem>
+                  // <MenuItem value={10}>Batch A1</MenuItem>
+                    
+                  } */}
+                  {items}
+                </Select>
+              </FormControl>
             </Box>
             <Box style={BoxStyle}>
               {/* <DemoContainer components={['DatePicker']}> */}
