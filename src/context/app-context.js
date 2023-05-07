@@ -17,7 +17,7 @@ export const AppProvider = ({ children }) => {
   const [batch, setBatch] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [freq, setFreq] = useState("");
+  const [note, setNote] = useState("");
   const [room, setRoom] = useState("");
   const [teacher, setTeacher] = useState("");
   const [subject, setSubject] = useState("");
@@ -29,6 +29,8 @@ export const AppProvider = ({ children }) => {
   const [MyDataNew, SetMyDataNew] = useState([]);
   const [MyDataProfile, SetMyDataProfile] = useState([]);
   const [BatchData, SetBatchData] = useState([]);
+
+  const [openCreate, setOpenCreate] = useState(false);
 
   return (
     <AppContext.Provider
@@ -54,8 +56,8 @@ export const AppProvider = ({ children }) => {
         setFrom,
         to,
         setTo,
-        freq,
-        setFreq,
+        note,
+        setNote,
         room,
         setRoom,
         teacher,
@@ -75,6 +77,9 @@ export const AppProvider = ({ children }) => {
         SetBatchData,
         MyDataProfile,
         SetMyDataProfile,
+
+        openCreate,
+        setOpenCreate,
       }}
     >
       {children}

@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import LatestModal from "../Components/LatestModal";
 import { useNavigate } from "react-router-dom";
 import BatchModal from "../Components/BatchModal";
+import EditModal from "../Components/EditModal";
 
 const style = {
   position: "absolute",
@@ -277,7 +278,7 @@ const Class = ({}) => {
         aria-describedby="modal-modal-description"
       >
         {/* <DummyNew/> */}
-        <LatestModal />
+        <EditModal />
       </Modal>
       <Modal
         open={openBatchModal}

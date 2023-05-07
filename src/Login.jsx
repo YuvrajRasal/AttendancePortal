@@ -22,6 +22,7 @@ import validateInfoNew from "./Validation";
 import fullStop from "./images/blueFullstop.png"
 
 import { useNavigate } from 'react-router-dom';
+import { useApp } from "./context/app-context";
 
 
 //
@@ -45,13 +46,18 @@ function Login() {
   //functions for form validation
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+
+  const { SetMyData, MyData } = useApp();
+
   function submitForm() {
     setIsSubmitted(true);
   }
   const { handleChange, handleSubmit, values, errors } = useForm(
     submitForm,
     validateInfoNew,
-    "login"
+    "login",
+    SetMyData, 
+    MyData
   );
 
   const navigate = useNavigate();

@@ -45,7 +45,7 @@ const BoxStyle = {
   marginTop: "1rem",
 };
 
-function LatestModal() {
+function EditModal() {
   // const [batch, setBatch] = React.useState("");
   // const [from, setFrom] = React.useState("");
   // const [to, setTo] = React.useState("");
@@ -85,6 +85,8 @@ function LatestModal() {
 
     openCreate,
     setOpenCreate,
+
+    selectedLecture,
   } = useApp();
 
   //////////////////////////////////////////////
@@ -208,34 +210,8 @@ function LatestModal() {
       });
   };
 
-  /*
-    {
-  "room_number": "1",
-  "startTime": "12:12",
-  "endTime": "12:25",
-  "date": "2023-04-28",
-  "note": "string",
-  "attendance_taken": true,
-  "teacher": 1,
-  "batch": 0,
-  "subject": 1
-}
-  const newPost = {
-    userId: 1,
-    title: 'A new post',
-    body: 'This is the body of the new post'
-};
+  const lecture = selectedLecture;
 
-const sendPostRequest = async () => {
-    try {
-        const resp = await axios.post('https://jsonplaceholder.typicode.com/posts', newPost);
-        console.log(resp.data);
-    } catch (err) {
-        // Handle Error Here
-        console.error(err);
-    }
-};
-*/
   let items = [];
   for (let index = 0; index < MyDataNew.length; index++) {
     items.push(
@@ -287,8 +263,9 @@ const sendPostRequest = async () => {
                 <Select
                   className="SmlBtn"
                   labelId="From-id"
-                  value={subject}
+                  // value={subject}
                   label="subject"
+                  defaultValue={lecture.subject.id}
                   onChange={handleChangeSub}
                   sx={{
                     width: "13.562rem",
@@ -321,8 +298,9 @@ const sendPostRequest = async () => {
                 <Select
                   className="SmlBtn"
                   labelId="From-id"
-                  value={batch}
+                  // value={batch}
                   label="Batch"
+                  defaultValue={lecture.batch.id}
                   onChange={handleChangeBatch}
                   sx={{
                     width: "13.562rem",
@@ -351,6 +329,7 @@ const sendPostRequest = async () => {
                 type="date"
                 className="BigBtn"
                 onChange={handleChangeDate}
+                defaultValue={lecture.date}
               />
             </Box>
             <Box style={BoxStyle}>
@@ -370,9 +349,10 @@ const sendPostRequest = async () => {
                   // value={from}
                   label="From"
                   // placeholder="11-11"
-                  value={from}
+                  //   value={from}
                   // disabled={true}
                   onChange={handleChangeFrom}
+                  defaultValue={lecture.startTime}
                   sx={{
                     width: "13.562rem",
                     height: "50px",
@@ -389,9 +369,10 @@ const sendPostRequest = async () => {
                   id="ToId"
                   // value={to}
                   // defaultValue="0000"
-                  value={to}
+                  //   value={to}
                   label="To"
                   onChange={handleChangeTo}
+                  defaultValue={lecture.endTime}
                   sx={{
                     width: "13.562rem",
                     height: "50px",
@@ -420,8 +401,8 @@ const sendPostRequest = async () => {
                   label="Teacher"
                   variant="outlined"
                   value={MyDataProfile.id}
-                  // defaultValue={MyDataProfile.id}
                   onChange={handleChangeTeacher}
+                  defaultValue={MyDataProfile.id}
                   sx={{
                     width: "13.562rem",
                     height: "50px",
@@ -436,8 +417,9 @@ const sendPostRequest = async () => {
                   id="Room"
                   label="Room No."
                   variant="outlined"
-                  value={room}
+                  //   value={room}
                   onChange={handleChangeRoom}
+                  defaultValue={room}
                   sx={{
                     width: "13.562rem",
                     height: "50px",
@@ -453,9 +435,10 @@ const sendPostRequest = async () => {
                   className="BigBtn"
                   labelId="note-id"
                   id="noteId"
-                  value={note}
+                  //   value={note}
                   label="Note"
                   onChange={handleChangeNote}
+                  defaultValue={lecture.note}
                   sx={{
                     width: "27.9rem",
                     height: "50px",
@@ -491,4 +474,4 @@ const sendPostRequest = async () => {
   );
 }
 
-export default LatestModal;
+export default EditModal;

@@ -55,14 +55,15 @@ const TeacherNewData = () => {
   const currentDate = `${current.getDate()}/${
     current.getMonth() + 1
   }/${current.getFullYear()}`;
-  const [alignment, setAlignment] = React.useState("Upcoming");
+
+  const [alignment, setAlignment] = React.useState("All");
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [openCreate, setOpenCreate] = React.useState(false);
+  const handleOpen = () => setOpenCreate(true);
+  const handleClose = () => setOpenCreate(false);
 
   const navigate = useNavigate();
   //   const [data, setData] = useState([]);
@@ -100,6 +101,8 @@ const TeacherNewData = () => {
     SetMyDataNew,
     MyDataProfile,
     SetMyDataProfile,
+    openCreate,
+    setOpenCreate,
   } = useApp();
 
   const [superSearch, setSuperSearch] = useState("");
@@ -242,7 +245,7 @@ const TeacherNewData = () => {
     // sx={{ flexGrow: 1, pl: '10%',pr:'10%', width: '100%'}}>
     <Box sx={{ display: "flex" }}>
       <Modal
-        open={open}
+        open={openCreate}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -298,11 +301,11 @@ const TeacherNewData = () => {
                 Completed
               </ToggleButton>
               <ToggleButton
-                value="Load"
+                value="All"
                 className="button"
                 onClick={() => filterItemLoad(MyData)}
               >
-                Load
+                All
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
@@ -356,7 +359,7 @@ const TeacherNewData = () => {
 
         {/* {filterData.map((data) => ( */}
         {filterData.length == 0 ? (
-          <div></div>
+          <div>Loading</div>
         ) : (
           filterData?.map((data) => (
             <>

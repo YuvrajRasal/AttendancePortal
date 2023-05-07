@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppProvider, useApp } from "./context/app-context";
+import { AppProvider } from "./context/app-context";
 
-const useForm = (callback, validate, page) => {
+const useForm = (callback, validate, page, SetMyData, MyData) => {
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -41,6 +41,9 @@ const useForm = (callback, validate, page) => {
     const sap_id = e.target.SapId.value;
     const password = e.target.password.value;
 
+    // fetching data of home when we login
+    // const { SetMyData, MyData } = useApp();
+
     //Fetching the refresh and access tokens from the backend
     axios
       .post("http://attendanceportal.pythonanywhere.com/accounts/login/", {
@@ -68,7 +71,36 @@ const useForm = (callback, validate, page) => {
           localStorage.setItem("accessToken", JSON.stringify(res.data.access));
           localStorage.setItem("user", JSON.stringify(res.config.data));
           //localStorage.setItem('user', JSON.stringify(user));
+
+          loadHomeData(SetMyData, MyData);
         }
+      });
+  };
+
+  const loadHomeData = (SetMyData, MyData) => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+      headers: {
+        // Authorization: "Bearer ${token}",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+      },
+      //   Authorization:
+      //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzMzc3Mjg4LCJpYXQiOjE2ODMyOTA4ODgsImp0aSI6IjZiMTQzMTE2YjJjMDRlNzBhNDA3ZGFiMDVmNDM4YjM2IiwidXNlcl9pZCI6MTF9.z0cUTQGB4MCNycsvQmJkFnhjQFml9qmWAoAwCPvetNc",
+      // },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(response.data.Lectures);
+        SetMyData(response.data.Lectures);
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error");
       });
   };
 
