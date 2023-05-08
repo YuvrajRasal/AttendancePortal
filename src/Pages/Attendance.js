@@ -104,8 +104,11 @@ const Attendance = ({}) => {
   //   });
 
   const [MyDataNew, SetMyDataNew] = useState([]);
+
+  // useEffect(() => {
   const token = JSON.stringify(localStorage.getItem("accessToken"));
-  // console.log(token);
+  console.log(token);
+  // }, []);
 
   useEffect(() => {
     let config = {
@@ -113,9 +116,9 @@ const Attendance = ({}) => {
       maxBodyLength: Infinity,
       url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
       headers: {
-        // 'Authorization': 'Bearer ${token}'
+        Authorization: `Bearer ${token}`,
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNDg5MTEzLCJpYXQiOjE2ODM0MDI3MTMsImp0aSI6IjNiMjZmMzJhYjA2YzRhY2Q4MzczZTU5NzllZTUyMDg0IiwidXNlcl9pZCI6MX0.9CS2raXKdg1TDCgp1xVLSv2-2okHYiygVVT5SAGntrs",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
     };
 

@@ -68,7 +68,6 @@ const useForm = (callback, validate, page, SetMyData, MyData) => {
             JSON.stringify(res.data.refresh)
           );
           localStorage.setItem("accessToken", JSON.stringify(res.data.access));
-          localStorage.setItem("accessToken", JSON.stringify(res.data.access));
           localStorage.setItem("user", JSON.stringify(res.config.data));
           //localStorage.setItem('user', JSON.stringify(user));
 
@@ -85,7 +84,7 @@ const useForm = (callback, validate, page, SetMyData, MyData) => {
       headers: {
         // Authorization: "Bearer ${token}",
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
       //   Authorization:
       //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzMzc3Mjg4LCJpYXQiOjE2ODMyOTA4ODgsImp0aSI6IjZiMTQzMTE2YjJjMDRlNzBhNDA3ZGFiMDVmNDM4YjM2IiwidXNlcl9pZCI6MTF9.z0cUTQGB4MCNycsvQmJkFnhjQFml9qmWAoAwCPvetNc",

@@ -106,30 +106,23 @@ const TeacherNewData = () => {
   } = useApp();
 
   const [superSearch, setSuperSearch] = useState("");
-  // console.log(superSearch);
-  // const [search,setSearch] = useState('');
-  // const [search,setSearch] = useState({});
 
-  //IF we dont console log it keeps calling array even after we make chanes in modal
-  // console.log(data);
-
-  // const [item, setItem] = useState(data);
-
-  // const [MyData, SetMyData] = useState([]);
-
+  // here we have used stringify which converts it to string but we need a object
   // const token = JSON.stringify(localStorage.getItem("accessToken"));
   // console.log(token);
-  const tokenNew =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNDg5MTEzLCJpYXQiOjE2ODM0MDI3MTMsImp0aSI6IjNiMjZmMzJhYjA2YzRhY2Q4MzczZTU5NzllZTUyMDg0IiwidXNlcl9pZCI6MX0.9CS2raXKdg1TDCgp1xVLSv2-2okHYiygVVT5SAGntrs";
+
+  const token = JSON.parse(localStorage.getItem("accessToken"));
+  console.log(token);
+
   useEffect(() => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
       url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
       headers: {
-        // Authorization: "Bearer ${token}",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+        Authorization: `Bearer ${token}`,
+        // Authorization:
+        //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
       //   Authorization:
       //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzMzc3Mjg4LCJpYXQiOjE2ODMyOTA4ODgsImp0aSI6IjZiMTQzMTE2YjJjMDRlNzBhNDA3ZGFiMDVmNDM4YjM2IiwidXNlcl9pZCI6MTF9.z0cUTQGB4MCNycsvQmJkFnhjQFml9qmWAoAwCPvetNc",
@@ -157,9 +150,9 @@ const TeacherNewData = () => {
       maxBodyLength: Infinity,
       url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
       headers: {
-        // 'Authorization': 'Bearer ${token}'
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+        Authorization: `Bearer ${token}`,
+        // Authorization:
+        //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
     };
 
@@ -183,9 +176,10 @@ const TeacherNewData = () => {
       maxBodyLength: Infinity,
       url: "http://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
       headers: {
-        // 'Authorization': 'Bearer ${token}'
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTI3OTA3LCJpYXQiOjE2ODM0NDE1MDcsImp0aSI6IjcwNDdlZTEyZGQ4NTRhODI4N2RlN2Y0ZGFiZWYwMjA3IiwidXNlcl9pZCI6MX0.E0K824FAm8Bh85x1NAvGbQctYmTMdzT3PULJdL370TA",
+        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
+        // Authorization:
+        //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
     };
 
