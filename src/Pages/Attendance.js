@@ -26,6 +26,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Chart from "../Components/Chart";
 
 import { useState, useEffect } from "react";
+import { CSVLink } from "react-csv";
 
 const drawerWidth = 120;
 const txtStyle = {
@@ -106,7 +107,7 @@ const Attendance = ({}) => {
   const [MyDataNew, SetMyDataNew] = useState([]);
 
   // useEffect(() => {
-  const token = JSON.stringify(localStorage.getItem("accessToken"));
+  const token = JSON.parse(localStorage.getItem("accessToken"));
   console.log(token);
   // }, []);
 
@@ -117,8 +118,6 @@ const Attendance = ({}) => {
       url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
       headers: {
         Authorization: `Bearer ${token}`,
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
     };
 
@@ -139,6 +138,12 @@ const Attendance = ({}) => {
   // const myArray = Array.from(MyDataNew);
   // console.log(Array.isArray(myArray))
   // console.log(myArray)
+
+  const headers = [
+    { label: "Id", key: "id" },
+    { label: "name", key: "name" },
+    // {label:"name", key:"name"}
+  ];
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -225,6 +230,14 @@ const Attendance = ({}) => {
             >
               <Typography style={txtStyle}>Submit</Typography>
             </Button>
+            {/* <CSVLink data={MyDataNew} headers={MyDataNew} filename="csvData">
+              <Button
+                className="buttonDownload"
+                sx={{ width: "10px", ml: "25%" }}
+              >
+                <Typography style={txtStyle}>Download</Typography>
+              </Button>
+            </CSVLink> */}
             <Chart />
           </Grid>
         </Grid>

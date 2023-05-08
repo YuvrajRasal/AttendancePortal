@@ -103,6 +103,8 @@ function ProfileNew() {
   // const [filterData, setFilterData] = useState(data);
 
   /////NewProfile
+  const token = JSON.parse(localStorage.getItem("accessToken"));
+  console.log(token);
 
   useEffect(() => {
     let config = {
@@ -110,9 +112,7 @@ function ProfileNew() {
       maxBodyLength: Infinity,
       url: "http://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
       headers: {
-        // 'Authorization': 'Bearer ${token}'
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
+        Authorization: `Bearer ${token}`,
       },
     };
 
