@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../Components/Nav";
 import { Box } from "@mui/system";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,6 +14,8 @@ import LatestModal from "../Components/LatestModal";
 import { useNavigate } from "react-router-dom";
 import BatchModal from "../Components/BatchModal";
 import EditModal from "../Components/EditModal";
+
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -93,6 +95,73 @@ const Class = ({}) => {
   const handleCloseBatchModal = () => setOpenBatchModal(false);
 
   const navigate = useNavigate();
+
+  const [MyDataNew2, SetMyDataNew2] = useState([]);
+
+  let Data = JSON.stringify({
+    lecture: selectedLecture.id,
+  });
+
+  // const handleDownload = async () => {
+  //   try {
+  //     let config = {
+  //       method: "post",
+  //       maxBodyLength: Infinity,
+  //       url: "http://attendanceportal.pythonanywhere.com/attendance/download-attendance/",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       data: Data,
+  //     };
+  //     axios
+  //       .request(config)
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         SetMyDataNew2(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   } catch (err) {
+  //     // Handle Error Here
+  //     console.error(err);
+  //   }
+  // };
+
+  const [loading, setLoading] = useState(false);
+  const handleDownload = () => {
+    const data = { lecture: selectedLecture.id }; // POST data (if required)
+    const url =
+      "http://attendanceportal.pythonanywhere.com/attendance/download-attendance/";
+    setLoading(true);
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "data.csv");
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error downloading CSV file:", error);
+        setLoading(false);
+      });
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -326,6 +395,15 @@ const Class = ({}) => {
             </Button>
           </Grid>
           <Grid item xs={12} lg={12} md={6} sx={{ mt: 1.5 }}>
+            <Grid sx={{ mb: 1 }}>
+              <Button
+                className="buttonAttendance"
+                sx={{ width: "10px", ml: "1px" }}
+                onClick={handleDownload}
+              >
+                <Typography style={txtStyle}>Download Attendance</Typography>
+              </Button>
+            </Grid>
             <Box sx={{ display: "flex" }}>
               <Typography variant="h6">Batch</Typography>
               <Button onClick={handleOpenBatchModal}>View Batch</Button>
@@ -337,6 +415,12 @@ const Class = ({}) => {
               <Typography variant="h6">Semester</Typography>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 {lecture.batch.semester}
+              </Typography>
+            </Grid>
+            <Grid sx={{ mb: 2 }}>
+              <Typography variant="h6">Lec Id</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {lecture.id}
               </Typography>
             </Grid>
             <Grid sx={{ mb: 2 }}>
@@ -375,7 +459,23 @@ const Class = ({}) => {
                 >
                   Delete
                 </Button>
-              </Grid>
+              </Grid>{" "}
+              {/* <Button
+                className="buttonAttendance"
+                sx={{ width: "10px", ml: "25%" }}
+                onClick={handleDownload}
+              >
+                <Typography style={txtStyle}>Download </Typography>
+              </Button> */}
+              {/* <Grid Item xs={6} lg={1} md={6.5}>
+            <Button
+              className="buttonAttendance"
+              sx={{ width: "10px", ml: "25%" }}
+              onClick={handleDownload}
+            >
+              <Typography style={txtStyle}>Download </Typography>
+            </Button>
+          </Grid> */}
             </Grid>
           </Grid>
         </Grid>

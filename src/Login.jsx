@@ -36,7 +36,7 @@ const paperStyle = {
   width: "60rem",
   // width: "100%",
   // maxWidth:"80%",
-  padding: "35px",
+  // padding: "35px",
 };
 
 const avatarStyle = { backgroundColor: "lightBlue" };
@@ -113,7 +113,7 @@ function Login() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            maxWidth: "80%",
+            maxWidth: "90%",
           }}
         >
           <Paper
@@ -124,9 +124,10 @@ function Login() {
           >
             <Grid fluidContainer spacing={2} className="lrGrid">
               {/* left side starts */}
-              <Grid item xs={5.5} sx={{ padding: "20px" }} className="leftGrid">
+              <Grid item xs={5.5} sx={{ padding: "30px"  }} className="leftGrid">
                 {/* ----inserted padding */}
                 <Box className="box" >
+                  <box className="imgBox">
                   <img
                   className="logoImage"
                     src={logo}
@@ -139,7 +140,8 @@ function Login() {
                       display:"flex"
                     }}
                   ></img>
-                  <Typography sx={{ fontWeight: 400, fontSize: "2.5rem" }}>
+                  </box>
+                  <Typography sx={{ fontWeight: 400, fontSize: "2.5rem" }} id="welcome">
                     Welcome Back<>{bull}</>
                     {/* Welcome Back */}
                     {/* <><img src={fullStop}/></> */}
@@ -282,10 +284,10 @@ function Login() {
                 <img
                   src={library}
                   style={{
-                    maxWidth: "90%",
-                    width: "30rem",
+                    maxWidth: "100%",
+                    width: "35rem",
                     objectFit: "cover",
-                    borderRadius: "40px",
+                    borderRadius: "30px",
                     padding: "1rem",
                     boxSizing: "border-box",
                   }}

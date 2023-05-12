@@ -26,7 +26,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Chart from "../Components/Chart";
 
 import { useState, useEffect } from "react";
-import { CSVLink } from "react-csv";
 
 const drawerWidth = 120;
 const txtStyle = {
@@ -44,6 +43,48 @@ const txtStyle = {
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Attendance = ({}) => {
+  const {
+    selectedLecture,
+    data,
+    BatchData,
+    SetBatchData,
+    MyDataNew,
+    SetMyDataNew,
+  } = useApp();
+  // console.log(BatchData);
+
+  const [studentId, setStudentId] = useState(0);
+
+  const token = JSON.parse(localStorage.getItem("accessToken"));
+  // console.log(token);
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(response.data);
+        SetMyDataNew(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // console.log(MyDataNew);
+    // console.log(Array.isArray(MyDataNew));
+  }, []);
+
+  const BatchDataAttendance = MyDataNew.find(
+    (element) => element?.id === BatchData?.id
+  );
+
   const [isTaken, setIsSubscribed] = useState(true);
   const [isNotTaken, setIsNotSubscribed] = useState(false);
 
@@ -58,92 +99,107 @@ const Attendance = ({}) => {
 
     console.log(isNotTaken);
   };
-
+  const axios = require("axios").default;
   const handleSubmit = () => {
     sendPostRequest();
   };
 
-  const axios = require("axios").default;
+  const [MyDataNew1, SetMyDataNew1] = useState([]);
 
-  const newPost = [
-    {
-      student: "60004210031",
-      present: isTaken,
-      lecture: 24,
-    },
-  ];
-
-  const sendPostRequest = async () => {
-    try {
-      const resp = await axios.post(
-        "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
-        newPost
-      );
-      console.log(newPost);
-      console.log(resp);
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-    }
-  };
-
-  //   const url = 'http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/';
-  // const token = localStorage.getItem('accessToken');
-
-  // axios.get(url, {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`
-  //   }
-  // })
-  //   .then(response => {
-  //     // handle the response data here
-  //     console.log(response)
-  //   })
-  //   .catch(error => {
-  //     // handle the error here
-  //     console.error(error);
-  //   });
-
-  const [MyDataNew, SetMyDataNew] = useState([]);
-
-  // useEffect(() => {
-  const token = JSON.parse(localStorage.getItem("accessToken"));
-  console.log(token);
-  // }, []);
+  console.log(BatchDataAttendance, "BatchAttendance");
+  let Data = JSON.stringify({
+    batch: BatchDataAttendance.id,
+  });
 
   useEffect(() => {
     let config = {
-      method: "get",
+      method: "post",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
+      url: "http://attendanceportal.pythonanywhere.com/attendance/batch-data/",
       headers: {
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
+      data: Data,
     };
-
     axios
       .request(config)
       .then((response) => {
-        // console.log(response.data);
-        SetMyDataNew(response.data);
+        console.log(response.data);
+        SetMyDataNew1(response.data);
+        setStudentId(response.data.id);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+  console.log(studentId);
 
-  // console.log(MyDataNew);
+  // console.log(MyDataNew1[0].id, "ABC");
+
+  const [objectList, setObjectList] = useState([
+    // { present: true, lecture: MyDataNew.id, student: studentId },
+    // { present: false, lecture: selectedLecture.id, student: MyDataNew1[0].id },
+    { present: false, lecture: 23, student: 2 },
+  ]);
+  console.log(objectList, "ObjectList");
+  // console.log(MyDataNew1);
+  const sendPostRequest = () => {
+    const url =
+      "http://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/";
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(objectList),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        console.log("Objects uploaded successfully");
+        console.log(objectList);
+      })
+      .catch((error) => {
+        console.error("Error uploading objects:", error);
+      });
+  };
+
+  //     const newPost = [
+  //   {
+  //     // student: MyDataNew1.name,
+  //     present: isTaken,
+  //     lecture: BatchDataAttendance.id,
+  //   },
+  // ];
+
+  const newPost = [
+    {
+      // student:"60004210031",
+      // present: isTaken,
+      // lecture: 24
+    },
+  ];
+
+  // const sendPostRequest = async () => {
+  //   try {
+  //     const resp = await axios.post(
+  //       "http://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/",
+  //       newPost
+  //     );
+  //     console.log(newPost);
+  //     console.log(resp);
+  //   } catch (err) {
+  //     // Handle Error Here
+  //     console.error(err);
+  //   }
+  // };
+
   // console.log(Array.isArray(MyDataNew));
 
   // const myArray = Array.from(MyDataNew);
   // console.log(Array.isArray(myArray))
   // console.log(myArray)
-
-  const headers = [
-    { label: "Id", key: "id" },
-    { label: "name", key: "name" },
-    // {label:"name", key:"name"}
-  ];
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -177,10 +233,10 @@ const Attendance = ({}) => {
               Computer Networks
             </Typography>
 
-            {MyDataNew.length == 0 ? (
+            {MyDataNew1.length == 0 ? (
               <div>NO DATA</div>
             ) : (
-              MyDataNew?.map((values) => (
+              MyDataNew1?.map((values) => (
                 <>
                   <Paper elevation={2}>
                     <Grid container sx={{ mb: 1, mt: 1 }}>
@@ -230,14 +286,6 @@ const Attendance = ({}) => {
             >
               <Typography style={txtStyle}>Submit</Typography>
             </Button>
-            {/* <CSVLink data={MyDataNew} headers={MyDataNew} filename="csvData">
-              <Button
-                className="buttonDownload"
-                sx={{ width: "10px", ml: "25%" }}
-              >
-                <Typography style={txtStyle}>Download</Typography>
-              </Button>
-            </CSVLink> */}
             <Chart />
           </Grid>
         </Grid>

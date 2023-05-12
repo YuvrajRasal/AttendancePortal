@@ -77,7 +77,7 @@ const useForm = (callback, validate, page, SetMyData, MyData) => {
   };
 
   const token = JSON.parse(localStorage.getItem("accessToken"));
-  console.log(token);
+  // console.log(token);
 
   const loadHomeData = (SetMyData, MyData) => {
     let config = {
@@ -97,6 +97,7 @@ const useForm = (callback, validate, page, SetMyData, MyData) => {
       .then((response) => {
         // console.log(response.data.Lectures);
         SetMyData(response.data.Lectures);
+        console.log(MyData);
       })
       .catch((error) => {
         console.log(error);

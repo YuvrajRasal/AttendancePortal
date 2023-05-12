@@ -112,7 +112,7 @@ const TeacherNewData = () => {
   // console.log(token);
 
   const token = JSON.parse(localStorage.getItem("accessToken"));
-  console.log(token);
+  // console.log(token);
 
   useEffect(() => {
     let config = {
@@ -159,15 +159,15 @@ const TeacherNewData = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         SetMyDataNew(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
 
-    console.log(MyDataNew);
-    console.log(Array.isArray(MyDataNew));
+    // console.log(MyDataNew);
+    // console.log(Array.isArray(MyDataNew));
   }, []);
 
   useEffect(() => {
@@ -192,7 +192,7 @@ const TeacherNewData = () => {
       .catch((error) => {
         console.log(error);
       });
-    console.log(MyDataProfile);
+    // console.log(MyDataProfile);
     // console.log(Array.isArray(MyDataProfile));
   }, []);
 
@@ -422,7 +422,7 @@ const TeacherNewData = () => {
                   <Box
                     sx={{
                       display: "flex",
-                      flexDirection: "row",
+                      flexDirection: "column",
                       marginBottom: "2px",
                     }}
                     className="Detail"
@@ -431,8 +431,16 @@ const TeacherNewData = () => {
                       variant="body2"
                       color="#000000ab"
                       fontSize={"17px"}
+                      // sx={{ marginRight: "5px" }}
                     >
                       Note: {data.note}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="#000000ab"
+                      fontSize={"17px"}
+                    >
+                      Lec Id: {data.id}
                     </Typography>
                   </Box>
                 </CardContent>
@@ -443,6 +451,7 @@ const TeacherNewData = () => {
                       //   setSelectedNews(data);
                       setSelectedLecture(data);
                       navigate(`/class/${data.id}`);
+                      // localStorage.setItem("classId", data.id);
                       // console.log(data);
                     }}
                   >

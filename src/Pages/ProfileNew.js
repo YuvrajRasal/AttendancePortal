@@ -104,7 +104,7 @@ function ProfileNew() {
 
   /////NewProfile
   const token = JSON.parse(localStorage.getItem("accessToken"));
-  console.log(token);
+  // console.log(token);
 
   useEffect(() => {
     let config = {
