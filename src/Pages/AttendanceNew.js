@@ -236,14 +236,6 @@ const Attendance = ({}) => {
       });
   };
 
-  //     const newPost = [
-  //   {
-  //     // student: MyDataNew1.name,
-  //     present: isTaken,
-  //     lecture: BatchDataAttendance.id,
-  //   },
-  // ];
-
   const clearFalse = () => {
     for (let j = 0; j < objectList.length; j++) {
       console.log(objectList[j].present, "Present");
@@ -255,34 +247,6 @@ const Attendance = ({}) => {
       }
     }
   };
-
-  const newPost = [
-    {
-      // student:"60004210031",
-      // present: isTaken,
-      // lecture: 24
-    },
-  ];
-
-  // const sendPostRequest = async () => {
-  //   try {
-  //     const resp = await axios.post(
-  //       "http://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/",
-  //       newPost
-  //     );
-  //     console.log(newPost);
-  //     console.log(resp);
-  //   } catch (err) {
-  //     // Handle Error Here
-  //     console.error(err);
-  //   }
-  // };
-
-  // console.log(Array.isArray(MyDataNew));
-
-  // const myArray = Array.from(MyDataNew);
-  // console.log(Array.isArray(myArray))
-  // console.log(myArray)
 
   return (
     <Box sx={{ display: "flex" }}>
