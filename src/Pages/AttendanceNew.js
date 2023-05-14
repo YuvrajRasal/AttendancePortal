@@ -53,9 +53,11 @@ const Attendance = ({}) => {
   } = useApp();
   // console.log(BatchData);
 
-  const [studentId, setStudentId] = useState(0);
+  const [studentId, setStudentId] = useState();
 
-  console.log(selectedLecture.id);
+  // console.log(selectedLecture.id);
+  // console.log(studentId, "stdId");
+  // console.log(BatchDataAttendance, "BatchDataAttendance");
 
   const token = JSON.parse(localStorage.getItem("accessToken"));
   // console.log(token);
@@ -72,7 +74,7 @@ const Attendance = ({}) => {
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data, "MyDataNew teacher-batch");
         SetMyDataNew(response.data);
       })
       .catch((error) => {
@@ -95,20 +97,54 @@ const Attendance = ({}) => {
 
     console.log(isTaken);
   };
+  const handleChangeUV = (values) => {
+    setIsSubscribed((current) => !current);
+    // const [counter, setCounter] = useState(0);
+    // if () {
+
+    // }
+
+    const isSelected = objectList.some(
+      (selectedObject) => selectedObject.student === values.id
+    );
+    console.log(isSelected, "isSelected val");
+    console.log(objectList, "ObjectList before Filtering");
+    if (isSelected) {
+      // Object is already selected, so remove it from the selectedObjects array
+      const updatedSelectedObjects = objectList.filter(
+        (selectedObject) => selectedObject.student !== values.id
+      );
+      setObjectList(updatedSelectedObjects);
+      console.log(updatedSelectedObjects, "objectList after filtering");
+    } else {
+      objectList.push(
+        {
+          present: true,
+          lecture: selectedLecture.id,
+          // student: studentId,
+          student: values.id,
+        }
+        // ,
+        // ...objectList
+      );
+      console.log(isTaken);
+      console.log(objectList, "ObjectList after pushing");
+    }
+  };
 
   const handleChange2 = () => {
     setIsNotSubscribed((current) => !current);
 
-    console.log(isNotTaken);
+    console.log(isNotTaken, "cross selected");
   };
   const axios = require("axios").default;
   const handleSubmit = () => {
+    handleCheck();
     sendPostRequest();
   };
 
   const [MyDataNew1, SetMyDataNew1] = useState([]);
 
-  console.log(BatchDataAttendance, "BatchAttendance");
   let Data = JSON.stringify({
     batch: BatchDataAttendance.id,
   });
@@ -126,24 +162,55 @@ const Attendance = ({}) => {
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data, "MyDataNew1 batch data");
         SetMyDataNew1(response.data);
-        setStudentId(response.data.id);
+        // setStudentId(response.data.id);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  console.log(studentId);
 
   // console.log(MyDataNew1[0].id, "ABC");
 
   const [objectList, setObjectList] = useState([
     // { present: true, lecture: MyDataNew.id, student: studentId },
     // { present: false, lecture: selectedLecture.id, student: MyDataNew1[0].id },
-    { present: false, lecture: selectedLecture.id, student: 2 },
+    // { present: false, lecture: selectedLecture.id, student: 10 },
   ]);
-  console.log(objectList, "ObjectList");
+
+  // useEffect(() => {
+  const handleCheck = () => {
+    for (let i = 0; i < BatchDataAttendance.number_of_students; i++) {
+      let flag = 0;
+      for (let j = 0; j < objectList.length; j++) {
+        if (MyDataNew1[i].id == objectList[j].student) {
+          flag = 1;
+          break;
+        }
+      }
+      if (flag == 1) {
+        console.log("ID " + MyDataNew1[i].id + " present in objList");
+      } else {
+        objectList.push({
+          present: false,
+          lecture: selectedLecture.id,
+          student: MyDataNew1[i].id,
+        });
+        console.log("pushed ID " + i + " in objList");
+      }
+    }
+    console.log(objectList);
+  };
+
+  // for (let index = 0; index < BatchDataAttendance.number_of_students; index++) {
+  //   objectList.push({
+  //     present: false,
+  //     llecture: selectedLecture.id,
+  //     student: 2,
+  //   });
+  // }
+  // console.log(objectList, "ObjectList");
   // console.log(MyDataNew1);
   const sendPostRequest = () => {
     const url =
@@ -160,7 +227,9 @@ const Attendance = ({}) => {
           throw new Error("Network response was not ok");
         }
         console.log("Objects uploaded successfully");
-        console.log(objectList);
+        console.log(objectList, "uploaded list");
+        clearFalse();
+        console.log("hi");
       })
       .catch((error) => {
         console.error("Error uploading objects:", error);
@@ -174,6 +243,18 @@ const Attendance = ({}) => {
   //     lecture: BatchDataAttendance.id,
   //   },
   // ];
+
+  const clearFalse = () => {
+    for (let j = 0; j < objectList.length; j++) {
+      console.log(objectList[j].present, "Present");
+      if (objectList[j].present === false) {
+        objectList.pop();
+        console.log(objectList, "popping false");
+      } else {
+        console.log("no one absent");
+      }
+    }
+  };
 
   const newPost = [
     {
@@ -243,12 +324,9 @@ const Attendance = ({}) => {
                   <Paper elevation={2}>
                     <Grid container sx={{ mb: 1, mt: 1 }}>
                       <Grid item xs={6} sx={{ ml: 1 }} lg={7} key={values.id}>
-                        <Typography
-                          variant="h5"
-                          sx={{ fontWeight: "bold" }}
-                          value={"60004210031"}
-                        >
+                        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                           {values.id}
+                          {/* {setStudentId(values.id)} */}
                         </Typography>
                         <Typography variant="h6">{values.name}</Typography>
                       </Grid>
@@ -259,11 +337,16 @@ const Attendance = ({}) => {
                           icon={<CheckCircleOutlineIcon fontSize="large" />}
                           checkedIcon={<CheckCircleIcon fontSize="large" />}
                           defaultChecked={false}
-                          onChange={handleChange}
+                          onChange={() => {
+                            handleChangeUV(values);
+                          }}
+                          // onClick={() => {
+                          //   setStudentId(values.id);
+                          // }}
                           value={isTaken}
                         />
                       </Grid>
-                      <Grid item xs={2} lg={1}>
+                      {/* <Grid item xs={2} lg={1}>
                         <Checkbox
                           {...label}
                           icon={<CancelOutlinedIcon fontSize="large" />}
@@ -272,7 +355,7 @@ const Attendance = ({}) => {
                           onChange={handleChange2}
                           value={isNotTaken}
                         />
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                   </Paper>
                 </>
@@ -288,7 +371,14 @@ const Attendance = ({}) => {
             >
               <Typography style={txtStyle}>Submit</Typography>
             </Button>
-            <Chart />
+            {/* <Button
+              className="buttonAttendance"
+              sx={{ width: "10px", ml: "25%" }}
+              onClick={handleCheck}
+            >
+              <Typography style={txtStyle}>Check</Typography>
+            </Button> */}
+            {/* <Chart /> */}
           </Grid>
         </Grid>
       </Box>

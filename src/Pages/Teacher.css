@@ -16,21 +16,21 @@
     /* background-color:blue !important */
 }
 @media screen and (max-width: 900px){
-    .card{
+    .cardTeacher{
         /* margin-left: 15px !important; */
         margin-right: 15px !important;
 
     }
   
   }
-  @media screen and (max-width: 600px){
+  /* @media screen and (max-width: 600px){
     .card{
         margin-left: 60px !important;
         margin-right: 5px !important;
 
         }
  
-    } 
+    }  */
     @media screen and (max-width: 475px){
         .Detail{
             flex-direction: column !important;
@@ -40,12 +40,30 @@
         }
   
   }
-  @media screen and (max-width: 435px){
-    .card{
+  @media screen and (max-width: 600px){
+    .cardTeacher{
         margin-left: 0px !important;
         margin-right: 0px !important;
         /* padding: 0px !important; */
 
+    }
+  
+  }
+  @media screen and (max-width: 700px){
+    #BtnBox{
+        flex-direction: column;
+    }
+    #AddBox{
+        margin-bottom: 30px;
+    }
+    #AddBtn{
+        max-width: 100%;
+        justify-content: center;
+
+    }
+    .button{
+        width:100px !important;
+        margin-right: 5px;
     }
   
   }

@@ -31,6 +31,7 @@ export const AppProvider = ({ children }) => {
   const [BatchData, SetBatchData] = useState([]);
 
   const [openCreate, setOpenCreate] = useState(false);
+  const [studentId, setStudentId] = useState([]);
 
   return (
     <AppContext.Provider
@@ -80,6 +81,8 @@ export const AppProvider = ({ children }) => {
 
         openCreate,
         setOpenCreate,
+        studentId,
+        setStudentId,
       }}
     >
       {children}

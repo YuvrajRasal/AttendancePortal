@@ -253,7 +253,7 @@ const TeacherNewData = () => {
 
       <Box
         component="main"
-        className="card"
+        className="cardTeacher"
         sx={{
           flexGrow: 1,
           mt: 0,
@@ -266,7 +266,10 @@ const TeacherNewData = () => {
         }}
       >
         <Toolbar />
-        <Box sx={{ display: "flex", flexDirection: "row", flex: "1" }}>
+        <Box
+          id="BtnBox"
+          sx={{ display: "flex", flexDirection: "row", flex: "1" }}
+        >
           <Box sx={{ display: "flex", flexDirection: "row", flex: "1" }}>
             <ToggleButtonGroup
               display="flex"
@@ -303,19 +306,27 @@ const TeacherNewData = () => {
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
-          {/* <Box sx={{alignItems: "center",justifyContent:"center",margin:"0.6rem"}}>
+          {/* <Box
+            sx={{
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0.6rem",
+            }}
+          >
             <Button onClick={handleOpen}>
-            <AddIcon></AddIcon>
+              <AddIcon></AddIcon>
             </Button>
           </Box> */}
-          <Box>
+          <Box id="AddBox">
             <ListItemButton
               onClick={handleOpen}
               sx={{
                 boxShadow: 2,
                 borderRadius: "0.5em",
+                maxWidth: "90%",
                 // justifyContent:"right"
               }}
+              id="AddBtn"
             >
               <AddOutlinedIcon fontSize="large" />
             </ListItemButton>
