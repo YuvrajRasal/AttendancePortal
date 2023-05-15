@@ -124,6 +124,8 @@ const txtStyle = {
 };
 
 const Nav = (props) => {
+  const { MyDataProfile, SetMyDataProfile } = useApp();
+
   const [alignment, setAlignment] = React.useState("Upcoming");
 
   const handleChange = (event, newAlignment) => {
@@ -211,6 +213,7 @@ const Nav = (props) => {
           }}
           onClick={() => {
             navigate("/");
+            localStorage.removeItem("key1");
           }}
         >
           <ListItemButton>
@@ -319,17 +322,15 @@ const Nav = (props) => {
                         pb: "12px",
                       }}
                       onClick={handleChangeAll}
-                      // onDoubleClick={handlechangeAllDouble}
                       value={true}
                     >
-                      {/* <FilterAltIcon /> */}
-                      <Typography style={txtStyle}>ALL</Typography>
+                      <FilterAltIcon />
                     </ListItemButton>
                   </ListItem>
                 </Box>
                 <Box sx={{ display: "flex", flexBasis: "50%" }}>
                   <ListItem className="header">
-                    <Typography>Name</Typography>
+                    <Typography>{MyDataProfile?.user?.first_name}</Typography>
                     <img
                       src={x}
                       style={{

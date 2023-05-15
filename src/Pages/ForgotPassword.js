@@ -13,13 +13,11 @@ import {
   Typography,
 } from "@mui/material";
 import useForm from "../UseForm";
-import validateInfo from "../garbage/validateInfo";
 import library from "../images/library.PNG";
 import logo from "../images/djLogo.PNG";
 import { createTheme } from "@mui/material/styles";
 import "../Login.css";
 import validateInfoNew from "../Validation";
-import fullStop from "../images/blueFullstop.png";
 
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/app-context";
@@ -27,13 +25,15 @@ import { useApp } from "../context/app-context";
 //
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const paperStyle = {
+  // display: "flex",
   alignItems: "center",
   justifyContent: "center",
   marginTop: "15px",
   marginBottom: "15px",
   width: "60rem",
-
-  padding: "35px",
+  // width: "100%",
+  // maxWidth:"80%",
+  // padding: "35px",
 };
 
 const avatarStyle = { backgroundColor: "lightBlue" };
@@ -105,7 +105,7 @@ function ForgotPassword() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            maxWidth: "80%",
+            maxWidth: "90%",
           }}
         >
           <Paper
@@ -116,31 +116,39 @@ function ForgotPassword() {
           >
             <Grid fluidContainer spacing={2} className="lrGrid">
               {/* left side starts */}
-              <Grid item xs={5.5} sx={{ padding: "20px" }} className="leftGrid">
+              <Grid
+                item
+                xs={5.5}
+                sx={{ padding: " 0px 30px" }}
+                className="leftGrid"
+              >
                 {/* ----inserted padding */}
                 <Box className="box">
-                  <img
-                    className="logoImage"
-                    src={logo}
-                    style={{
-                      width: "32%",
-                      objectFit: "cover",
-                      borderRadius: "60px",
-                      padding: "1rem",
-                      boxSizing: "border-box",
-                    }}
-                  ></img>
-                  <Typography sx={{ fontWeight: 400, fontSize: "2.5rem" }}>
+                  <box className="imgBox">
+                    <img
+                      className="logoImage"
+                      src={logo}
+                      style={{
+                        width: "50%",
+                        objectFit: "cover",
+                        borderRadius: "60px",
+                        padding: "1rem",
+                        boxSizing: "border-box",
+                        display: "flex",
+                      }}
+                    ></img>
+                  </box>
+                  <Typography
+                    sx={{ fontWeight: 400, fontSize: "2.5rem" }}
+                    id="welcome"
+                  >
                     Forgot Password<>{bull}</>
                     {/* Welcome Back */}
                     {/* <><img src={fullStop}/></> */}
                   </Typography>
 
                   <form onSubmit={handleSubmit}>
-                    <Grid align="center">
-                      {/* <Container maxWidth='xs' mb={4}  variant='outlined'
-     color='primary'> */}
-                    </Grid>
+                    <Grid align="center"></Grid>
                     <Box mb={1} mt={4}>
                       <Box mb={1}>
                         <TextField
@@ -192,7 +200,7 @@ function ForgotPassword() {
                         </Typography>
                       </Button>
                     </Box>
-                    <Typography sx={{ fontSize: "18px" }}>
+                    <Typography sx={{ fontSize: "18px", mb: 2 }}>
                       Want to go back?
                       <span
                         id="BackToLogin"
@@ -222,10 +230,10 @@ function ForgotPassword() {
                 <img
                   src={library}
                   style={{
-                    maxWidth: "90%",
-                    width: "30rem",
+                    maxWidth: "100%",
+                    width: "35rem",
                     objectFit: "cover",
-                    borderRadius: "40px",
+                    borderRadius: "30px",
                     padding: "1rem",
                     boxSizing: "border-box",
                   }}

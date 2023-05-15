@@ -121,18 +121,13 @@ const TeacherNewData = () => {
       url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
       headers: {
         Authorization: `Bearer ${token}`,
-        // Authorization:
-        //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
-      //   Authorization:
-      //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzMzc3Mjg4LCJpYXQiOjE2ODMyOTA4ODgsImp0aSI6IjZiMTQzMTE2YjJjMDRlNzBhNDA3ZGFiMDVmNDM4YjM2IiwidXNlcl9pZCI6MTF9.z0cUTQGB4MCNycsvQmJkFnhjQFml9qmWAoAwCPvetNc",
-      // },
     };
 
     axios
       .request(config)
       .then((response) => {
-        // console.log(response.data.Lectures);
+        console.log(response.data.Lectures);
         SetMyData(response.data.Lectures);
       })
       .catch((error) => {
@@ -229,6 +224,15 @@ const TeacherNewData = () => {
       return search.toUpperCase() === ""
         ? filterData
         : filterData?.subject.name?.includes(search.toUpperCase());
+    });
+    setFilterData(newFilter);
+  }, [search]);
+
+  useEffect(() => {
+    const newFilter = MyData.filter((filterData) => {
+      return search.toUpperCase() === ""
+        ? filterData
+        : filterData?.batch.name?.includes(search.toUpperCase());
     });
     setFilterData(newFilter);
   }, [search]);
@@ -364,7 +368,16 @@ const TeacherNewData = () => {
 
         {/* {filterData.map((data) => ( */}
         {filterData.length == 0 ? (
-          <div>Loading</div>
+          <div>
+            Loading....
+            <span
+              onClick={() => filterItemLoad(MyData)}
+              style={{ textDecorationLine: "underline" }}
+              id="clickHere"
+            >
+              click here
+            </span>
+          </div>
         ) : (
           filterData?.map((data) => (
             <>
@@ -477,8 +490,6 @@ const TeacherNewData = () => {
             </>
           ))
         )}
-        {/* </Link> */}
-        {/* </Paper> */}
       </Box>
     </Box>
   );

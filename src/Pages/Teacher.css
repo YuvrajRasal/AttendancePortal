@@ -15,6 +15,10 @@
     /* background-color: #0056D2 !important; */
     /* background-color:blue !important */
 }
+
+#clickHere:hover{
+    cursor: pointer;
+}
 @media screen and (max-width: 900px){
     .cardTeacher{
         /* margin-left: 15px !important; */

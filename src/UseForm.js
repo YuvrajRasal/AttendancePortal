@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppProvider } from "./context/app-context";
+import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
 const useForm = (callback, validate, page, SetMyData, MyData) => {
   const [values, setValues] = useState({
@@ -67,6 +68,8 @@ const useForm = (callback, validate, page, SetMyData, MyData) => {
             "refreshToken",
             JSON.stringify(res.data.refresh)
           );
+          const key1 = 2;
+          localStorage.setItem("key1", key1);
           localStorage.setItem("accessToken", JSON.stringify(res.data.access));
           localStorage.setItem("user", JSON.stringify(res.config.data));
           //localStorage.setItem('user', JSON.stringify(user));

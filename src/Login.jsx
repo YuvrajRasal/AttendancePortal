@@ -124,7 +124,7 @@ function Login() {
           >
             <Grid fluidContainer spacing={2} className="lrGrid">
               {/* left side starts */}
-              <Grid item xs={5.5} sx={{ padding: "30px"  }} className="leftGrid">
+              <Grid item xs={5.5} sx={{ padding: " 0px 30px"  }} className="leftGrid">
                 {/* ----inserted padding */}
                 <Box className="box" >
                   <box className="imgBox">
