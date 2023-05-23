@@ -32,6 +32,10 @@ export const AppProvider = ({ children }) => {
 
   const [openCreate, setOpenCreate] = useState(false);
   const [studentId, setStudentId] = useState([]);
+  const [tokenNew, setTokenNew] = useState([]);
+  const [presentStudent, setPresentStudent] = useState(0);
+  const [absentStudent, setAbsentStudent] = useState(0);
+  const [totalStudent, setTotalStudent] = useState();
 
   return (
     <AppContext.Provider
@@ -83,6 +87,16 @@ export const AppProvider = ({ children }) => {
         setOpenCreate,
         studentId,
         setStudentId,
+
+        tokenNew,
+        setTokenNew,
+
+        presentStudent,
+        setPresentStudent,
+        absentStudent,
+        setAbsentStudent,
+        totalStudent,
+        setTotalStudent,
       }}
     >
       {children}

@@ -50,6 +50,13 @@ const Attendance = ({}) => {
     SetBatchData,
     MyDataNew,
     SetMyDataNew,
+
+    presentStudent,
+    setPresentStudent,
+    absentStudent,
+    setAbsentStudent,
+    totalStudent,
+    setTotalStudent,
   } = useApp();
   // console.log(BatchData);
 
@@ -58,6 +65,11 @@ const Attendance = ({}) => {
   // console.log(selectedLecture.id);
   // console.log(studentId, "stdId");
   // console.log(BatchDataAttendance, "BatchDataAttendance");
+
+  useEffect(() => {
+    setAbsentStudent(0);
+    setPresentStudent(0);
+  }, []);
 
   const token = JSON.parse(localStorage.getItem("accessToken"));
   // console.log(token);
@@ -99,6 +111,7 @@ const Attendance = ({}) => {
   };
   const handleChangeUV = (values) => {
     setIsSubscribed((current) => !current);
+
     // const [counter, setCounter] = useState(0);
     // if () {
 
@@ -116,6 +129,8 @@ const Attendance = ({}) => {
       );
       setObjectList(updatedSelectedObjects);
       console.log(updatedSelectedObjects, "objectList after filtering");
+      setPresentStudent(presentStudent - 1);
+      setAbsentStudent(absentStudent + 1);
     } else {
       objectList.push(
         {
@@ -127,9 +142,16 @@ const Attendance = ({}) => {
         // ,
         // ...objectList
       );
+      setPresentStudent((presentStudent) => presentStudent + 1);
+      setAbsentStudent(absentStudent - 1);
       console.log(isTaken);
       console.log(objectList, "ObjectList after pushing");
     }
+    console.log(((totalStudent - presentStudent) / totalStudent) * 100);
+    console.log((presentStudent / totalStudent) * 100);
+    console.log("Total", totalStudent);
+    console.log("present", presentStudent);
+    console.log("absent", absentStudent);
   };
 
   const handleChange2 = () => {
@@ -179,6 +201,8 @@ const Attendance = ({}) => {
     // { present: false, lecture: selectedLecture.id, student: 10 },
   ]);
 
+  setTotalStudent(BatchDataAttendance.number_of_students);
+
   // useEffect(() => {
   const handleCheck = () => {
     for (let i = 0; i < BatchDataAttendance.number_of_students; i++) {
@@ -197,10 +221,14 @@ const Attendance = ({}) => {
           lecture: selectedLecture.id,
           student: MyDataNew1[i].id,
         });
+        setAbsentStudent(absentStudent + 1);
         console.log("pushed ID " + i + " in objList");
       }
     }
     console.log(objectList);
+    console.log("Total", totalStudent);
+    console.log("present", presentStudent);
+    console.log("absent", absentStudent);
   };
 
   // for (let index = 0; index < BatchDataAttendance.number_of_students; index++) {
@@ -233,6 +261,9 @@ const Attendance = ({}) => {
       })
       .catch((error) => {
         console.error("Error uploading objects:", error);
+        console.log("Total", totalStudent);
+        console.log("present", presentStudent);
+        console.log("absent", absentStudent);
       });
   };
 
@@ -342,7 +373,7 @@ const Attendance = ({}) => {
             >
               <Typography style={txtStyle}>Check</Typography>
             </Button> */}
-            {/* <Chart /> */}
+            <Chart />
           </Grid>
         </Grid>
       </Box>

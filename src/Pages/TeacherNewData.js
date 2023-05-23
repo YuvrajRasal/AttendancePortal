@@ -220,22 +220,25 @@ const TeacherNewData = () => {
   };
 
   useEffect(() => {
-    const newFilter = MyData.filter((filterData) => {
+    const newFilterS = MyData.filter((filterData) => {
       return search.toUpperCase() === ""
         ? filterData
         : filterData?.subject.name?.includes(search.toUpperCase());
     });
-    setFilterData(newFilter);
+    setFilterData(newFilterS);
   }, [search]);
 
-  useEffect(() => {
-    const newFilter = MyData.filter((filterData) => {
-      return search.toUpperCase() === ""
-        ? filterData
-        : filterData?.batch.name?.includes(search.toUpperCase());
-    });
-    setFilterData(newFilter);
-  }, [search]);
+  // useEffect(() => {
+  //   const newFilterB = MyData.filter((filterData) => {
+  //     return search.toUpperCase() === ""
+  //       ? filterData
+  //       : filterData?.batch.name?.includes(search.toUpperCase());
+  //   });
+  //   setFilterData(newFilterB);
+  // }, [search]);
+
+  //reversing the array
+  const reversed = [...filterData].reverse();
 
   return (
     // <Box
@@ -379,7 +382,8 @@ const TeacherNewData = () => {
             </span>
           </div>
         ) : (
-          filterData?.map((data) => (
+          // filterData?.map((data) => (
+          reversed?.map((data) => (
             <>
               <Card
                 sx={{

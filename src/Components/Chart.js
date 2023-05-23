@@ -2,19 +2,40 @@ import React from "react";
 import { Chart as ChartJs, Tooltip, Title, ArcElement, Legend } from "chart.js";
 import "./Chart.css";
 import { Doughnut } from "react-chartjs-2";
+import { useApp } from "../context/app-context";
 ChartJs.register(Tooltip, Title, ArcElement, Legend);
 
-const data = {
-  datasets: [
-    {
-      data: [10, 20, 30],
-      backgroundColor: ["red", "blue", "grey"],
-    },
-  ],
-  // These labels appear in the legend and in the tooltips when hovering different arcs
-  labels: ["Absent", "Present", "Not marked"],
-};
 const Chart = () => {
+  const {
+    presentStudent,
+    setPresentStudent,
+    absentStudent,
+    setAbsentStudent,
+    totalStudent,
+    setTotalStudent,
+  } = useApp();
+
+  const data = {
+    datasets: [
+      {
+        // data: [
+        //   (absentStudent / totalStudent) * 100,
+        //   (presentStudent / totalStudent) * 100,
+        //   (100 * (totalStudent - presentStudent - absentStudent)) /
+        //     totalStudent,
+        // ],
+        // backgroundColor: ["red", "blue", "grey"],
+
+        data: [
+          ((totalStudent - presentStudent) / totalStudent) * 100,
+          (presentStudent / totalStudent) * 100,
+        ],
+        backgroundColor: ["red", "blue"],
+      },
+    ],
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: ["Absent", "Present"],
+  };
   return (
     <div
       className="chart"
