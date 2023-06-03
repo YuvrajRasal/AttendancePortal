@@ -19,6 +19,11 @@
 #clickHere:hover{
     cursor: pointer;
 }
+#AddBtn{
+        display: flex;
+        justify-content: center;
+
+}
 @media screen and (max-width: 900px){
     .cardTeacher{
         /* margin-left: 15px !important; */
@@ -62,6 +67,7 @@
     }
     #AddBtn{
         max-width: 100%;
+        display: flex;
         justify-content: center;
 
     }

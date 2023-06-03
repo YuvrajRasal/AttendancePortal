@@ -103,6 +103,8 @@ const TeacherNewData = () => {
     SetMyDataProfile,
     openCreate,
     setOpenCreate,
+    userToken,
+    setUserToken,
   } = useApp();
 
   const [superSearch, setSuperSearch] = useState("");
@@ -111,7 +113,11 @@ const TeacherNewData = () => {
   // const token = JSON.stringify(localStorage.getItem("accessToken"));
   // console.log(token);
 
-  const token = JSON.parse(localStorage.getItem("accessToken"));
+  //Here we used localstorage to get token
+  // const token = JSON.parse(localStorage.getItem("accessToken"));
+
+  //Here we have used use context and use state to get token
+  const token = JSON.parse(userToken);
   // console.log(token);
 
   useEffect(() => {
@@ -137,8 +143,6 @@ const TeacherNewData = () => {
   }, []);
 
   // const [MyDataNew, SetMyDataNew] = useState([]);
-  // const token = JSON.stringify(localStorage.getItem("accessToken"));
-  // console.log(token);
   useEffect(() => {
     let config = {
       method: "get",
@@ -146,8 +150,6 @@ const TeacherNewData = () => {
       url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
       headers: {
         Authorization: `Bearer ${token}`,
-        // Authorization:
-        //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
     };
 
@@ -171,10 +173,7 @@ const TeacherNewData = () => {
       maxBodyLength: Infinity,
       url: "http://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
       headers: {
-        // Authorization: `Bearer ${token}`,
         Authorization: `Bearer ${token}`,
-        // Authorization:
-        //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNjM1ODE5LCJpYXQiOjE2ODM1NDk0MTksImp0aSI6ImRjMTdhNTNmZGMyMTQ1YmZhNGQ0NGNjY2QzNGJmM2NlIiwidXNlcl9pZCI6MX0.yn2Pz9Ge2A4rGJH3Mq3hiMxrgSDcddYCVagI8K5rWAo",
       },
     };
 

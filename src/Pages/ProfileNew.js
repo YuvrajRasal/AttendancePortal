@@ -89,6 +89,9 @@ function ProfileNew() {
     SetMyData,
     MyDataProfile,
     SetMyDataProfile,
+
+    userToken,
+    setUserToken,
   } = useApp();
 
   // const [superSearch, setSuperSearch] = useState("");
@@ -102,9 +105,14 @@ function ProfileNew() {
   // const [item, setItem] = useState(data);
   // const [filterData, setFilterData] = useState(data);
 
-  /////NewProfile
-  const token = JSON.parse(localStorage.getItem("accessToken"));
+  //NewProfile
+
+  //Prev using local storage
+  // const token = JSON.parse(localStorage.getItem("accessToken"));
   // console.log(token);
+
+  //Using usestate
+  const token = JSON.parse(userToken);
 
   useEffect(() => {
     let config = {

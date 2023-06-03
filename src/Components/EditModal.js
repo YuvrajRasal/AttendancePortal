@@ -87,6 +87,9 @@ function EditModal() {
     setOpenCreate,
 
     selectedLecture,
+
+    userToken,
+    setUserToken,
   } = useApp();
 
   //////////////////////////////////////////////
@@ -186,8 +189,11 @@ function EditModal() {
     setNote("");
   };
 
-  const token = JSON.parse(localStorage.getItem("accessToken"));
-  console.log(token);
+  // const token = JSON.parse(localStorage.getItem("accessToken"));
+  // console.log(token);
+
+  //Using usestate
+  const token = JSON.parse(userToken);
   const getData = () => {
     let config = {
       method: "get",

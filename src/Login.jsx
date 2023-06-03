@@ -47,7 +47,7 @@ function Login() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
 
-  const { SetMyData, MyData } = useApp();
+  const { SetMyData, MyData,userToken,setUserToken } = useApp();
 
   function submitForm() {
     setIsSubmitted(true);
@@ -57,7 +57,9 @@ function Login() {
     validateInfoNew,
     "login",
     SetMyData, 
-    MyData
+    MyData,
+    userToken,
+    setUserToken
   );
 
   const navigate = useNavigate();

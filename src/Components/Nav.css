@@ -48,6 +48,12 @@
     transition: 0.5s;
 } */
 
+#AddButton
+{
+    display: flex;
+    justify-content: center;
+}
+
 @media only screen and (max-width: 750px) {
     .SearchBar{
         width: 20rem !important

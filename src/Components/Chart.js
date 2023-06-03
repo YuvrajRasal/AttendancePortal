@@ -18,18 +18,14 @@ const Chart = () => {
   const data = {
     datasets: [
       {
+        // here data was taken with ratio to total
         // data: [
-        //   (absentStudent / totalStudent) * 100,
+        //   ((totalStudent - presentStudent) / totalStudent) * 100,
         //   (presentStudent / totalStudent) * 100,
-        //   (100 * (totalStudent - presentStudent - absentStudent)) /
-        //     totalStudent,
         // ],
-        // backgroundColor: ["red", "blue", "grey"],
+        // backgroundColor: ["red", "blue"],
 
-        data: [
-          ((totalStudent - presentStudent) / totalStudent) * 100,
-          (presentStudent / totalStudent) * 100,
-        ],
+        data: [totalStudent - presentStudent, presentStudent],
         backgroundColor: ["red", "blue"],
       },
     ],

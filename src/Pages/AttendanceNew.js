@@ -57,6 +57,8 @@ const Attendance = ({}) => {
     setAbsentStudent,
     totalStudent,
     setTotalStudent,
+    userToken,
+    setUserToken,
   } = useApp();
   // console.log(BatchData);
 
@@ -71,8 +73,12 @@ const Attendance = ({}) => {
     setPresentStudent(0);
   }, []);
 
-  const token = JSON.parse(localStorage.getItem("accessToken"));
+  // const token = JSON.parse(localStorage.getItem("accessToken"));
   // console.log(token);
+
+  //Using usestate
+  const token = JSON.parse(userToken);
+
   useEffect(() => {
     let config = {
       method: "get",
