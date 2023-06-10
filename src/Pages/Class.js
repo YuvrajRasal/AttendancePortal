@@ -54,6 +54,17 @@ const txtStyle = {
   alignItems: "center",
   textAlign: "center",
 };
+const DownloadtxtStyle = {
+  //  fontFamily: 'Montserrat',
+  // fontFamily: "sans-serif",
+  fontStyle: "normal",
+  fontWeight: 550,
+  fontSize: "15px",
+  lineHeight: "25px",
+  display: "flex",
+  alignItems: "center",
+  textAlign: "center",
+};
 const modalTxtStyle = {
   //  fontFamily: 'Montserrat',
   // fontFamily: "sans-serif",
@@ -401,7 +412,9 @@ const Class = ({}) => {
                 sx={{ width: "10px", ml: "1px" }}
                 onClick={handleDownload}
               >
-                <Typography style={txtStyle}>Download Attendance</Typography>
+                <Typography style={DownloadtxtStyle}>
+                  Download Attendance
+                </Typography>
               </Button>
             </Grid>
             <Box sx={{ display: "flex" }}>

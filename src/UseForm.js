@@ -83,6 +83,7 @@ const useForm = (
           localStorage.setItem("accessToken", JSON.stringify(res.data.access));
           const Atoken = JSON.stringify(res.data.access);
           setUserToken(Atoken);
+          console.log(Atoken);
           console.log(userToken, "usertoken");
           const token = JSON.parse(userToken);
           localStorage.setItem("user", JSON.stringify(res.config.data));

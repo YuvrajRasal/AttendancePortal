@@ -187,79 +187,115 @@ function Profile() {
 
         {/* <Paper elevation={1}> */}
         {/* <Link to="/class"> */}
-
         {/* {filterData.map((data) => ( */}
-        {MyData.map((data) => (
-          <Card
-            sx={{
-              maxWidth: "100%",
-              display: "flex",
-              position: "relative",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              variant: "outlined",
-              borderRadius: "10px",
-              border: "2px solid #DEDEDE",
-              boxShadow: "none",
-              // margin: "0.8rem",
-              marginTop: "0.8rem",
-            }}
-            className="Card"
-            // onClick={()=>{navigate('/class')}}
-          >
-            <CardContent>
-              <Box>
-                <Typography
-                  gutterBottom
-                  variant="h5"
-                  component="div"
-                  style={txtStyle}
-                  sx={{ fontWeight: 450, fontSize: "30px" }}
-                  className="Heading"
-                >
-                  Subject : {data.subject.name}
-                </Typography>
-              </Box>
-              <Box
+
+        <Box className="CardContainer">
+          {MyData.map((data) => (
+            <Card
+              // sx={{
+              //   maxWidth: "100%",
+              //   display: "flex",
+              //   position: "relative",
+              //   flexDirection: "row",
+              //   justifyContent: "space-between",
+              //   variant: "outlined",
+              //   borderRadius: "10px",
+              //   border: "2px solid #DEDEDE",
+              //   boxShadow: "none",
+              //   // margin: "0.8rem",
+              //   marginTop: "0.8rem",
+              // }}
+              sx={{
+                maxWidth: "100%",
+                display: "flex",
+                position: "relative",
+                flexBasis: "50%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                variant: "outlined",
+                borderRadius: "10px",
+                border: "2px solid #DEDEDE",
+                boxShadow: "none",
+                marginTop: "0.8rem",
+                color: "red",
+              }}
+              className="Card"
+              // onClick={()=>{navigate('/class')}}
+            >
+              <CardContent
                 sx={{
+                  maxWidth: "100%",
                   display: "flex",
+                  position: "relative",
+                  flexBasis: "50%",
                   flexDirection: "row",
-                  marginBottom: "2px",
+                  justifyContent: "space-between",
+                  variant: "outlined",
+                  borderRadius: "10px",
+                  border: "2px solid #DEDEDE",
+                  boxShadow: "none",
+                  marginTop: "0.8rem",
+                  color: "red",
                 }}
-                className="Detail"
               >
-                <Typography
-                  variant="body2"
-                  color="#000000ab"
-                  fontSize={"17px"}
-                  marginRight={"10px"}
+                <Box>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    style={txtStyle}
+                    sx={{ fontWeight: 450, fontSize: "30px" }}
+                    className="Heading"
+                  >
+                    Subject : {data.subject.name}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    marginBottom: "2px",
+                  }}
+                  className="Detail"
                 >
-                  {data.startTime} - {data.endTime}
-                </Typography>
-                <Typography variant="body2" color="#000000ab" fontSize={"17px"}>
-                  Batch.{data.batch.name}
-                </Typography>
-              </Box>
-            </CardContent>
-            <CardActions sx={{ float: "right" }}>
-              <Button
-                size="40rem"
-                onClick={() => {
-                  //   setSelectedNews(data);
-                  setSelectedLecture(data);
-                  navigate(`/class/${data.id}`);
-                  // console.log(data);
-                }}
-              >
-                <ArrowCircleRightIcon
-                  fontSize="large"
-                  color="blue"
-                  variant="filled"
-                />
-              </Button>
-            </CardActions>
-          </Card>
-        ))}
+                  <Typography
+                    variant="body2"
+                    color="#000000ab"
+                    fontSize={"17px"}
+                    marginRight={"10px"}
+                  >
+                    {data.startTime} - {data.endTime}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="#000000ab"
+                    fontSize={"17px"}
+                  >
+                    Batch.{data.batch.name}
+                  </Typography>
+                </Box>
+              </CardContent>
+              <CardActions sx={{ float: "right" }}>
+                <Button
+                  size="40rem"
+                  onClick={() => {
+                    //   setSelectedNews(data);
+                    setSelectedLecture(data);
+                    navigate(`/class/${data.id}`);
+                    // console.log(data);
+                  }}
+                >
+                  <ArrowCircleRightIcon
+                    fontSize="large"
+                    color="blue"
+                    variant="filled"
+                  />
+                </Button>
+              </CardActions>
+            </Card>
+          ))}
+        </Box>
+
         {/* </Link> */}
         {/* </Paper> */}
       </Box>

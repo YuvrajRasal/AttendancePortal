@@ -22,6 +22,8 @@ import validateInfoNew from "../Validation";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/app-context";
 
+import axios from "axios";
+
 //
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const paperStyle = {
@@ -43,23 +45,48 @@ function ForgotPassword() {
   //functions for form validation
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const { SetMyData, MyData } = useApp();
+  // const { SetMyData, MyData } = useApp();
 
-  function submitForm() {
-    setIsSubmitted(true);
-  }
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    submitForm,
-    validateInfoNew,
-    "login",
-    SetMyData,
-    MyData
-  );
+  // function submitForm() {
+  //   setIsSubmitted(true);
+  // }
+  // const { handleChange, handleSubmit, values, errors } = useForm(
+  //   submitForm,
+  //   validateInfoNew,
+  //   "login",
+  //   SetMyData,
+  //   MyData
+  // );
 
   const navigate = useNavigate();
 
   //
+  const [emailInput, setEmailInput] = useState();
+  const handleChange = (event) => {
+    setEmailInput(event.target.value);
+    console.log(emailInput);
+  };
 
+  const email = "meow@gmail.com";
+  const url =
+    "http://attendanceportal.pythonanywhere.com/accounts/password-reset/";
+
+  const data = {
+    email: email,
+    // Add other properties as needed
+  };
+  const ResetPass = () => {
+    axios
+      .post(url, data)
+      .then((response) => {
+        // Handle the response data
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      });
+  };
   const bull = (
     <Box component="span" sx={{ color: "#0056D2", fontSize: "40px" }}>
       ․
@@ -147,7 +174,7 @@ function ForgotPassword() {
                     {/* <><img src={fullStop}/></> */}
                   </Typography>
 
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={ResetPass}>
                     <Grid align="center"></Grid>
                     <Box mb={1} mt={4}>
                       <Box mb={1}>
@@ -160,20 +187,20 @@ function ForgotPassword() {
                           fullWidth
                           required
                           name="email"
-                          value={values.email}
+                          // value={values.email}
                           onChange={handleChange}
                           placeholder="...@gmail.com"
                           sx={{ width: "100%" }}
                           width="80%"
                         />
-                        {errors.email && (
+                        {/* {errors.email && (
                           <Typography
                             color="#bcbcbc"
                             sx={{ fontWeight: 600, fontSize: "0.9rem" }}
                           >
                             {errors.email}
                           </Typography>
-                        )}
+                        )} */}
                       </Box>
                       <Box mb={2.5}></Box>
                     </Box>
@@ -195,6 +222,9 @@ function ForgotPassword() {
                         <Typography
                           className="SubmitBtnTypo"
                           sx={{ fontSize: "20px", fontFamily: "Roboto:ital" }}
+                          // onClick={() => {
+                          //   ResetPass();
+                          // }}
                         >
                           Submit
                         </Typography>
@@ -236,9 +266,6 @@ function ForgotPassword() {
                     borderRadius: "30px",
                     padding: "1rem",
                     boxSizing: "border-box",
-                  }}
-                  onClick={() => {
-                    navigate("/teacher");
                   }}
                 ></img>
               </Grid>

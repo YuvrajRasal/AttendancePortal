@@ -59,6 +59,8 @@ const Attendance = ({}) => {
     setTotalStudent,
     userToken,
     setUserToken,
+    ReflectSubmit,
+    setReflectSubmit,
   } = useApp();
   // console.log(BatchData);
 
@@ -70,7 +72,11 @@ const Attendance = ({}) => {
 
   useEffect(() => {
     setAbsentStudent(0);
-    setPresentStudent(0);
+    setReflectSubmit("Submit");
+  }, []);
+
+  useEffect(() => {
+    setAbsentStudent(0);
   }, []);
 
   // const token = JSON.parse(localStorage.getItem("accessToken"));
@@ -263,6 +269,7 @@ const Attendance = ({}) => {
         console.log("Objects uploaded successfully");
         console.log(objectList, "uploaded list");
         clearFalse();
+        setReflectSubmit("Submit again");
         console.log("hi");
       })
       .catch((error) => {
@@ -370,7 +377,7 @@ const Attendance = ({}) => {
               sx={{ width: "10px", ml: "25%" }}
               onClick={handleSubmit}
             >
-              <Typography style={txtStyle}>Submit</Typography>
+              <Typography style={txtStyle}>{ReflectSubmit}</Typography>
             </Button>
             {/* <Button
               className="buttonAttendance"

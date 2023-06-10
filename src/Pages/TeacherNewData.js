@@ -107,7 +107,8 @@ const TeacherNewData = () => {
     setUserToken,
   } = useApp();
 
-  const [superSearch, setSuperSearch] = useState("");
+  // const [superSearch, setSuperSearch] = useState("");
+  const [tokenSaved, settokenSaved] = useState("");
 
   // here we have used stringify which converts it to string but we need a object
   // const token = JSON.stringify(localStorage.getItem("accessToken"));
@@ -118,6 +119,13 @@ const TeacherNewData = () => {
 
   //Here we have used use context and use state to get token
   const token = JSON.parse(userToken);
+  // useEffect(() => {
+  //   settokenSaved(token);
+  //   console.log(tokenSaved,"tokenSaved");
+  // }, []);
+
+  // settokenSaved(token);
+
   // console.log(token);
 
   useEffect(() => {
@@ -127,6 +135,7 @@ const TeacherNewData = () => {
       url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
       headers: {
         Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${tokenSaved}`,
       },
     };
 

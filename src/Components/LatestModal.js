@@ -91,6 +91,7 @@ function LatestModal() {
   } = useApp();
 
   //////////////////////////////////////////////
+
   const ModalSubmit = (e) => {
     console.log(subject);
   };

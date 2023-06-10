@@ -36,6 +36,7 @@ export const AppProvider = ({ children }) => {
   const [presentStudent, setPresentStudent] = useState(0);
   const [absentStudent, setAbsentStudent] = useState(0);
   const [totalStudent, setTotalStudent] = useState();
+  const [ReflectSubmit, setReflectSubmit] = useState("Submit");
 
   return (
     <AppContext.Provider
@@ -97,6 +98,9 @@ export const AppProvider = ({ children }) => {
         setAbsentStudent,
         totalStudent,
         setTotalStudent,
+
+        ReflectSubmit,
+        setReflectSubmit,
       }}
     >
       {children}

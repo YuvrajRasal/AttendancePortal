@@ -12,6 +12,12 @@
     /* background-color: #0056D2 !important; */
     /* background-color:blue !important */
 }
+
+.CardContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 @media screen and (max-width: 900px){
     .card{
         /* margin-left: 15px !important; */
