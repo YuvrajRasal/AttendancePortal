@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import { useApp } from "../context/app-context";
 import "../Pages/Class.css";
 
@@ -31,11 +31,37 @@ function BatchModal() {
   };
   const { selectedLecture, data, BatchData, SetBatchData, MyDataNew } =
     useApp();
-  // console.log(BatchData);
-  const BatchDataTeacher = MyDataNew.find(
+  //-----------------------Reload-------------------------
+
+  let MyDataNewTemp = 0;
+
+  if (MyDataNew.length == 0) {
+    MyDataNewTemp = JSON.parse(localStorage.getItem("MyDataNewLocal"));
+  } else {
+    MyDataNewTemp = MyDataNew;
+  }
+  useEffect(() => {
+    return () => {
+      console.log(MyDataNewTemp, "MydataNEw");
+    };
+  }, []);
+  //-----------------------Reload-------------------------
+  // console.log(BatchData.id);
+  // console.log(MyDataNew);
+  const BatchDataTeacher = MyDataNewTemp.find(
     (element) => element.id === BatchData.id
   );
+  // const BatchDataTeacher = BatchData;
+
+  // useEffect(() => {
+  //   return () => {
+  //     console.log(BatchData);
+  //     console.log(BatchDataTeacher.department);
+  //   };
+  // }, []);
+
   // console.log(BatchDataTeacher.department);
+
   return (
     <>
       <Box style={style} className="BatchModalBox">

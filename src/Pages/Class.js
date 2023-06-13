@@ -16,6 +16,7 @@ import BatchModal from "../Components/BatchModal";
 import EditModal from "../Components/EditModal";
 
 import axios from "axios";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -77,13 +78,51 @@ const modalTxtStyle = {
   textAlign: "center",
 };
 const Class = ({}) => {
-  const { selectedLecture, data, BatchData, SetBatchData } = useApp();
+  const {
+    selectedLecture,
+    data,
+    BatchData,
+    SetBatchData,
+    MyDataNew,
+    setMyDataNew,
+  } = useApp();
 
-  SetBatchData(selectedLecture.batch);
+  // SetBatchData(lecture.batch);
+
   // console.log(BatchData);
 
   // const lecture = data.find((element) => element.id === selectedLecture.id);
-  const lecture = selectedLecture;
+
+  let lecture = 0;
+  if (selectedLecture.length == 0) {
+    // lecture = localStorage.getItem("LectureLocalStorage");
+    lecture = JSON.parse(localStorage.getItem("LectureLocalStorage"));
+    // console.log(lecture);
+  } else {
+    lecture = selectedLecture;
+    console.log(localStorage.getItem("LectureLocalStorage"));
+  }
+
+  // SetBatchData(lecture.batch);
+  useEffect(() => {
+    return () => {
+      SetBatchData(lecture.batch);
+      console.log(lecture.batch);
+      console.log(BatchData);
+      console.log(MyDataNew);
+      console.log(
+        JSON.parse(localStorage.getItem("MyDataNewLocal")),
+        "myDataNew"
+      );
+    };
+  }, []);
+  console.log(BatchData);
+  localStorage.setItem("BatchDataLocal", JSON.stringify(BatchData));
+  console.log(
+    JSON.parse(localStorage.getItem("BatchDataLocal")),
+    "BatchDataLocal"
+  );
+
   // console.log(lecture.id);
 
   const [openEdit, setOpenEdit] = React.useState(false);
@@ -107,41 +146,9 @@ const Class = ({}) => {
 
   const navigate = useNavigate();
 
-  const [MyDataNew2, SetMyDataNew2] = useState([]);
-
-  let Data = JSON.stringify({
-    lecture: selectedLecture.id,
-  });
-
-  // const handleDownload = async () => {
-  //   try {
-  //     let config = {
-  //       method: "post",
-  //       maxBodyLength: Infinity,
-  //       url: "http://attendanceportal.pythonanywhere.com/attendance/download-attendance/",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       data: Data,
-  //     };
-  //     axios
-  //       .request(config)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         SetMyDataNew2(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   } catch (err) {
-  //     // Handle Error Here
-  //     console.error(err);
-  //   }
-  // };
-
   const [loading, setLoading] = useState(false);
   const handleDownload = () => {
-    const data = { lecture: selectedLecture.id }; // POST data (if required)
+    const data = { lecture: lecture.id }; // POST data (if required)
     const url =
       "http://attendanceportal.pythonanywhere.com/attendance/download-attendance/";
     setLoading(true);

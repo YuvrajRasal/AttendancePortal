@@ -1,3 +1,6 @@
+
+ 
+*/
 import React from "react";
 import Nav from "../Components/Nav";
 import { Box } from "@mui/system";
@@ -42,7 +45,7 @@ const txtStyle = {
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const Attendance = ({}) => {
+const AttendanceGarbage = ({}) => {
   const {
     selectedLecture,
     data,
@@ -72,7 +75,6 @@ const Attendance = ({}) => {
 
   useEffect(() => {
     setAbsentStudent(0);
-    setPresentStudent(0);
     setReflectSubmit("Submit");
   }, []);
 
@@ -84,21 +86,7 @@ const Attendance = ({}) => {
   // console.log(token);
 
   //Using usestate
-  //-----------------------Reload-------------------------
-  // const token = JSON.parse(userToken)
-  let token = 0;
-
-  if (userToken.length == 0) {
-    token = JSON.parse(localStorage.getItem("accessToken"));
-  } else {
-    token = JSON.parse(userToken);
-  }
-  useEffect(() => {
-    return () => {
-      console.log(userToken);
-    };
-  }, []);
-  //-----------------------Reload-------------------------
+  const token = JSON.parse(userToken);
 
   useEffect(() => {
     let config = {
@@ -123,45 +111,10 @@ const Attendance = ({}) => {
     // console.log(MyDataNew);
     // console.log(Array.isArray(MyDataNew));
   }, []);
-  ////////////////////////////////////////////
-  let MyDataNewTemp = 0;
 
-  if (MyDataNew.length === 0) {
-    MyDataNewTemp = JSON.parse(localStorage.getItem("MyDataNewLocal"));
-  } else {
-    MyDataNewTemp = MyDataNew;
-  }
-  /////////////////////////////////////////
-  ////////////////////////////////////////////
-  let BatchDataTemp = 0;
-
-  if (BatchData.length === 0) {
-    BatchDataTemp = JSON.parse(localStorage.getItem("BatchDataLocal"));
-  } else {
-    BatchDataTemp = BatchData;
-  }
-  /////////////////////////////////////////
-  const BatchDataAttendance = MyDataNewTemp.find(
-    (element) => element?.id === BatchDataTemp?.id
+  const BatchDataAttendance = MyDataNew.find(
+    (element) => element?.id === BatchData?.id
   );
-  /////
-  // useEffect(() => {
-  //   return () => {
-  //     console.log(MyDataNew, "1");
-  //     console.log(BatchData, "2");
-  //     console.log(BatchDataAttendance, "3");
-  //   };
-  // }, []);
-
-  console.log(MyDataNewTemp, "1");
-  console.log(BatchDataTemp, "2");
-  console.log(BatchDataAttendance, "3");
-
-  // localStorage.setItem(
-  //   "BatchDataAttendaLocal",
-  //   JSON.stringify(BatchDataAttendance)
-  // );
-  // JSON.parse(localStorage.getItem("BatchDataAttendaLocal"));
 
   const [isTaken, setIsSubscribed] = useState(true);
   const [isNotTaken, setIsNotSubscribed] = useState(false);
@@ -229,20 +182,6 @@ const Attendance = ({}) => {
 
   const [MyDataNew1, SetMyDataNew1] = useState([]);
 
-  //-----------------------Reload-------------------------
-  // let BatchDataCommon = 0;
-
-  // if (userToken.length == 0) {
-  //   BatchDataCommon = JSON.parse(localStorage.getItem("accessToken"));
-  // } else {
-  //   BatchDataCommon = JSON.parse(userToken);
-  // }
-  // useEffect(() => {
-  //   return () => {
-  //     console.log(userToken);
-  //   };
-  // }, []);
-  // //-----------------------Reload-------------------------
   let Data = JSON.stringify({
     batch: BatchDataAttendance.id,
   });
@@ -394,19 +333,15 @@ const Attendance = ({}) => {
               MyDataNew1?.map((values) => (
                 <>
                   <Paper elevation={2}>
-                    <Grid
-                      container
-                      className="grid"
-                      sx={{ mb: 1, mt: 1, height: 80 }}
-                    >
-                      <Grid item xs={8} sx={{ ml: 1 }} lg={7} key={values.id}>
+                    <Grid container sx={{ mb: 1, mt: 1 }}>
+                      <Grid item xs={6} sx={{ ml: 1 }} lg={7} key={values.id}>
                         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                           {values.id}
                           {/* {setStudentId(values.id)} */}
                         </Typography>
                         <Typography variant="h6">{values.name}</Typography>
                       </Grid>
-                      <Grid item lg={2} xs={1} md={0}></Grid>
+                      <Grid item lg={2} xs={0} md={0}></Grid>
                       <Grid item xs={2} lg={1.5}>
                         <Checkbox
                           {...label}
@@ -423,15 +358,15 @@ const Attendance = ({}) => {
                         />
                       </Grid>
                       {/* <Grid item xs={2} lg={1}>
-                      <Checkbox
-                        {...label}
-                        icon={<CancelOutlinedIcon fontSize="large" />}
-                        checkedIcon={<CancelIcon fontSize="large" />}
-                        defaultChecked={false}
-                        onChange={handleChange2}
-                        value={isNotTaken}
-                      />
-                    </Grid> */}
+                        <Checkbox
+                          {...label}
+                          icon={<CancelOutlinedIcon fontSize="large" />}
+                          checkedIcon={<CancelIcon fontSize="large" />}
+                          defaultChecked={false}
+                          onChange={handleChange2}
+                          value={isNotTaken}
+                        />
+                      </Grid> */}
                     </Grid>
                   </Paper>
                 </>
@@ -439,23 +374,22 @@ const Attendance = ({}) => {
             )}
           </Grid>
           <Grid item xs={12} md={0} lg={2}></Grid>
-
           <Grid item xs={12} md={4} lg={4}>
-            <Grid item xs={2} lg={0}></Grid>
-            <Grid item xs={8} md={12} lg={12}>
-              <Button
-                className="buttonAttendance"
-                sx={{ width: "10px", ml: "25%" }}
-                onClick={handleSubmit}
-              >
-                <Typography style={txtStyle}>{ReflectSubmit}</Typography>
-              </Button>
-            </Grid>
-            <Grid item xs={2} lg={0}></Grid>
-
-            {/* <Grid item xs={12} md={12} lg={12} className="chart1" > */}
+            <Button
+              className="buttonAttendance"
+              sx={{ width: "10px", ml: "25%" }}
+              onClick={handleSubmit}
+            >
+              <Typography style={txtStyle}>{ReflectSubmit}</Typography>
+            </Button>
+            {/* <Button
+              className="buttonAttendance"
+              sx={{ width: "10px", ml: "25%" }}
+              onClick={handleCheck}
+            >
+              <Typography style={txtStyle}>Check</Typography>
+            </Button> */}
             <Chart />
-            {/* </Grid> */}
           </Grid>
         </Grid>
       </Box>
@@ -463,4 +397,5 @@ const Attendance = ({}) => {
   );
 };
 
-export default Attendance;
+export default AttendanceGarbage;
+

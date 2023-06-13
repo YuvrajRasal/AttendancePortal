@@ -85,42 +85,58 @@ const useForm = (
           setUserToken(Atoken);
           console.log(Atoken);
           console.log(userToken, "usertoken");
-          const token = JSON.parse(userToken);
           localStorage.setItem("user", JSON.stringify(res.config.data));
           //localStorage.setItem('user', JSON.stringify(user));
 
-          // loadHomeData(SetMyData, MyData);
+          loadHomeData(SetMyData, MyData);
         }
       });
   };
 
-  // // console.log(token);
+  // console.log(token);
 
-  // const loadHomeData = (SetMyData, MyData) => {
-  //   let config = {
-  //     method: "get",
-  //     maxBodyLength: Infinity,
-  //     url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     //   Authorization:
-  //     //     "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzMzc3Mjg4LCJpYXQiOjE2ODMyOTA4ODgsImp0aSI6IjZiMTQzMTE2YjJjMDRlNzBhNDA3ZGFiMDVmNDM4YjM2IiwidXNlcl9pZCI6MTF9.z0cUTQGB4MCNycsvQmJkFnhjQFml9qmWAoAwCPvetNc",
-  //     // },
-  //   };
+  //-----------------------Reload-------------------------
+  let token = 0;
 
-  //   axios
-  //     .request(config)
-  //     .then((response) => {
-  //       // console.log(response.data.Lectures);
-  //       SetMyData(response.data.Lectures);
-  //       console.log(MyData);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       console.log("error");
-  //     });
-  // };
+  if (userToken.length == 0) {
+    token = JSON.parse(localStorage.getItem("accessToken"));
+  } else {
+    token = JSON.parse(userToken);
+  }
+  useEffect(() => {
+    return () => {
+      console.log(userToken);
+    };
+  }, []);
+  //-----------------------Reload-------------------------
+
+  const loadHomeData = (SetMyData, MyData) => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(response.data.Lectures);
+        SetMyData(response.data.Lectures);
+        console.log(MyData);
+        localStorage.setItem(
+          "MyDataLocal",
+          JSON.stringify(response.data.Lectures)
+        );
+        console.log(JSON.parse(localStorage.getItem("MyDataLocal")));
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log("error");
+      });
+  };
 
   // useEffect(() => {
   //   if (Object.keys(errors).length === 0 && isSubmitting) {

@@ -138,6 +138,25 @@ function EditModal() {
 
   const axios = require("axios").default;
 
+  ////////////////////////////////////////////
+  let MyDataNewTemp = 0;
+
+  if (MyDataNew.length === 0) {
+    MyDataNewTemp = JSON.parse(localStorage.getItem("MyDataNewLocal"));
+  } else {
+    MyDataNewTemp = MyDataNew;
+  }
+  /////////////////////////////////////////
+  ////////////////////////////////////////////
+  let MyDataProfileTemp = 0;
+
+  if (MyDataProfile.length === 0) {
+    MyDataProfileTemp = JSON.parse(localStorage.getItem("MyDataProfileLocal"));
+  } else {
+    MyDataProfileTemp = MyDataProfile;
+  }
+  /////////////////////////////////////////
+  console.log(MyDataProfileTemp);
   const newPost = {
     // userId: 1,
     // title: "A new post",
@@ -150,7 +169,7 @@ function EditModal() {
     // attendance_taken: true, //deafult specifcified in backend as true but shouldn't it be false?
     attendance_taken: false,
     // teacher: teacher,
-    teacher: MyDataProfile.id,
+    teacher: MyDataProfileTemp.id,
     batch: batch,
     subject: subject,
   };
@@ -193,7 +212,21 @@ function EditModal() {
   // console.log(token);
 
   //Using usestate
-  const token = JSON.parse(userToken);
+  //-----------------------Reload-------------------------
+  // const token = JSON.parse(userToken);
+  let token = 0;
+
+  if (userToken.length == 0) {
+    token = JSON.parse(localStorage.getItem("accessToken"));
+  } else {
+    token = JSON.parse(userToken);
+  }
+  useEffect(() => {
+    return () => {
+      console.log(userToken);
+    };
+  }, []);
+  //-----------------------Reload-------------------------
   const getData = () => {
     let config = {
       method: "get",
@@ -216,20 +249,31 @@ function EditModal() {
       });
   };
 
-  const lecture = selectedLecture;
+  // const lecture = selectedLecture;
+  let lecture = 0;
+  if (selectedLecture.length == 0) {
+    // lecture = localStorage.getItem("LectureLocalStorage");
+    lecture = JSON.parse(localStorage.getItem("LectureLocalStorage"));
+    // console.log(lecture);
+  } else {
+    lecture = selectedLecture;
+    console.log(localStorage.getItem("LectureLocalStorage"));
+  }
 
   let items = [];
-  for (let index = 0; index < MyDataNew.length; index++) {
+  for (let index = 0; index < MyDataNewTemp.length; index++) {
     items.push(
-      <MenuItem value={MyDataNew[index].id}>{MyDataNew[index].name}</MenuItem>
+      <MenuItem value={MyDataNewTemp[index].id}>
+        {MyDataNewTemp[index].name}
+      </MenuItem>
     );
   }
 
   let itemsSubject = [];
-  for (let index = 0; index < MyDataProfile.subjects.length; index++) {
+  for (let index = 0; index < MyDataProfileTemp.subjects.length; index++) {
     itemsSubject.push(
-      <MenuItem value={MyDataProfile.subjects[index].id}>
-        {MyDataProfile.subjects[index].name}
+      <MenuItem value={MyDataProfileTemp.subjects[index].id}>
+        {MyDataProfileTemp.subjects[index].name}
       </MenuItem>
     );
   }
@@ -406,9 +450,9 @@ function EditModal() {
                   id="Tecaher"
                   label="Teacher"
                   variant="outlined"
-                  value={MyDataProfile.id}
+                  value={MyDataProfileTemp.id}
                   onChange={handleChangeTeacher}
-                  defaultValue={MyDataProfile.id}
+                  defaultValue={MyDataProfileTemp.id}
                   sx={{
                     width: "13.562rem",
                     height: "50px",

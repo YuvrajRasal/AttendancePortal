@@ -118,7 +118,8 @@ const TeacherNewData = () => {
   // const token = JSON.parse(localStorage.getItem("accessToken"));
 
   //Here we have used use context and use state to get token
-  const token = JSON.parse(userToken);
+  // const token = JSON.parse(userToken);
+
   // useEffect(() => {
   //   settokenSaved(token);
   //   console.log(tokenSaved,"tokenSaved");
@@ -127,6 +128,22 @@ const TeacherNewData = () => {
   // settokenSaved(token);
 
   // console.log(token);
+
+  //-----------------------Reload-------------------------
+  let token = 0;
+
+  if (userToken.length == 0) {
+    token = JSON.parse(localStorage.getItem("accessToken"));
+  } else {
+    token = JSON.parse(userToken);
+  }
+  useEffect(() => {
+    return () => {
+      console.log(userToken);
+    };
+  }, []);
+  //-----------------------Reload-------------------------
+  // token = JSON.parse(localStorage.getItem("accessToken"));
 
   useEffect(() => {
     let config = {
@@ -167,6 +184,11 @@ const TeacherNewData = () => {
       .then((response) => {
         // console.log(response.data);
         SetMyDataNew(response.data);
+        localStorage.setItem("MyDataNewLocal", JSON.stringify(response.data));
+        console.log(
+          JSON.parse(localStorage.getItem("MyDataNewLocal")),
+          "myDataNew"
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -175,6 +197,17 @@ const TeacherNewData = () => {
     // console.log(MyDataNew);
     // console.log(Array.isArray(MyDataNew));
   }, []);
+
+  console.log(MyDataNew, "SetMyDataNew");
+
+  useEffect(() => {
+    return () => {
+      setTimeout(() => {
+        filterItemLoad(MyData);
+        console.log("Onlick func");
+      }, 500);
+    };
+  }, [MyData]);
 
   useEffect(() => {
     let config = {
@@ -191,6 +224,10 @@ const TeacherNewData = () => {
       .then((response) => {
         console.log(response.data);
         SetMyDataProfile(response.data);
+        localStorage.setItem(
+          "MyDataProfileLocal",
+          JSON.stringify(response.data)
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -486,9 +523,13 @@ const TeacherNewData = () => {
                     onClick={() => {
                       //   setSelectedNews(data);
                       setSelectedLecture(data);
+                      localStorage.setItem(
+                        "LectureLocalStorage",
+                        JSON.stringify(data)
+                      );
                       navigate(`/class/${data.id}`);
                       // localStorage.setItem("classId", data.id);
-                      // console.log(data);
+                      console.log(data);
                     }}
                   >
                     <ArrowCircleRightIcon

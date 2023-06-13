@@ -112,7 +112,22 @@ function ProfileNew() {
   // console.log(token);
 
   //Using usestate
-  const token = JSON.parse(userToken);
+
+  //-----------------------Reload-------------------------
+  // const token = JSON.parse(userToken);
+  let token = 0;
+
+  if (userToken.length == 0) {
+    token = JSON.parse(localStorage.getItem("accessToken"));
+  } else {
+    token = JSON.parse(userToken);
+  }
+  useEffect(() => {
+    return () => {
+      console.log(userToken);
+    };
+  }, []);
+  //-----------------------Reload-------------------------
 
   useEffect(() => {
     let config = {

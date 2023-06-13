@@ -82,6 +82,7 @@
 @media only screen and (max-width: 1207px) {
     .buttonAttendance {
         margin-top: 20px !important;
+       margin-left: 25%;
       }
   }
   @media only screen and (max-width: 505px) {
@@ -112,6 +113,14 @@
 
     .BatchModalBox{
       width: 20rem ;
+    }
+
+  }
+
+  @media only screen and (max-width: 505px) {
+
+    .grid{
+      height: 6rem !important ;
     }
 
   }
