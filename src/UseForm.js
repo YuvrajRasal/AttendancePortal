@@ -55,7 +55,7 @@ const useForm = (
 
     //Fetching the refresh and access tokens from the backend
     axios
-      .post("http://attendanceportal.pythonanywhere.com/accounts/login/", {
+      .post("https://attendanceportal.pythonanywhere.com/accounts/login/", {
         sap_id,
         password,
       })
@@ -78,6 +78,7 @@ const useForm = (
             "refreshToken",
             JSON.stringify(res.data.refresh)
           );
+          console.log("Refresh token", res.data.refresh);
           const key1 = 2;
           localStorage.setItem("key1", key1);
           localStorage.setItem("accessToken", JSON.stringify(res.data.access));
@@ -114,7 +115,7 @@ const useForm = (
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+      url: "https://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
       headers: {
         Authorization: `Bearer ${token}`,
       },

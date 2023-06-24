@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { Container } from "@mui/system";
 import {
@@ -74,6 +74,12 @@ function Login() {
       ․
     </Box>
   );
+
+  useEffect(() => {
+    return () => {
+      localStorage.clear();
+    };
+  }, [])
 
   return (
     <>
@@ -293,7 +299,8 @@ function Login() {
                     padding: "1rem",
                     boxSizing: "border-box",
                   }}
-                  onClick={()=>{navigate('/teacher')}}
+                  //direct pass to teacher but doesnt work with protected route
+                  // onClick={()=>{navigate('/teacher')}}
                 ></img>
               </Grid>
               {/* right side ends */}

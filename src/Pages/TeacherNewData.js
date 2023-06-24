@@ -149,7 +149,7 @@ const TeacherNewData = () => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+      url: "https://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
       headers: {
         Authorization: `Bearer ${token}`,
         // Authorization: `Bearer ${tokenSaved}`,
@@ -159,7 +159,7 @@ const TeacherNewData = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data.Lectures);
+        // console.log(response.data.Lectures);
         SetMyData(response.data.Lectures);
       })
       .catch((error) => {
@@ -173,7 +173,7 @@ const TeacherNewData = () => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
+      url: "https://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -185,10 +185,10 @@ const TeacherNewData = () => {
         // console.log(response.data);
         SetMyDataNew(response.data);
         localStorage.setItem("MyDataNewLocal", JSON.stringify(response.data));
-        console.log(
-          JSON.parse(localStorage.getItem("MyDataNewLocal")),
-          "myDataNew"
-        );
+        // console.log(
+        //   JSON.parse(localStorage.getItem("MyDataNewLocal")),
+        //   "myDataNew"
+        // );
       })
       .catch((error) => {
         console.log(error);
@@ -198,7 +198,7 @@ const TeacherNewData = () => {
     // console.log(Array.isArray(MyDataNew));
   }, []);
 
-  console.log(MyDataNew, "SetMyDataNew");
+  // console.log(MyDataNew, "SetMyDataNew");
 
   useEffect(() => {
     return () => {
@@ -213,7 +213,7 @@ const TeacherNewData = () => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
+      url: "https://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -222,7 +222,7 @@ const TeacherNewData = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         SetMyDataProfile(response.data);
         localStorage.setItem(
           "MyDataProfileLocal",
@@ -284,7 +284,24 @@ const TeacherNewData = () => {
 
   //reversing the array
   const reversed = [...filterData].reverse();
+  useEffect(() => {
+    return () => {
+      console.log(reversed, "reversed");
+    };
+  }, []);
 
+  //filter on basis of time
+  // const old = reversed.filter((element) => element.date > currentDate - 50);
+  // useEffect(() => {
+  //   return () => {
+  //     console.log(old, "old");
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     console.log(currentDate - 10, "old");
+  //   };
+  // }, []);
   return (
     // <Box
     // component="main"
@@ -529,7 +546,7 @@ const TeacherNewData = () => {
                       );
                       navigate(`/class/${data.id}`);
                       // localStorage.setItem("classId", data.id);
-                      console.log(data);
+                      // console.log(data);
                     }}
                   >
                     <ArrowCircleRightIcon

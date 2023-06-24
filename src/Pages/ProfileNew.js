@@ -8,7 +8,7 @@ import CardContent from "@mui/material/CardContent";
 import Toolbar from "@mui/material/Toolbar";
 import CardMedia from "@mui/material/CardMedia";
 import Paper from "@mui/material/Paper";
-import { Typography, Button, Modal } from "@mui/material";
+import { Typography, Button, Modal, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 // import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -133,7 +133,7 @@ function ProfileNew() {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
+      url: "https://attendanceportal.pythonanywhere.com/accounts/teacher-profile/",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -228,103 +228,95 @@ function ProfileNew() {
             {/* New Code for the cards */}
 
             {/* {filterData.map((data) => ( */}
-            <Box
-              sx={{
-                display: "flex",
-                // justifyContent: "center",
-                // alignItems: "center",
-                flexDirection: "row",
-                // flexBasis: "48%",
-              }}
-              id="CardHolder"
-            >
+            <Grid container spacing={2}>
               {MyDataProfile.subjects.map((data) => (
-                <Card
-                  sx={{
-                    maxWidth: "100%",
-                    display: "flex",
-                    position: "relative",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    variant: "outlined",
-                    borderRadius: "10px",
-                    border: "2px solid #DEDEDE",
-                    boxShadow: "none",
-                    // margin: "0.8rem",
-                    marginTop: "0.8rem",
-                    flexBasis: "50%",
-                    margin: "5px",
-                  }}
-                  className="Card"
-                  // onClick={()=>{navigate('/class')}}
-                >
-                  <CardContent>
-                    <Box>
-                      <Typography
-                        style={txtStyle}
-                        sx={{ fontWeight: 400, fontSize: "25px" }}
-                        className="Heading"
+                <Grid item lg={4} md={6} xs={12}>
+                  <Card
+                    sx={{
+                      // maxWidth: "100%",
+                      display: "flex",
+                      position: "relative",
+                      // flexDirection: "row",
+                      justifyContent: "space-between",
+                      variant: "outlined",
+                      borderRadius: "10px",
+                      border: "2px solid #DEDEDE",
+                      boxShadow: "none",
+                      // margin: "0.8rem",
+                      marginTop: "0.8rem",
+                      flexBasis: "50%",
+                      margin: "5px",
+                    }}
+                    className="Card"
+                    // onClick={()=>{navigate('/class')}}
+                  >
+                    <CardContent>
+                      <Box>
+                        <Typography
+                          style={txtStyle}
+                          sx={{ fontWeight: 400, fontSize: "25px" }}
+                          className="Heading"
+                        >
+                          Subject
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="#000000ab"
+                          fontSize={"17px"}
+                        >
+                          Name: {data.name}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="#000000ab"
+                          fontSize={"17px"}
+                        >
+                          ID: {data.id}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="#000000ab"
+                          fontSize={"17px"}
+                        >
+                          Semester: {data.semester}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          marginBottom: "2px",
+                          marginTop: "5px",
+                        }}
+                        className="Detail"
                       >
-                        Subject
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="#000000ab"
-                        fontSize={"17px"}
-                      >
-                        Name: {data.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="#000000ab"
-                        fontSize={"17px"}
-                      >
-                        ID: {data.id}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="#000000ab"
-                        fontSize={"17px"}
-                      >
-                        Semester: {data.semester}
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginBottom: "2px",
-                        marginTop: "5px",
-                      }}
-                      className="Detail"
-                    >
-                      <Typography
-                        style={txtStyle}
-                        sx={{ fontWeight: 400, fontSize: "25px" }}
-                        className="Heading"
-                      >
-                        Department
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="#000000ab"
-                        fontSize={"17px"}
-                      >
-                        Name: {data.department.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="#000000ab"
-                        fontSize={"17px"}
-                      >
-                        ID: {data.department.id}
-                      </Typography>
-                    </Box>
-                  </CardContent>
-                </Card>
+                        <Typography
+                          style={txtStyle}
+                          sx={{ fontWeight: 400, fontSize: "25px" }}
+                          className="Heading"
+                        >
+                          Department
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="#000000ab"
+                          fontSize={"17px"}
+                        >
+                          Name: {data.department.name}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="#000000ab"
+                          fontSize={"17px"}
+                        >
+                          ID: {data.department.id}
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Grid>
               ))}
-            </Box>
-
+            </Grid>
             {/* previous Code for the cards */}
           </Box>
         </>

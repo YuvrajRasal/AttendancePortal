@@ -24,6 +24,7 @@ import { useApp } from "../context/app-context";
 
 import axios from "axios";
 
+import swal from "sweetalert";
 //
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const paperStyle = {
@@ -67,24 +68,48 @@ function ForgotPassword() {
     console.log(emailInput);
   };
 
-  const email = "meow@gmail.com";
+  // const email = "meow@gmail.com";
+  const email = emailInput;
+
   const url =
-    "http://attendanceportal.pythonanywhere.com/accounts/password-reset/";
+    "https://attendanceportal.pythonanywhere.com/accounts/password-reset/";
 
   const data = {
     email: email,
     // Add other properties as needed
   };
-  const ResetPass = () => {
+  const ResetPass = (e) => {
+    e.preventDefault();
     axios
       .post(url, data)
       .then((response) => {
         // Handle the response data
         console.log(response.data);
+        if (response.data.status === 200) {
+          swal({
+            title: "Mail sent!",
+            text: response.data.message,
+            icon: "success",
+            button: "ok",
+          });
+        } else {
+          swal({
+            title: "Oh snap!",
+            text: "Email doesn't exist. Please use your registered email",
+            icon: "warning",
+            button: "ok",
+          });
+        }
       })
       .catch((error) => {
         // Handle any errors
         console.error(error);
+        swal({
+          title: "Oops!",
+          text: "Check your connection",
+          icon: "error",
+          button: "ok",
+        });
       });
   };
   const bull = (
@@ -182,6 +207,7 @@ function ForgotPassword() {
                           className="SapIdTF"
                           variant="outlined"
                           label="email"
+                          type="email"
                           autoComplete="email"
                           autoFocus
                           fullWidth
@@ -222,9 +248,9 @@ function ForgotPassword() {
                         <Typography
                           className="SubmitBtnTypo"
                           sx={{ fontSize: "20px", fontFamily: "Roboto:ital" }}
-                          // onClick={() => {
-                          //   ResetPass();
-                          // }}
+                          onClick={() => {
+                            ResetPass();
+                          }}
                         >
                           Submit
                         </Typography>
@@ -235,7 +261,8 @@ function ForgotPassword() {
                       <span
                         id="BackToLogin"
                         sx={{ color: "#0056D2" }}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
                           navigate("/");
                         }}
                       >

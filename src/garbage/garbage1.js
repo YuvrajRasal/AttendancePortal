@@ -92,7 +92,7 @@ const AttendanceGarbage = ({}) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
+      url: "https://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -190,7 +190,7 @@ const AttendanceGarbage = ({}) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/batch-data/",
+      url: "https://attendanceportal.pythonanywhere.com/attendance/batch-data/",
       headers: {
         "Content-Type": "application/json",
       },
@@ -257,7 +257,7 @@ const AttendanceGarbage = ({}) => {
   // console.log(MyDataNew1);
   const sendPostRequest = () => {
     const url =
-      "http://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/";
+      "https://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/";
     fetch(url, {
       method: "POST",
       body: JSON.stringify(objectList),

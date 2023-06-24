@@ -13,21 +13,39 @@ import Profile from "./Pages/Profile";
 import Attendance from "./Pages/Attendance";
 import ProfileNew from "./Pages/ProfileNew";
 import AttendanceNew from "./Pages/AttendanceNew";
+
+import { Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+
+import PrivateRoute from "./PrivateRoute";
 function App() {
   // const [superSearch,setSuperSearch] = useState({});
   // const [selectedNews, setSelectedNews] = useState({});
+
+  const PrivateRoute1 = () => {
+    let auth = localStorage.getItem("accessToken");
+    console.log(auth);
+
+    return auth ? <Outlet /> : <Navigate to="/" />;
+  };
 
   return (
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Login />}></Route>
-        {/* <Route exact path='/teacher' element={<Teacher/>}></Route> */}{" "}
-        {/*orignal */}
-        {/* <Route exact path='/teacher' element={<TeacherNew setSelectedNews={setSelectedNews}/>}></Route>  new */}
-        <Route exact path="/teacher" element={<TeacherNewData />}></Route>
-        <Route exact path="/class/:publishedAt" element={<Class />}></Route>
-        <Route exact path="/profile" element={<ProfileNew />}></Route>
-        <Route exact path="/attendance" element={<AttendanceNew />}></Route>
+        <Route element={<PrivateRoute />} path="/teacher">
+          <Route path="/teacher" element={<TeacherNewData />}></Route>
+        </Route>
+        <Route element={<PrivateRoute />} path="/class/:publishedAt">
+          <Route path="/class/:publishedAt" element={<Class />}></Route>
+        </Route>
+        <Route element={<PrivateRoute />} path="/profile">
+          <Route path="/profile" element={<ProfileNew />}></Route>
+        </Route>
+        <Route element={<PrivateRoute />} path="/attendance">
+          <Route path="/attendance" element={<AttendanceNew />}></Route>
+        </Route>
+
         <Route
           exact
           path="/forgotPassword"

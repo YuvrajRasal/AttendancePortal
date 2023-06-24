@@ -64,7 +64,7 @@ const TeacherNew = (setSelectedNews) => {
   useEffect(() => {
     const PostCard = async () => {
       const res = await fetch(
-        "https://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
+        "httpss://saurav.tech/NewsAPI/top-headlines/category/health/in.json"
       );
       const data = await res.json();
       setData(data.articles);

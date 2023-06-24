@@ -27,6 +27,8 @@ import Chart from "../Components/Chart";
 
 import { useState, useEffect } from "react";
 
+import swal from "sweetalert";
+
 const drawerWidth = 120;
 const txtStyle = {
   //  fontFamily: 'Montserrat',
@@ -104,7 +106,7 @@ const Attendance = ({}) => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
+      url: "https://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -200,6 +202,8 @@ const Attendance = ({}) => {
           lecture: selectedLecture.id,
           // student: studentId,
           student: values.id,
+          //extra so could be used later in update attendance
+          name: values.name,
         }
         // ,
         // ...objectList
@@ -251,7 +255,7 @@ const Attendance = ({}) => {
     let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/batch-data/",
+      url: "https://attendanceportal.pythonanywhere.com/attendance/batch-data/",
       headers: {
         "Content-Type": "application/json",
       },
@@ -296,6 +300,8 @@ const Attendance = ({}) => {
           present: false,
           lecture: selectedLecture.id,
           student: MyDataNew1[i].id,
+          //extra so could be used later in update attendance
+          name: MyDataNew1[i].name,
         });
         setAbsentStudent(absentStudent + 1);
         console.log("pushed ID " + i + " in objList");
@@ -318,7 +324,7 @@ const Attendance = ({}) => {
   // console.log(MyDataNew1);
   const sendPostRequest = () => {
     const url =
-      "http://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/";
+      "https://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/";
     fetch(url, {
       method: "POST",
       body: JSON.stringify(objectList),
@@ -335,12 +341,24 @@ const Attendance = ({}) => {
         clearFalse();
         setReflectSubmit("Submit again");
         console.log("hi");
+        swal({
+          title: "Attendance taken!",
+          // text: response.data.message,
+          icon: "success",
+          button: "ok",
+        });
       })
       .catch((error) => {
         console.error("Error uploading objects:", error);
         console.log("Total", totalStudent);
         console.log("present", presentStudent);
         console.log("absent", absentStudent);
+        swal({
+          title: "Oops!",
+          text: "Some error occured",
+          icon: "error",
+          button: "ok",
+        });
       });
   };
 

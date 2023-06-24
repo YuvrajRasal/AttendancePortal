@@ -213,7 +213,8 @@ const Nav = (props) => {
           }}
           onClick={() => {
             navigate("/");
-            localStorage.removeItem("key1");
+            localStorage.removeItem("key1"); //
+            localStorage.clear();
           }}
         >
           <ListItemButton>

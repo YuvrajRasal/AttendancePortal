@@ -150,7 +150,7 @@ const Class = ({}) => {
   const handleDownload = () => {
     const data = { lecture: lecture.id }; // POST data (if required)
     const url =
-      "http://attendanceportal.pythonanywhere.com/attendance/download-attendance/";
+      "https://attendanceportal.pythonanywhere.com/attendance/download-attendance/";
     setLoading(true);
     fetch(url, {
       method: "POST",

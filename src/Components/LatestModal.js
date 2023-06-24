@@ -157,12 +157,12 @@ function LatestModal() {
   const sendPostRequest = async () => {
     try {
       // const resp = await axios.post(
-      //   "https://jsonplaceholder.typicode.com/posts",
+      //   "httpss://jsonplaceholder.typicode.com/posts",
       //   newPost
       // );
       console.log(newPost);
       const resp = await axios.post(
-        "http://attendanceportal.pythonanywhere.com/attendance/lecture/",
+        "https://attendanceportal.pythonanywhere.com/attendance/lecture/",
         newPost
       );
       console.log(newPost);
@@ -212,7 +212,7 @@ function LatestModal() {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: "http://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+      url: "https://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -250,7 +250,7 @@ function LatestModal() {
 
 const sendPostRequest = async () => {
     try {
-        const resp = await axios.post('https://jsonplaceholder.typicode.com/posts', newPost);
+        const resp = await axios.post('httpss://jsonplaceholder.typicode.com/posts', newPost);
         console.log(resp.data);
     } catch (err) {
         // Handle Error Here
