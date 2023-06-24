@@ -205,7 +205,7 @@ const TeacherNewData = () => {
       setTimeout(() => {
         filterItemLoad(MyData);
         console.log("Onlick func");
-      }, 500);
+      }, 100);
     };
   }, [MyData]);
 
@@ -284,6 +284,13 @@ const TeacherNewData = () => {
 
   //reversing the array
   const reversed = [...filterData].reverse();
+  // useEffect(() => {
+  //   return () => {
+  // const reversed1 = [...filterData].reverse();
+  // console.log(reversed1, "reversed new");
+  //   };
+  // }, [MyData]);
+
   useEffect(() => {
     return () => {
       console.log(reversed, "reversed");

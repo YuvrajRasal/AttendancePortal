@@ -16,7 +16,11 @@ import DatePicker from "react-date-picker";
 
 // use context
 import { useApp } from "../context/app-context";
-import { Form } from "react-router-dom";
+import { useNavigate, useRouteLoaderData } from "react-router-dom";
+import { Form, Navigate } from "react-router-dom";
+import { render } from "react-dom";
+import TeacherNewData from "../Pages/TeacherNewData";
+import { Refresh } from "@mui/icons-material";
 
 const style = {
   position: "absolute",
@@ -91,6 +95,8 @@ function LatestModal() {
   } = useApp();
 
   //////////////////////////////////////////////
+
+  const navigate = useNavigate();
 
   const ModalSubmit = (e) => {
     console.log(subject);
@@ -170,6 +176,9 @@ function LatestModal() {
       getData();
       closeModal();
       clearModalData();
+      //How to reflect the post directly?
+      // navigate("/teacher");
+      // render(TeacherNewData);
     } catch (err) {
       // Handle Error Here
       console.error(err);
@@ -221,7 +230,7 @@ function LatestModal() {
     axios
       .request(config)
       .then((response) => {
-        // console.log(response.data.Lectures);
+        console.log(response.data.Lectures);
         SetMyData(response.data.Lectures);
       })
       .catch((error) => {
