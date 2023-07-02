@@ -23,7 +23,7 @@ export default function validateInfoNew(values, page) {
 
   // }
 
-  let regex4 = /^(?=.[0-9])(?=.[a-z])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&]{8,}$/;
+  let regex4 = /^(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&])[a-zA-Z0-9!@#$%^&]{8,}$/;
   let str4 = values.password;
 
   if (regex4.test(str4)) {
@@ -34,8 +34,8 @@ export default function validateInfoNew(values, page) {
     c++;
   }
 
-  if (c == 0) {
-    alert("Success");
-  }
+  // if (c == 0) {
+  //   alert("Success");
+  // }
   return errors;
 }
