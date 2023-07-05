@@ -346,8 +346,12 @@ const TeacherNewData = () => {
           id="BtnBox"
           sx={{ display: "flex", flexDirection: "row", flex: "1" }}
         >
-          <Box sx={{ display: "flex", flexDirection: "row", flex: "1" }}>
+          <Box
+            sx={{ display: "flex", flexDirection: "row", flex: "1" }}
+            id="Togglebox"
+          >
             <ToggleButtonGroup
+              id="ToggleButtonGroup"
               display="flex"
               color="primary"
               // class="btn btn-primary btn-lg active"
@@ -376,6 +380,7 @@ const TeacherNewData = () => {
               <ToggleButton
                 value="All"
                 className="button"
+                id="All"
                 onClick={() => filterItemLoad(MyData)}
               >
                 All

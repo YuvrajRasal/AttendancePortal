@@ -230,7 +230,7 @@ function ProfileNew() {
             {/* {filterData.map((data) => ( */}
             <Grid container spacing={2}>
               {MyDataProfile.subjects.map((data) => (
-                <Grid item lg={4} md={6} xs={12}>
+                <Grid item lg={4} md={6} sm={6} xs={12}>
                   <Card
                     sx={{
                       // maxWidth: "100%",

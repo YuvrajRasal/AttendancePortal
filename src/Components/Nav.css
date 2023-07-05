@@ -58,15 +58,33 @@
     .SearchBar{
         width: 20rem !important
     }
+    .css-mnx3yd-MuiListItem-root {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
   }
   @media only screen and (max-width:600px) {
     .NavList{
-        margin-left: 5px !important
+        margin-left: 5px !important;
+
     }
+
   }
   @media only screen and (max-width:505px) {
     .SearchBar{
         width: 12rem !important
+    }
+
+ 
+  }
+
+  @media only screen and (max-width:425px) {
+    .css-mnx3yd-MuiListItem-root {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .css-1p823my-MuiListItem-root{
+        padding-left: 8px !important;
     }
   }
 

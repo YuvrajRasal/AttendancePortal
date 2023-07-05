@@ -16,7 +16,7 @@ import DatePicker from "react-date-picker";
 
 // use context
 import { useApp } from "../context/app-context";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -56,6 +56,8 @@ function EditModal() {
   // // const [startDate, setStartDate] = useState(new Date());
   // const [date, setDate] = React.useState("");
 
+  const navigate = useNavigate();
+
   const {
     batch,
     setBatch,
@@ -92,7 +94,75 @@ function EditModal() {
     setUserToken,
   } = useApp();
 
+  //-----------------------Reload-------------------------
+  // const token = JSON.parse(userToken);
+  let token = 0;
+
+  if (userToken.length == 0) {
+    token = JSON.parse(localStorage.getItem("accessToken"));
+  } else {
+    token = JSON.parse(userToken);
+  }
+  useEffect(() => {
+    return () => {
+      console.log(userToken);
+    };
+  }, []);
+  //-----------------------Reload-------------------------
+
+  ////////////////////////////////////////////
+  let MyDataNewTemp = 0;
+
+  if (MyDataNew.length === 0) {
+    MyDataNewTemp = JSON.parse(localStorage.getItem("MyDataNewLocal"));
+  } else {
+    MyDataNewTemp = MyDataNew;
+  }
+  /////////////////////////////////////////
+  ////////////////////////////////////////////
+  let MyDataProfileTemp = 0;
+
+  if (MyDataProfile.length === 0) {
+    MyDataProfileTemp = JSON.parse(localStorage.getItem("MyDataProfileLocal"));
+  } else {
+    MyDataProfileTemp = MyDataProfile;
+  }
+  /////////////////////////////////////////
+  // const lecture = selectedLecture;
+  let lecture = 0;
+  if (selectedLecture.length == 0) {
+    // lecture = localStorage.getItem("LectureLocalStorage");
+    lecture = JSON.parse(localStorage.getItem("LectureLocalStorage"));
+    // console.log(lecture);
+  } else {
+    lecture = selectedLecture;
+    // console.log(localStorage.getItem("LectureLocalStorage"));
+  }
+
   //////////////////////////////////////////////
+
+  useEffect(() => {
+    return () => {
+      setSubject(lecture.subject.id);
+      setBatch(lecture.batch.id);
+      setDate(lecture.date);
+      setFrom(lecture.startTime);
+      setTo(lecture.endTime);
+      setNote(lecture.note);
+      console.log(lecture);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   return () => {
+  //     console.log(lecture.subject.id);
+  //     console.log(lecture.batch.id);
+  //     console.log(lecture.date);
+  //     console.log(lecture.startTime);
+  //     console.log(lecture.endTime);
+  //     console.log(lecture.note);
+  //   };
+  // }, []);
   const ModalSubmit = (e) => {
     console.log(subject);
   };
@@ -127,6 +197,7 @@ function EditModal() {
   const handleChangeNote = (event) => {
     setNote(event.target.value);
     console.log(note);
+    // console.log(lecture);
   };
   const funcLecCreated = (event) => {
     // setLecCreated(true);
@@ -138,62 +209,44 @@ function EditModal() {
 
   const axios = require("axios").default;
 
-  ////////////////////////////////////////////
-  let MyDataNewTemp = 0;
+  // console.log(MyDataProfileTemp);
 
-  if (MyDataNew.length === 0) {
-    MyDataNewTemp = JSON.parse(localStorage.getItem("MyDataNewLocal"));
-  } else {
-    MyDataNewTemp = MyDataNew;
-  }
-  /////////////////////////////////////////
-  ////////////////////////////////////////////
-  let MyDataProfileTemp = 0;
-
-  if (MyDataProfile.length === 0) {
-    MyDataProfileTemp = JSON.parse(localStorage.getItem("MyDataProfileLocal"));
-  } else {
-    MyDataProfileTemp = MyDataProfile;
-  }
-  /////////////////////////////////////////
-  console.log(MyDataProfileTemp);
-  const newPost = {
-    // userId: 1,
-    // title: "A new post",
-    // body: "This is the body of the new post",
+  let editData = JSON.stringify({
     room_number: room,
     startTime: from,
     endTime: to,
     date: date,
     note: note,
-    // attendance_taken: true, //deafult specifcified in backend as true but shouldn't it be false?
-    attendance_taken: false,
-    // teacher: teacher,
+    // attendance_taken: false,
     teacher: MyDataProfileTemp.id,
     batch: batch,
     subject: subject,
-  };
+  });
 
-  const sendPostRequest = async () => {
-    try {
-      // const resp = await axios.post(
-      //   "httpss://jsonplaceholder.typicode.com/posts",
-      //   newPost
-      // );
-      console.log(newPost);
-      const resp = await axios.post(
-        "https://attendanceportal.pythonanywhere.com/attendance/lecture/",
-        newPost
-      );
-      console.log(newPost);
-      console.log(resp);
-      getData();
-      closeModal();
-      clearModalData();
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
-    }
+  const LectureId = lecture.id;
+  const sendPostRequest = () => {
+    let config = {
+      method: "patch",
+      maxBodyLength: Infinity,
+      url: `http://attendanceportal.pythonanywhere.com/attendance/lecture/${LectureId}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: editData,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        fetchdata();
+        closeModal();
+        clearModalData();
+        navigate("/teacher");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const closeModal = () => setOpenCreate(false);
@@ -208,32 +261,14 @@ function EditModal() {
     setNote("");
   };
 
-  // const token = JSON.parse(localStorage.getItem("accessToken"));
-  // console.log(token);
-
-  //Using usestate
-  //-----------------------Reload-------------------------
-  // const token = JSON.parse(userToken);
-  let token = 0;
-
-  if (userToken.length == 0) {
-    token = JSON.parse(localStorage.getItem("accessToken"));
-  } else {
-    token = JSON.parse(userToken);
-  }
-  useEffect(() => {
-    return () => {
-      console.log(userToken);
-    };
-  }, []);
-  //-----------------------Reload-------------------------
-  const getData = () => {
+  const fetchdata = () => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
       url: "https://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
       headers: {
         Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${tokenSaved}`,
       },
     };
 
@@ -248,17 +283,32 @@ function EditModal() {
         console.log("error");
       });
   };
+  // const token = JSON.parse(localStorage.getItem("accessToken"));
+  // console.log(token);
 
-  // const lecture = selectedLecture;
-  let lecture = 0;
-  if (selectedLecture.length == 0) {
-    // lecture = localStorage.getItem("LectureLocalStorage");
-    lecture = JSON.parse(localStorage.getItem("LectureLocalStorage"));
-    // console.log(lecture);
-  } else {
-    lecture = selectedLecture;
-    console.log(localStorage.getItem("LectureLocalStorage"));
-  }
+  //Using usestate
+
+  // const getData = () => {
+  //   let config = {
+  //     method: "get",
+  //     maxBodyLength: Infinity,
+  //     url: "https://attendanceportal.pythonanywhere.com/attendance/assigned-teacher-lecture/",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   };
+
+  //   axios
+  //     .request(config)
+  //     .then((response) => {
+  //       // console.log(response.data.Lectures);
+  //       SetMyData(response.data.Lectures);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       console.log("error");
+  //     });
+  // };
 
   let items = [];
   for (let index = 0; index < MyDataNewTemp.length; index++) {
@@ -469,7 +519,7 @@ function EditModal() {
                   variant="outlined"
                   //   value={room}
                   onChange={handleChangeRoom}
-                  defaultValue={room}
+                  defaultValue={lecture.room_number}
                   sx={{
                     width: "13.562rem",
                     height: "50px",

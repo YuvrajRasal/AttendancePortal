@@ -18,6 +18,8 @@ import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
+import RangeDownload from "./Pages/RangeDownload";
+import Dashboard from "./Pages/Dashboard";
 function App() {
   // const [superSearch,setSuperSearch] = useState({});
   // const [selectedNews, setSelectedNews] = useState({});
@@ -45,7 +47,9 @@ function App() {
         <Route element={<PrivateRoute />} path="/attendance">
           <Route path="/attendance" element={<AttendanceNew />}></Route>
         </Route>
-
+        <Route element={<PrivateRoute />} path="/download">
+          <Route path="/download" element={<Dashboard />}></Route>
+        </Route>
         <Route
           exact
           path="/forgotPassword"

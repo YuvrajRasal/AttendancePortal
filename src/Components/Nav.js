@@ -182,11 +182,14 @@ const Nav = (props) => {
             display: "flex",
             flexDirection: "column",
           }}
+          onClick={() => {
+            navigate("/download");
+          }}
         >
           <ListItemButton>
             <DateRangeOutlinedIcon fontSize="large" />
           </ListItemButton>
-          <ListItemText>Calender</ListItemText>
+          <ListItemText>Download</ListItemText>
         </ListItem>
 
         <ListItem
@@ -268,7 +271,7 @@ const Nav = (props) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 0, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -289,7 +292,7 @@ const Nav = (props) => {
                   <ListItem
                     className="NavList"
                     sx={{
-                      marginLeft: "5px",
+                      // marginLeft: "5px",
                       display: "flex",
                       flexDirection: "row",
                     }}
@@ -311,7 +314,7 @@ const Nav = (props) => {
                       />
                     </Search>
                   </ListItem>
-                  <ListItem className="Filter">
+                  {/* <ListItem className="Filter">
                     <ListItemButton
                       sx={{
                         border: "1.7px solid rgb(191, 189, 189)",
@@ -327,7 +330,7 @@ const Nav = (props) => {
                     >
                       <FilterAltIcon />
                     </ListItemButton>
-                  </ListItem>
+                  </ListItem> */}
                 </Box>
                 <Box sx={{ display: "flex", flexBasis: "50%" }}>
                   <ListItem className="header">

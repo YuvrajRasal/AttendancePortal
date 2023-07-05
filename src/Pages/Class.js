@@ -100,7 +100,7 @@ const Class = ({}) => {
     // console.log(lecture);
   } else {
     lecture = selectedLecture;
-    console.log(localStorage.getItem("LectureLocalStorage"));
+    // console.log(localStorage.getItem("LectureLocalStorage"));
   }
 
   // SetBatchData(lecture.batch);
@@ -116,12 +116,14 @@ const Class = ({}) => {
       );
     };
   }, []);
-  console.log(BatchData);
+
+  //These logs were to check if correct batch value is getting set
+  // console.log(BatchData);
   localStorage.setItem("BatchDataLocal", JSON.stringify(BatchData));
-  console.log(
-    JSON.parse(localStorage.getItem("BatchDataLocal")),
-    "BatchDataLocal"
-  );
+  // console.log(
+  //   JSON.parse(localStorage.getItem("BatchDataLocal")),
+  //   "BatchDataLocal"
+  // );
 
   // console.log(lecture.id);
 
