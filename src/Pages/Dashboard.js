@@ -79,6 +79,8 @@ const Dashboard = () => {
     setDateTo(event.target.value);
     console.log(DateTo);
   };
+  //-----------------------Reload-------------------------
+  // const token = JSON.parse(userToken);
   let token = 0;
 
   if (userToken.length == 0) {
@@ -91,6 +93,7 @@ const Dashboard = () => {
       console.log(userToken);
     };
   }, []);
+  //-----------------------Reload-------------------------
 
   useEffect(() => {
     let config = {
@@ -159,6 +162,7 @@ const Dashboard = () => {
       <MenuItem value={MyDataNew[index].id}>{MyDataNew[index].name}</MenuItem>
     );
   }
+
   ///////////////////////////
   const [loading, setLoading] = useState(false);
 
@@ -177,11 +181,13 @@ const Dashboard = () => {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
+        Authorization: "Bearer ${token}",
         "Content-Type": "application/json",
       },
     })
       .then((response) => {
         if (!response.ok) {
+          clearValues();
           throw new Error("Network response was not ok");
         }
         return response.blob();
@@ -195,12 +201,23 @@ const Dashboard = () => {
         link.click();
         link.parentNode.removeChild(link);
         setLoading(false);
+        // clearValues();
       })
       .catch((error) => {
         console.error("Error downloading CSV file:", error);
         setLoading(false);
       });
   };
+
+  const clearValues = () => {
+    setDateFrom("");
+    setDateTo("");
+    setSubject("");
+    setBatch("");
+    console.log("hello");
+    // console.log(DateTo + " " + DateFrom + " " + subject + " " + batch + " ");
+  };
+  // console.log(DateTo + "1 " + DateFrom + "2 " + subject + " 3" + batch + " 4");
 
   const defaultTheme = createTheme();
 
@@ -245,6 +262,7 @@ const Dashboard = () => {
                   mt: 2,
                 }}
                 type="date"
+                defaultValue={DateFrom}
                 onChange={handleChangeDateFrom}
                 name="from"
               />
@@ -264,6 +282,7 @@ const Dashboard = () => {
                   width: "20rem",
                   mt: 2,
                 }}
+                defaultValue={DateTo}
                 onChange={handleChangeDateTo}
                 type="date"
                 name="to"

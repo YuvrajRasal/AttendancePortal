@@ -1,38 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../Components/Nav";
 import { Box } from "@mui/system";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import "./Class.css";
 
+import "./Class.css";
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useApp } from "../context/app-context";
 
-import Checkbox from "@mui/material/Checkbox";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import Modal from "@mui/material/Modal";
+import LatestModal from "../Components/LatestModal";
+import { useNavigate } from "react-router-dom";
+import BatchModal from "../Components/BatchModal";
+import EditModal from "../Components/EditModal";
 
 import axios from "axios";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import CancelIcon from "@mui/icons-material/Cancel";
-import Chart from "../Components/Chart";
+import { useEffect } from "react";
 
-import { useState, useEffect } from "react";
-
-import swal from "sweetalert";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  // width: "300px",
+  bgcolor: "white",
+  // border: "2px solid #000",
+  boxShadow: 24,
+  display: "flex",
+  flexDirection: "column",
+  background: "#FFFFFF",
+  borderRadius: "10px",
+};
+const btnStyle = {
+  // paddingLeft: "30px",
+  // paddingRight: "30px",
+  // paddingTop: "20px",
+  // paddingBottom: "20px",
+  // margin: "20px",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
 const drawerWidth = 120;
+
 const txtStyle = {
   //  fontFamily: 'Montserrat',
-  fontFamily: "sans-serif",
+  // fontFamily: "sans-serif",
   fontStyle: "normal",
   fontWeight: 550,
   fontSize: "17px",
@@ -41,293 +55,108 @@ const txtStyle = {
   alignItems: "center",
   textAlign: "center",
 };
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
-const Attendance = ({}) => {
+const DownloadtxtStyle = {
+  //  fontFamily: 'Montserrat',
+  // fontFamily: "sans-serif",
+  fontStyle: "normal",
+  fontWeight: 550,
+  fontSize: "15px",
+  lineHeight: "25px",
+  display: "flex",
+  alignItems: "center",
+  textAlign: "center",
+};
+const modalTxtStyle = {
+  //  fontFamily: 'Montserrat',
+  // fontFamily: "sans-serif",
+  fontStyle: "normal",
+  fontWeight: 700,
+  // fontSize: "25px",
+  lineHeight: "25px",
+  display: "flex",
+  alignItems: "center",
+  textAlign: "center",
+};
+const Class = ({}) => {
   const {
     selectedLecture,
     data,
     BatchData,
     SetBatchData,
     MyDataNew,
-    SetMyDataNew,
-
-    presentStudent,
-    setPresentStudent,
-    absentStudent,
-    setAbsentStudent,
-    totalStudent,
-    setTotalStudent,
-    userToken,
-    setUserToken,
-    ReflectSubmit,
-    setReflectSubmit,
+    setMyDataNew,
   } = useApp();
+
+  // SetBatchData(lecture.batch);
+
   // console.log(BatchData);
 
-  const [studentId, setStudentId] = useState();
+  // const lecture = data.find((element) => element.id === selectedLecture.id);
 
-  // console.log(selectedLecture.id);
-  // console.log(studentId, "stdId");
-  // console.log(BatchDataAttendance, "BatchDataAttendance");
-
-  useEffect(() => {
-    setAbsentStudent(0);
-    setPresentStudent(0);
-    setReflectSubmit("Submit");
-  }, []);
-
-  useEffect(() => {
-    setAbsentStudent(0);
-  }, []);
-
-  // const token = JSON.parse(localStorage.getItem("accessToken"));
-  // console.log(token);
-
-  //Using usestate
-  //-----------------------Reload-------------------------
-  // const token = JSON.parse(userToken)
-  let token = 0;
-
-  if (userToken.length == 0) {
-    token = JSON.parse(localStorage.getItem("accessToken"));
+  let lecture = 0;
+  if (selectedLecture.length == 0) {
+    // lecture = localStorage.getItem("LectureLocalStorage");
+    lecture = JSON.parse(localStorage.getItem("LectureLocalStorage"));
+    // console.log(lecture);
   } else {
-    token = JSON.parse(userToken);
+    lecture = selectedLecture;
+    // console.log(localStorage.getItem("LectureLocalStorage"));
   }
+
+  // SetBatchData(lecture.batch);
   useEffect(() => {
     return () => {
-      console.log(userToken);
+      SetBatchData(lecture.batch);
+      console.log(lecture.batch);
+      console.log(BatchData);
+      console.log(MyDataNew);
+      console.log(
+        JSON.parse(localStorage.getItem("MyDataNewLocal")),
+        "myDataNew"
+      );
     };
   }, []);
-  //-----------------------Reload-------------------------
 
-  useEffect(() => {
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: "https://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data, "MyDataNew teacher-batch");
-        SetMyDataNew(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // console.log(MyDataNew);
-    // console.log(Array.isArray(MyDataNew));
-  }, []);
-  ////////////////////////////////////////////
-  let MyDataNewTemp = 0;
-
-  if (MyDataNew.length === 0) {
-    MyDataNewTemp = JSON.parse(localStorage.getItem("MyDataNewLocal"));
-  } else {
-    MyDataNewTemp = MyDataNew;
-  }
-  /////////////////////////////////////////
-  ////////////////////////////////////////////
-  let BatchDataTemp = 0;
-
-  if (BatchData.length === 0) {
-    BatchDataTemp = JSON.parse(localStorage.getItem("BatchDataLocal"));
-  } else {
-    BatchDataTemp = BatchData;
-  }
-  /////////////////////////////////////////
-  const BatchDataAttendance = MyDataNewTemp.find(
-    (element) => element?.id === BatchDataTemp?.id
-  );
-  /////
-  // useEffect(() => {
-  //   return () => {
-  //     console.log(MyDataNew, "1");
-  //     console.log(BatchData, "2");
-  //     console.log(BatchDataAttendance, "3");
-  //   };
-  // }, []);
-
-  console.log(MyDataNewTemp, "1");
-  console.log(BatchDataTemp, "2");
-  console.log(BatchDataAttendance, "3");
-
-  // localStorage.setItem(
-  //   "BatchDataAttendaLocal",
-  //   JSON.stringify(BatchDataAttendance)
+  //These logs were to check if correct batch value is getting set
+  // console.log(BatchData);
+  localStorage.setItem("BatchDataLocal", JSON.stringify(BatchData));
+  // console.log(
+  //   JSON.parse(localStorage.getItem("BatchDataLocal")),
+  //   "BatchDataLocal"
   // );
-  // JSON.parse(localStorage.getItem("BatchDataAttendaLocal"));
 
-  const [isTaken, setIsSubscribed] = useState(true);
-  const [isNotTaken, setIsNotSubscribed] = useState(false);
+  // console.log(lecture.id);
 
-  const handleChange = () => {
-    setIsSubscribed((current) => !current);
-
-    console.log(isTaken);
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const handleOpenEdit = () => setOpenEdit(true);
+  const handleCloseEdit = () => setOpenEdit(false);
+  const handleScheduleEdit = () => {
+    handleCloseEdit();
+    handleOpenScEdit();
   };
-  const handleChangeUV = (values) => {
-    setIsSubscribed((current) => !current);
+  const [openScEdit, setOpenScEdit] = React.useState(false);
+  const handleOpenScEdit = () => setOpenScEdit(true);
+  const handleCloseScEdit = () => setOpenScEdit(false);
 
-    // const [counter, setCounter] = useState(0);
-    // if () {
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const handleOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
 
-    // }
+  const [openBatchModal, setOpenBatchModal] = React.useState(false);
+  const handleOpenBatchModal = () => setOpenBatchModal(true);
+  const handleCloseBatchModal = () => setOpenBatchModal(false);
 
-    const isSelected = objectList.some(
-      (selectedObject) => selectedObject.student === values.id
-    );
-    console.log(isSelected, "isSelected val");
-    console.log(objectList, "ObjectList before Filtering");
-    if (isSelected) {
-      // Object is already selected, so remove it from the selectedObjects array
-      const updatedSelectedObjects = objectList.filter(
-        (selectedObject) => selectedObject.student !== values.id
-      );
-      setObjectList(updatedSelectedObjects);
-      console.log(updatedSelectedObjects, "objectList after filtering");
-      setPresentStudent(presentStudent - 1);
-      setAbsentStudent(absentStudent + 1);
-    } else {
-      objectList.push(
-        {
-          present: true,
-          lecture: selectedLecture.id,
-          // student: studentId,
-          student: values.id,
-          //extra so could be used later in update attendance
-          name: values.name,
-        }
-        // ,
-        // ...objectList
-      );
-      setPresentStudent((presentStudent) => presentStudent + 1);
-      setAbsentStudent(absentStudent - 1);
-      console.log(isTaken);
-      console.log(objectList, "ObjectList after pushing");
-    }
-    console.log(((totalStudent - presentStudent) / totalStudent) * 100);
-    console.log((presentStudent / totalStudent) * 100);
-    console.log("Total", totalStudent);
-    console.log("present", presentStudent);
-    console.log("absent", absentStudent);
-  };
+  const navigate = useNavigate();
 
-  const handleChange2 = () => {
-    setIsNotSubscribed((current) => !current);
-
-    console.log(isNotTaken, "cross selected");
-  };
-  const axios = require("axios").default;
-  const handleSubmit = () => {
-    handleCheck();
-    sendPostRequest();
-  };
-
-  const [MyDataNew1, SetMyDataNew1] = useState([]);
-
-  //-----------------------Reload-------------------------
-  // let BatchDataCommon = 0;
-
-  // if (userToken.length == 0) {
-  //   BatchDataCommon = JSON.parse(localStorage.getItem("accessToken"));
-  // } else {
-  //   BatchDataCommon = JSON.parse(userToken);
-  // }
-  // useEffect(() => {
-  //   return () => {
-  //     console.log(userToken);
-  //   };
-  // }, []);
-  // //-----------------------Reload-------------------------
-  let Data = JSON.stringify({
-    batch: BatchDataAttendance?.id,
-  });
-
-  useEffect(() => {
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://attendanceportal.pythonanywhere.com/attendance/batch-data/",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: Data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(response.data, "MyDataNew1 batch data");
-        SetMyDataNew1(response.data);
-        // setStudentId(response.data.id);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  // console.log(MyDataNew1[0].id, "ABC");
-
-  const [objectList, setObjectList] = useState([
-    // { present: true, lecture: MyDataNew.id, student: studentId },
-    // { present: false, lecture: selectedLecture.id, student: MyDataNew1[0].id },
-    // { present: false, lecture: selectedLecture.id, student: 10 },
-  ]);
-
-  setTotalStudent(BatchDataAttendance?.number_of_students);
-
-  // useEffect(() => {
-  const handleCheck = () => {
-    for (let i = 0; i < BatchDataAttendance?.number_of_students; i++) {
-      let flag = 0;
-      for (let j = 0; j < objectList?.length; j++) {
-        if (MyDataNew1[i]?.id == objectList[j]?.student) {
-          flag = 1;
-          break;
-        }
-      }
-      if (flag == 1) {
-        console.log("ID " + MyDataNew1[i]?.id + " present in objList");
-      } else {
-        objectList.push({
-          present: false,
-          lecture: selectedLecture?.id,
-          student: MyDataNew1[i]?.id,
-          //extra so could be used later in update attendance
-          name: MyDataNew1[i]?.name,
-        });
-        setAbsentStudent(absentStudent + 1);
-        console.log("pushed ID " + i + " in objList");
-      }
-    }
-    console.log(objectList);
-    console.log("Total", totalStudent);
-    console.log("present", presentStudent);
-    console.log("absent", absentStudent);
-  };
-
-  // for (let index = 0; index < BatchDataAttendance.number_of_students; index++) {
-  //   objectList.push({
-  //     present: false,
-  //     llecture: selectedLecture.id,
-  //     student: 2,
-  //   });
-  // }
-  // console.log(objectList, "ObjectList");
-  // console.log(MyDataNew1);
-  const sendPostRequest = () => {
+  const [loading, setLoading] = useState(false);
+  const handleDownload = () => {
+    const data = { lecture: lecture?.id }; // POST data (if required)
     const url =
-      "https://attendanceportal.pythonanywhere.com/attendance/lecture-attendance/";
+      "https://attendanceportal.pythonanywhere.com/attendance/download-attendance/";
+    setLoading(true);
     fetch(url, {
       method: "POST",
-      body: JSON.stringify(objectList),
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
@@ -336,48 +165,253 @@ const Attendance = ({}) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        console.log("Objects uploaded successfully");
-        console.log(objectList, "uploaded list");
-        clearFalse();
-        setReflectSubmit("Submit again");
-        console.log("hi");
-        swal({
-          title: "Attendance taken!",
-          // text: response.data.message,
-          icon: "success",
-          button: "ok",
-        });
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "data.csv");
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+        setLoading(false);
       })
       .catch((error) => {
-        console.error("Error uploading objects:", error);
-        console.log("Total", totalStudent);
-        console.log("present", presentStudent);
-        console.log("absent", absentStudent);
-        swal({
-          title: "Oops!",
-          text: "Some error occured",
-          icon: "error",
-          button: "ok",
-        });
+        console.error("Error downloading CSV file:", error);
+        setLoading(false);
       });
   };
 
-  const clearFalse = () => {
-    for (let j = 0; j < objectList?.length; j++) {
-      console.log(objectList[j]?.present, "Present");
-      if (objectList[j]?.present === false) {
-        objectList.pop();
-        console.log(objectList, "popping false");
-      } else {
-        console.log("no one absent");
-      }
-    }
+  const delete_data = () => {
+    console.log("Delete");
+    const deleteData = lecture?.id;
+    console.log(deleteData);
+
+    let config = {
+      method: "delete",
+      maxBodyLength: Infinity,
+      url: `https://attendanceportal.pythonanywhere.com/attendance/lecture/${deleteData}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: lecture,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .then(console.log("success"))
+      .catch((error) => {
+        console.log(error);
+      });
+
+    navigate("/teacher");
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <Nav />
-
+      <Modal
+        open={openEdit}
+        onClose={handleCloseEdit}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box style={style}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            id="ModalUpperBox"
+          >
+            <Typography
+              style={modalTxtStyle}
+              sx={{ fontSize: "25px" }}
+              className="font"
+            >
+              Are you sure you want to Edit ?
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Box
+              sx={{
+                border: "1px solid grey",
+                flexBasis: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                sx={btnStyle}
+                display="flex"
+                // onClick={handleOpenScEdit}
+                onClick={handleScheduleEdit}
+              >
+                <Typography
+                  style={modalTxtStyle}
+                  sx={{ fontSize: "20px" }}
+                  // sx={{
+                  //   paddingLeft: "30px",
+                  //   paddingRight: "30px",
+                  //   paddingTop: "20px",
+                  //   paddingBottom: "20px",
+                  // }}
+                  className="Btnfont"
+                >
+                  Yes
+                </Typography>
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                border: "1px solid grey",
+                flexBasis: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button sx={btnStyle} display="flex">
+                <Typography
+                  style={modalTxtStyle}
+                  sx={{ fontSize: "20px" }}
+                  // sx={{
+                  //   paddingLeft: "30px",
+                  //   paddingRight: "30px",
+                  //   paddingTop: "20px",
+                  //   paddingBottom: "20px",
+                  // }}
+                  className="Btnfont"
+                  onClick={handleCloseEdit}
+                >
+                  No
+                </Typography>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
+      {/* ________________________*/}
+      <Modal
+        open={openDelete}
+        onClose={handleCloseDelete}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "30px",
+            }}
+            id="ModalUpperBox"
+          >
+            <Typography
+              style={modalTxtStyle}
+              sx={{ fontSize: "25px" }}
+              className="font"
+            >
+              Are you sure you want to delete ?
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Box
+              sx={{
+                border: "1px solid grey",
+                flexBasis: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button sx={btnStyle} display="flex" onClick={delete_data}>
+                <Typography
+                  style={modalTxtStyle}
+                  sx={{ fontSize: "20px" }}
+                  // sx={{
+                  //   paddingLeft: "30px",
+                  //   paddingRight: "30px",
+                  //   paddingTop: "20px",
+                  //   paddingBottom: "20px",
+                  // }}
+                  className="Btnfont"
+                >
+                  Yes
+                </Typography>
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                border: "1px solid grey",
+                flexBasis: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                sx={btnStyle}
+                display="flex"
+                onClick={handleCloseDelete}
+                onClose={handleCloseDelete}
+              >
+                <Typography
+                  style={modalTxtStyle}
+                  sx={{ fontSize: "20px" }}
+                  // sx={{
+                  //   paddingLeft: "30px",
+                  //   paddingRight: "30px",
+                  //   paddingTop: "20px",
+                  //   paddingBottom: "20px",
+                  // }}
+                  className="Btnfont"
+                >
+                  No
+                </Typography>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
+      {/* ________________________*/}
+      <Modal
+        open={openScEdit}
+        onClose={handleCloseScEdit}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        {/* <DummyNew/> */}
+        <EditModal />
+      </Modal>
+      <Modal
+        open={openBatchModal}
+        onClose={handleCloseBatchModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        {/* <DummyNew/> */}
+        <BatchModal />
+      </Modal>
       <Box
         component="main"
         className="MainBox"
@@ -391,89 +425,114 @@ const Attendance = ({}) => {
       >
         <Toolbar />
         <Grid container>
-          <Grid item xs={12} md={6} lg={6}>
-            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-              SE COMPUTER ENGINEERING A3
+          <Grid item xs={12} lg={10} md={6}>
+            <Typography variant="h3">
+              {/* SE COMPUTER ENGINEERING -A3 */}
+              Subject {lecture.subject.name}
             </Typography>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 400,
-                mt: 1,
-                mb: 2,
+            {/* <Typography variant="h4" sx={{ mt: 2 }}>
+              Teacher: {lecture.teacher}
+            </Typography> */}
+            <Typography variant="h5" sx={{ mt: 2 }}>
+              Note: {lecture.note}
+            </Typography>
+          </Grid>
+          <Grid Item xs={6} lg={2} md={6.5}>
+            <Button
+              className="buttonAttendance"
+              sx={{ width: "10px" }}
+              onClick={() => {
+                navigate("/attendance");
               }}
             >
-              Computer Networks
-            </Typography>
-
-            {MyDataNew1.length == 0 ? (
-              <div>NO DATA</div>
-            ) : (
-              MyDataNew1?.map((values) => (
-                <>
-                  <Paper elevation={2}>
-                    <Grid
-                      container
-                      className="grid"
-                      sx={{ mb: 1, mt: 1, height: 80 }}
-                    >
-                      <Grid item xs={8} sx={{ ml: 1 }} lg={7} key={values.id}>
-                        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                          {values.id}
-                          {/* {setStudentId(values.id)} */}
-                        </Typography>
-                        <Typography variant="h6">{values.name}</Typography>
-                      </Grid>
-                      <Grid item lg={2} xs={1} md={0}></Grid>
-                      <Grid item xs={2} lg={1.5}>
-                        <Checkbox
-                          {...label}
-                          icon={<CheckCircleOutlineIcon fontSize="large" />}
-                          checkedIcon={<CheckCircleIcon fontSize="large" />}
-                          defaultChecked={false}
-                          onChange={() => {
-                            handleChangeUV(values);
-                          }}
-                          // onClick={() => {
-                          //   setStudentId(values.id);
-                          // }}
-                          value={isTaken}
-                        />
-                      </Grid>
-                      {/* <Grid item xs={2} lg={1}>
-                      <Checkbox
-                        {...label}
-                        icon={<CancelOutlinedIcon fontSize="large" />}
-                        checkedIcon={<CancelIcon fontSize="large" />}
-                        defaultChecked={false}
-                        onChange={handleChange2}
-                        value={isNotTaken}
-                      />
-                    </Grid> */}
-                    </Grid>
-                  </Paper>
-                </>
-              ))
-            )}
+              <Typography style={txtStyle}>Take attedance</Typography>
+            </Button>
           </Grid>
-          <Grid item xs={12} md={0} lg={2}></Grid>
-
-          <Grid item xs={12} md={4} lg={4}>
-            <Grid item xs={2} lg={0}></Grid>
-            <Grid item xs={8} md={12} lg={12}>
+          <Grid item xs={12} lg={12} md={6} sx={{ mt: 1.5 }}>
+            <Grid sx={{ mb: 1 }}>
               <Button
                 className="buttonAttendance"
-                sx={{ width: "10px", ml: "25%" }}
-                onClick={handleSubmit}
+                sx={{ width: "10px", ml: "1px" }}
+                onClick={handleDownload}
               >
-                <Typography style={txtStyle}>{ReflectSubmit}</Typography>
+                <Typography style={DownloadtxtStyle}>
+                  Download Attendance
+                </Typography>
               </Button>
             </Grid>
-            <Grid item xs={2} lg={0}></Grid>
-
-            {/* <Grid item xs={12} md={12} lg={12} className="chart1" > */}
-            <Chart />
-            {/* </Grid> */}
+            <Box sx={{ display: "flex" }}>
+              <Typography variant="h6">Batch</Typography>
+              <Button onClick={handleOpenBatchModal}>View Batch</Button>
+            </Box>
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              {lecture.batch.name}
+            </Typography>
+            <Grid sx={{ mb: 2 }}>
+              <Typography variant="h6">Semester</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {lecture.batch.semester}
+              </Typography>
+            </Grid>
+            <Grid sx={{ mb: 2 }}>
+              <Typography variant="h6">Lec Id</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {lecture.id}
+              </Typography>
+            </Grid>
+            <Grid sx={{ mb: 2 }}>
+              <Typography variant="h6">Timings</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {lecture.startTime} - {lecture.endTime}
+              </Typography>
+            </Grid>
+            <Grid sx={{ mb: 2 }}>
+              <Typography variant="h6">Date</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {lecture.date}
+              </Typography>
+            </Grid>
+            <Grid sx={{ mb: 2 }}>
+              {/* <Typography variant="h6">Note</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {lecture.note}
+              </Typography> */}
+            </Grid>
+            <Grid container>
+              <Grid item xs={3.5} lg={1.2} md={2.5}>
+                <Button
+                  className="edit"
+                  variant="outlined"
+                  onClick={handleOpenEdit}
+                >
+                  Edit
+                </Button>
+              </Grid>
+              <Grid item xs={3.5} lg={1.2} md={2.5}>
+                <Button
+                  className="delete"
+                  variant="outlined"
+                  onClick={handleOpenDelete}
+                >
+                  Delete
+                </Button>
+              </Grid>{" "}
+              {/* <Button
+                className="buttonAttendance"
+                sx={{ width: "10px", ml: "25%" }}
+                onClick={handleDownload}
+              >
+                <Typography style={txtStyle}>Download </Typography>
+              </Button> */}
+              {/* <Grid Item xs={6} lg={1} md={6.5}>
+            <Button
+              className="buttonAttendance"
+              sx={{ width: "10px", ml: "25%" }}
+              onClick={handleDownload}
+            >
+              <Typography style={txtStyle}>Download </Typography>
+            </Button>
+          </Grid> */}
+            </Grid>
           </Grid>
         </Grid>
       </Box>
@@ -481,4 +540,4 @@ const Attendance = ({}) => {
   );
 };
 
-export default Attendance;
+export default Class;

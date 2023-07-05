@@ -84,6 +84,17 @@ const Attendance = ({}) => {
 
   // const token = JSON.parse(localStorage.getItem("accessToken"));
   // console.log(token);
+  //-------------------------------------------------------------
+  let lecture = 0;
+  if (selectedLecture.length == 0) {
+    // lecture = localStorage.getItem("LectureLocalStorage");
+    lecture = JSON.parse(localStorage.getItem("LectureLocalStorage"));
+    // console.log(lecture);
+  } else {
+    lecture = selectedLecture;
+    // console.log(localStorage.getItem("LectureLocalStorage"));
+  }
+  //----------------------------------------------------------
 
   //Using usestate
   //-----------------------Reload-------------------------
@@ -158,6 +169,7 @@ const Attendance = ({}) => {
   console.log(MyDataNewTemp, "1");
   console.log(BatchDataTemp, "2");
   console.log(BatchDataAttendance, "3");
+  console.log(lecture, "SelectedLecture,lecture");
 
   // localStorage.setItem(
   //   "BatchDataAttendaLocal",
@@ -199,7 +211,7 @@ const Attendance = ({}) => {
       objectList.push(
         {
           present: true,
-          lecture: selectedLecture.id,
+          lecture: lecture.id,
           // student: studentId,
           student: values.id,
           //extra so could be used later in update attendance
@@ -298,7 +310,7 @@ const Attendance = ({}) => {
       } else {
         objectList.push({
           present: false,
-          lecture: selectedLecture?.id,
+          lecture: lecture?.id,
           student: MyDataNew1[i]?.id,
           //extra so could be used later in update attendance
           name: MyDataNew1[i]?.name,
@@ -374,6 +386,17 @@ const Attendance = ({}) => {
     }
   };
 
+  let year = "";
+  if (lecture.batch.semester == 1 || lecture.batch.semester == 2) {
+    year = "FE";
+  } else if (lecture.batch.semester == 3 || lecture.batch.semester == 4) {
+    year = "SE";
+  } else if (lecture.batch.semester == 5 || lecture.batch.semester == 6) {
+    year = "TE";
+  } else if (lecture.batch.semester == 7 || lecture.batch.semester == 8) {
+    year = "BE";
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
       <Nav />
@@ -393,7 +416,8 @@ const Attendance = ({}) => {
         <Grid container>
           <Grid item xs={12} md={6} lg={6}>
             <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-              SE COMPUTER ENGINEERING A3
+              {year} {BatchDataAttendance.department.toUpperCase()}{" "}
+              {BatchDataAttendance.name}
             </Typography>
             <Typography
               variant="h6"
@@ -403,7 +427,7 @@ const Attendance = ({}) => {
                 mb: 2,
               }}
             >
-              Computer Networks
+              {lecture.subject.name}
             </Typography>
 
             {MyDataNew1.length == 0 ? (
