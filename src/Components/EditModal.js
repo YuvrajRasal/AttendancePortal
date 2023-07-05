@@ -233,6 +233,10 @@ function EditModal() {
         "Content-Type": "application/json",
       },
       data: editData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: editData,
     };
 
     axios

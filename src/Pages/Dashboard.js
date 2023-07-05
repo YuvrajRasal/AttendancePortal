@@ -159,9 +159,47 @@ const Dashboard = () => {
       <MenuItem value={MyDataNew[index].id}>{MyDataNew[index].name}</MenuItem>
     );
   }
+  ///////////////////////////
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
     console.log(DateTo + " " + DateFrom + " " + subject + " " + batch + " ");
+    const data = {
+      start: DateFrom,
+      end: DateTo,
+      subject: subject,
+      batch: batch,
+    };
+    const url =
+      "http://attendanceportal.pythonanywhere.com/attendance/download-attendance-range/?";
+    setLoading(true);
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "data.csv");
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error downloading CSV file:", error);
+        setLoading(false);
+      });
   };
 
   const defaultTheme = createTheme();
