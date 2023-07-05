@@ -150,7 +150,7 @@ const Class = ({}) => {
 
   const [loading, setLoading] = useState(false);
   const handleDownload = () => {
-    const data = { lecture: lecture.id }; // POST data (if required)
+    const data = { lecture: lecture?.id }; // POST data (if required)
     const url =
       "https://attendanceportal.pythonanywhere.com/attendance/download-attendance/";
     setLoading(true);
@@ -183,6 +183,34 @@ const Class = ({}) => {
       });
   };
 
+  const delete_data = () => {
+    console.log("Delete");
+    const deleteData = lecture?.id;
+    console.log(deleteData);
+
+    let config = {
+      method: "delete",
+      maxBodyLength: Infinity,
+      url: `https://attendanceportal.pythonanywhere.com/attendance/lecture/${deleteData}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: lecture,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .then(console.log("success"))
+      .catch((error) => {
+        console.log(error);
+      });
+
+    navigate("/teacher");
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <Nav />
@@ -206,7 +234,7 @@ const Class = ({}) => {
               sx={{ fontSize: "25px" }}
               className="font"
             >
-              What do you want to edit?
+              Are you sure you want to Edit ?
             </Typography>
           </Box>
           <Box
@@ -242,7 +270,7 @@ const Class = ({}) => {
                   // }}
                   className="Btnfont"
                 >
-                  One Lecture
+                  Yes
                 </Typography>
               </Button>
             </Box>
@@ -266,15 +294,16 @@ const Class = ({}) => {
                   //   paddingBottom: "20px",
                   // }}
                   className="Btnfont"
+                  onClick={handleCloseEdit}
                 >
-                  Schedule
+                  No
                 </Typography>
               </Button>
             </Box>
           </Box>
         </Box>
       </Modal>
-      {/* ____________________________________________________________________*/}
+      {/* ________________________*/}
       <Modal
         open={openDelete}
         onClose={handleCloseDelete}
@@ -296,7 +325,7 @@ const Class = ({}) => {
               sx={{ fontSize: "25px" }}
               className="font"
             >
-              What do you want to Delete?
+              Are you sure you want to delete ?
             </Typography>
           </Box>
           <Box
@@ -315,7 +344,7 @@ const Class = ({}) => {
                 justifyContent: "center",
               }}
             >
-              <Button sx={btnStyle} display="flex">
+              <Button sx={btnStyle} display="flex" onClick={delete_data}>
                 <Typography
                   style={modalTxtStyle}
                   sx={{ fontSize: "20px" }}
@@ -327,7 +356,7 @@ const Class = ({}) => {
                   // }}
                   className="Btnfont"
                 >
-                  One Lecture
+                  Yes
                 </Typography>
               </Button>
             </Box>
@@ -340,7 +369,12 @@ const Class = ({}) => {
                 justifyContent: "center",
               }}
             >
-              <Button sx={btnStyle} display="flex">
+              <Button
+                sx={btnStyle}
+                display="flex"
+                onClick={handleCloseDelete}
+                onClose={handleCloseDelete}
+              >
                 <Typography
                   style={modalTxtStyle}
                   sx={{ fontSize: "20px" }}
@@ -352,14 +386,14 @@ const Class = ({}) => {
                   // }}
                   className="Btnfont"
                 >
-                  Schedule
+                  No
                 </Typography>
               </Button>
             </Box>
           </Box>
         </Box>
       </Modal>
-      {/* ____________________________________________________________________*/}
+      {/* ________________________*/}
       <Modal
         open={openScEdit}
         onClose={handleCloseScEdit}
