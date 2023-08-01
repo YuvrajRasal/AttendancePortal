@@ -282,6 +282,15 @@ const TeacherNewData = () => {
   //   setFilterData(newFilterB);
   // }, [search]);
 
+  // useEffect(() => {
+  //   const newFilterD = MyData.filter((filterData) => {
+  //     return search.toUpperCase() === ""
+  //       ? filterData
+  //       : filterData?.date?.includes(search.toUpperCase());
+  //   });
+  //   setFilterData(newFilterD);
+  // }, [search]);
+
   //reversing the array
   const reversed = [...filterData].reverse();
   // useEffect(() => {

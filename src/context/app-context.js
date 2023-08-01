@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { data as initialData } from "../Data/DummyData";
+// import { data as initialData } from "../Data/DummyData";
 
 const defaultProviderValues = {};
 
@@ -9,9 +9,9 @@ export const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState("");
   const [userToken, setUserToken] = useState("");
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState("");
-  const [filterData, setFilterData] = useState(data);
+  const [filterData, setFilterData] = useState([]);
   const [all, setAll] = useState("");
 
   const [batch, setBatch] = useState("");
