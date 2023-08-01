@@ -302,6 +302,9 @@ const TeacherNewData = () => {
   //   };
   // }, [MyData]);
   const generateSkeletonCards = (count) => {
+    if (!Array.isArray(filterData)) {
+      return null;
+    }
     const skeletonCards = [];
     for (let i = 0; i < count; i++) {
       skeletonCards.push(
@@ -323,22 +326,22 @@ const TeacherNewData = () => {
             >
               <CardContent sx={{width:"100%"}}>
                 <Typography level="h5" fontSize="md">
-                  <Skeleton animation="wave" sx={{ width: "25%" }} />
+                  <Skeleton animation="pulse" sx={{ width: "25%" }} />
                 </Typography>
                 <Typography level="body2" sx={{ mt: 0.5 }}>
-                  <Skeleton animation="wave" sx={{ width: "40%" }} />
+                  <Skeleton animation="pulse" sx={{ width: "40%" }} />
                 </Typography>
                 <Typography level="h2" fontSize="md">
-                  <Skeleton animation="wave" sx={{ width: "17%" }} />
+                  <Skeleton animation="pulse" sx={{ width: "17%" }} />
                 </Typography>
                 <Typography level="body2" sx={{ mt: 0.5 }}>
-                  <Skeleton animation="wave" sx={{ width: "14%" }} />
+                  <Skeleton animation="pulse" sx={{ width: "14%" }} />
                 </Typography>
               </CardContent>
               <CardActions sx={{ float: "right" }}>
                 <Button>
                   <Skeleton
-                    animation="wave"
+                    animation="pulse"
                     variant="circular"
                     width={36}
                     height={36}
@@ -359,7 +362,11 @@ const TeacherNewData = () => {
     };
   }, []);
 
-
+const ReloadFunc = () =>{
+  console.log("before");
+  window.location.reload()
+  console.log("after");
+}
   return (
     // <Box
     // component="main"
@@ -372,7 +379,7 @@ const TeacherNewData = () => {
         aria-describedby="modal-modal-description"
       >
         <div>
-        <LatestModal />
+        <LatestModal onReloadComponent={ReloadFunc}/>
         </div>
       </Modal>
 

@@ -51,7 +51,7 @@ const BoxStyle = {
   marginTop: "1rem",
 };
 
-function LatestModal() {
+function LatestModal({onReloadComponent}) {
   // const [batch, setBatch] = React.useState("");
   // const [from, setFrom] = React.useState("");
   // const [to, setTo] = React.useState("");
@@ -164,12 +164,12 @@ function LatestModal() {
     subject: subject,
   };
 
+  // const addingNewPost = (newPost) =>{
+  //   setFilterData(...filterData,newPost)
+  // }
+
   const sendPostRequest = async () => {
     try {
-      // const resp = await axios.post(
-      //   "httpss://jsonplaceholder.typicode.com/posts",
-      //   newPost
-      // );
       console.log(newPost);
       const resp = await axios.post(
         "https://attendanceportal.pythonanywhere.com/attendance/lecture/",
@@ -177,12 +177,13 @@ function LatestModal() {
       );
       console.log(newPost);
       console.log(resp);
+      // addingNewPost(newPost)
       getData();
       navigate("/teacher");
       closeModal();
       clearModalData();
       //How to reflect the post directly?
-      navigate("/teacher");
+      // navigate("/teacher");
       // render(TeacherNewData);
     } catch (err) {
       // Handle Error Here
@@ -222,6 +223,8 @@ function LatestModal() {
   }, []);
   //-----------------------Reload-------------------------
 
+
+
   const getData = () => {
     let config = {
       method: "get",
@@ -238,6 +241,7 @@ function LatestModal() {
         console.log(response.data.Lectures);
         SetMyData(response.data.Lectures);
         setFilterData(response.data.Lectures)
+        // onReloadComponent(response.data.Lectures)
       })
       .catch((error) => {
         console.log(error);

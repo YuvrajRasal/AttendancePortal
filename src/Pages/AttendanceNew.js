@@ -407,13 +407,13 @@ const Attendance = ({}) => {
       >
         <CardContent>
           <Typography level="h2" fontSize="md">
-          <Skeleton animation="wave" sx={{width:"40%"}}/>
+          <Skeleton animation="pulse" sx={{width:"40%"}}/>
           </Typography>
           <Typography level="body2" sx={{ mt: 0.5 }}>
-          <Skeleton animation="wave"  sx={{width:"10%"}}/>
+          <Skeleton animation="pulse"  sx={{width:"10%"}}/>
           </Typography>
         </CardContent>
-        <Skeleton animation="wave" variant="circular" width={36} height={36}  sx={{mt:1}}/>
+        <Skeleton animation="pulse" variant="circular" width={36} height={36}  sx={{mt:1}}/>
       </Card>
       );
     }
