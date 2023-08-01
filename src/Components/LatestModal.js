@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
+import Button from "@mui/joy/Button";
+
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
@@ -92,6 +94,8 @@ function LatestModal() {
 
     userToken,
     setUserToken,
+    filterData,
+    setFilterData
   } = useApp();
 
   //////////////////////////////////////////////
@@ -174,10 +178,11 @@ function LatestModal() {
       console.log(newPost);
       console.log(resp);
       getData();
+      navigate("/teacher");
       closeModal();
       clearModalData();
       //How to reflect the post directly?
-      // navigate("/teacher");
+      navigate("/teacher");
       // render(TeacherNewData);
     } catch (err) {
       // Handle Error Here
@@ -232,6 +237,7 @@ function LatestModal() {
       .then((response) => {
         console.log(response.data.Lectures);
         SetMyData(response.data.Lectures);
+        setFilterData(response.data.Lectures)
       })
       .catch((error) => {
         console.log(error);
