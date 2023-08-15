@@ -84,7 +84,10 @@ const Class = ({}) => {
     BatchData,
     SetBatchData,
     MyDataNew,
-    setMyDataNew,
+    SetMyDataNew,
+    SetMyData,
+    MyData,
+    userToken,
   } = useApp();
 
   // SetBatchData(lecture.batch);
@@ -97,10 +100,10 @@ const Class = ({}) => {
   if (selectedLecture.length == 0) {
     // lecture = localStorage.getItem("LectureLocalStorage");
     lecture = JSON.parse(localStorage.getItem("LectureLocalStorage"));
-    // console.log(lecture);
+    console.log(lecture);
   } else {
     lecture = selectedLecture;
-    // console.log(localStorage.getItem("LectureLocalStorage"));
+    console.log(selectedLecture);
   }
 
   // SetBatchData(lecture.batch);
@@ -149,6 +152,51 @@ const Class = ({}) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+
+  //-----------------------Reload-------------------------
+  let token = 0;
+
+  if (userToken.length == 0) {
+    token = JSON.parse(localStorage.getItem("accessToken"));
+  } else {
+    token = JSON.parse(userToken);
+  }
+  useEffect(() => {
+    return () => {
+      console.log(userToken);
+      console.log("hello");
+    };
+  }, []);
+  //-----------------------Reload-------------------------
+  useEffect(() => {
+    let config = {
+      method: "get",
+      maxBodyLength: Infinity,
+      url: "https://attendanceportal.pythonanywhere.com/attendance/teachers-batch/",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(response.data);
+        SetMyDataNew(response.data);
+        localStorage.setItem("MyDataNewLocal", JSON.stringify(response.data));
+        // console.log(
+        //   JSON.parse(localStorage.getItem("MyDataNewLocal")),
+        //   "myDataNew"
+        // );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // console.log(MyDataNew);
+    // console.log(Array.isArray(MyDataNew));
+  }, []);
+
   const handleDownload = () => {
     const data = { lecture: lecture?.id }; // POST data (if required)
     const url =
@@ -162,7 +210,7 @@ const Class = ({}) => {
       },
     })
       .then((response) => {
-        console.log(response,"Hello");
+        console.log(response, "Hello");
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -204,19 +252,22 @@ const Class = ({}) => {
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+        // SetMyData(MyData.filter((item) => item.id !== deleteData));
+        console.log(MyData);
       })
       .then(console.log("success"))
       .catch((error) => {
         console.log(error);
       });
-
-    navigate("/teacher");
+    setTimeout(() => {
+      navigate("/teacher");
+    }, 5000);
   };
 
-  //To check data of csv 
+  //To check data of csv
   // useEffect(() => {
   //   return () => {
-  //     const data = { lecture: lecture?.id }; 
+  //     const data = { lecture: lecture?.id };
   //     let config = {
   //     method: 'post',
   //     maxBodyLength: Infinity,
@@ -234,7 +285,6 @@ const Class = ({}) => {
   //   });
   //       }
   // }, [])
-  
 
   return (
     <Box sx={{ display: "flex" }}>

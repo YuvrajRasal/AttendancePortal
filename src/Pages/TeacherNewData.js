@@ -110,7 +110,6 @@ const TeacherNewData = () => {
 
   // const [superSearch, setSuperSearch] = useState("");
   const [tokenSaved, settokenSaved] = useState("");
-  
 
   // here we have used stringify which converts it to string but we need a object
   // const token = JSON.stringify(localStorage.getItem("accessToken"));
@@ -142,6 +141,7 @@ const TeacherNewData = () => {
   useEffect(() => {
     return () => {
       console.log(userToken);
+      console.log("hello");
     };
   }, []);
   //-----------------------Reload-------------------------
@@ -161,7 +161,7 @@ const TeacherNewData = () => {
     axios
       .request(config)
       .then((response) => {
-        // console.log(response.data.Lectures);
+        console.log(response.data.Lectures);
         SetMyData(response.data.Lectures);
       })
       .catch((error) => {
@@ -309,47 +309,47 @@ const TeacherNewData = () => {
     for (let i = 0; i < count; i++) {
       skeletonCards.push(
         <Card
-              sx={{
-                maxWidth: "100%",
-                display: "flex",
-                position: "relative",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                variant: "outlined",
-                borderRadius: "10px",
-                border: "2px solid #DEDEDE",
-                boxShadow: "none",
-                marginTop: "0.8rem",
-              }}
-              key={i}
-              className="Card"
-            >
-              <CardContent sx={{width:"100%"}}>
-                <Typography level="h5" fontSize="md">
-                  <Skeleton animation="pulse" sx={{ width: "25%" }} />
-                </Typography>
-                <Typography level="body2" sx={{ mt: 0.5 }}>
-                  <Skeleton animation="pulse" sx={{ width: "40%" }} />
-                </Typography>
-                <Typography level="h2" fontSize="md">
-                  <Skeleton animation="pulse" sx={{ width: "17%" }} />
-                </Typography>
-                <Typography level="body2" sx={{ mt: 0.5 }}>
-                  <Skeleton animation="pulse" sx={{ width: "14%" }} />
-                </Typography>
-              </CardContent>
-              <CardActions sx={{ float: "right" }}>
-                <Button>
-                  <Skeleton
-                    animation="pulse"
-                    variant="circular"
-                    width={36}
-                    height={36}
-                    sx={{ mt: 1 }}
-                  />
-                </Button>
-              </CardActions>
-            </Card>
+          sx={{
+            maxWidth: "100%",
+            display: "flex",
+            position: "relative",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            variant: "outlined",
+            borderRadius: "10px",
+            border: "2px solid #DEDEDE",
+            boxShadow: "none",
+            marginTop: "0.8rem",
+          }}
+          key={i}
+          className="Card"
+        >
+          <CardContent sx={{ width: "100%" }}>
+            <Typography level="h5" fontSize="md">
+              <Skeleton animation="pulse" sx={{ width: "25%" }} />
+            </Typography>
+            <Typography level="body2" sx={{ mt: 0.5 }}>
+              <Skeleton animation="pulse" sx={{ width: "40%" }} />
+            </Typography>
+            <Typography level="h2" fontSize="md">
+              <Skeleton animation="pulse" sx={{ width: "17%" }} />
+            </Typography>
+            <Typography level="body2" sx={{ mt: 0.5 }}>
+              <Skeleton animation="pulse" sx={{ width: "14%" }} />
+            </Typography>
+          </CardContent>
+          <CardActions sx={{ float: "right" }}>
+            <Button>
+              <Skeleton
+                animation="pulse"
+                variant="circular"
+                width={36}
+                height={36}
+                sx={{ mt: 1 }}
+              />
+            </Button>
+          </CardActions>
+        </Card>
       );
     }
     return skeletonCards;
@@ -362,11 +362,11 @@ const TeacherNewData = () => {
     };
   }, []);
 
-const ReloadFunc = () =>{
-  console.log("before");
-  window.location.reload()
-  console.log("after");
-}
+  const ReloadFunc = () => {
+    console.log("before");
+    window.location.reload();
+    console.log("after");
+  };
   return (
     // <Box
     // component="main"
@@ -379,7 +379,7 @@ const ReloadFunc = () =>{
         aria-describedby="modal-modal-description"
       >
         <div>
-        <LatestModal onReloadComponent={ReloadFunc}/>
+          <LatestModal onReloadComponent={ReloadFunc} />
         </div>
       </Modal>
 
@@ -514,123 +514,120 @@ const ReloadFunc = () =>{
               click here
             </span>
             {generateSkeletonCards(numberOfSkeletonCards)}
-            
           </>
         ) : (
           // filterData?.map((data) => (
           reversed?.map((data) => (
-            
-              <Card
-                key={data.id}
-                sx={{
-                  maxWidth: "100%",
-                  display: "flex",
-                  position: "relative",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  variant: "outlined",
-                  borderRadius: "10px",
-                  border: "2px solid #DEDEDE",
-                  boxShadow: "none",
-                  // margin: "0.8rem",
-                  marginTop: "0.8rem",
-                }}
-                className="Card"
-                // onClick={()=>{navigate('/class')}}
-                // onClick={() => {
-                //   //   setSelectedNews(data);
-                //   setSelectedLecture(data);
-                //   console.log(data);
-                //   navigate(`/class/${data.id}`);
-                //   // console.log(data);
-                // }}
-              >
-                <CardContent>
-                  <Box>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="div"
-                      style={txtStyle}
-                      sx={{ fontWeight: 450 }}
-                      className="Heading"
-                    >
-                      Subject : {data.subject.name}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      marginBottom: "2px",
-                    }}
-                    className="Detail"
+            <Card
+              key={data.id}
+              sx={{
+                maxWidth: "100%",
+                display: "flex",
+                position: "relative",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                variant: "outlined",
+                borderRadius: "10px",
+                border: "2px solid #DEDEDE",
+                boxShadow: "none",
+                // margin: "0.8rem",
+                marginTop: "0.8rem",
+              }}
+              className="Card"
+              // onClick={()=>{navigate('/class')}}
+              // onClick={() => {
+              //   //   setSelectedNews(data);
+              //   setSelectedLecture(data);
+              //   console.log(data);
+              //   navigate(`/class/${data.id}`);
+              //   // console.log(data);
+              // }}
+            >
+              <CardContent>
+                <Box>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    style={txtStyle}
+                    sx={{ fontWeight: 450 }}
+                    className="Heading"
                   >
-                    <Typography
-                      variant="body2"
-                      color="#000000ab"
-                      fontSize={"17px"}
-                      marginRight={"10px"}
-                    >
-                      {data.startTime} - {data.endTime}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="#000000ab"
-                      fontSize={"17px"}
-                    >
-                      Batch Name: {data.batch.name}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      marginBottom: "2px",
-                    }}
-                    className="Detail"
+                    Subject : {data.subject.name}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    marginBottom: "2px",
+                  }}
+                  className="Detail"
+                >
+                  <Typography
+                    variant="body2"
+                    color="#000000ab"
+                    fontSize={"17px"}
+                    marginRight={"10px"}
                   >
-                    <Typography
-                      variant="body2"
-                      color="#000000ab"
-                      fontSize={"17px"}
-                      // sx={{ marginRight: "5px" }}
-                    >
-                      Note: {data.note}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="#000000ab"
-                      fontSize={"17px"}
-                    >
-                      Lec Id: {data.id}
-                    </Typography>
-                  </Box>
-                </CardContent>
-                <CardActions sx={{ float: "right" }}>
-                  <Button
-                    size="40rem"
-                    onClick={() => {
-                      //   setSelectedNews(data);
-                      setSelectedLecture(data);
-                      localStorage.setItem(
-                        "LectureLocalStorage",
-                        JSON.stringify(data)
-                      );
-                      navigate(`/class/${data.id}`);
-                      // localStorage.setItem("classId", data.id);
-                      // console.log(data);
-                    }}
+                    {data.startTime} - {data.endTime}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="#000000ab"
+                    fontSize={"17px"}
                   >
-                    <ArrowCircleRightIcon
-                      fontSize="large"
-                      color="blue"
-                      variant="filled"
-                    />
-                  </Button>
-                </CardActions>
-              </Card>
-            
+                    Batch Name: {data.batch.name}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginBottom: "2px",
+                  }}
+                  className="Detail"
+                >
+                  <Typography
+                    variant="body2"
+                    color="#000000ab"
+                    fontSize={"17px"}
+                    // sx={{ marginRight: "5px" }}
+                  >
+                    Note: {data.note}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="#000000ab"
+                    fontSize={"17px"}
+                  >
+                    Lec Id: {data.id}
+                  </Typography>
+                </Box>
+              </CardContent>
+              <CardActions sx={{ float: "right" }}>
+                <Button
+                  size="40rem"
+                  onClick={() => {
+                    //   setSelectedNews(data);
+                    setSelectedLecture(data);
+                    localStorage.setItem(
+                      "LectureLocalStorage",
+                      JSON.stringify(data)
+                    );
+                    navigate(`/class/${data.id}`);
+                    // localStorage.setItem("classId", data.id);
+                    // console.log(data);
+                  }}
+                >
+                  <ArrowCircleRightIcon
+                    fontSize="large"
+                    color="blue"
+                    variant="filled"
+                  />
+                </Button>
+              </CardActions>
+            </Card>
           ))
         )}
       </Box>

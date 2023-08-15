@@ -72,12 +72,12 @@ const Dashboard = () => {
     console.log(batch);
   };
   const handleChangeDateTo = (event) => {
-    setDateFrom(event.target.value);
-    console.log(DateFrom);
-  };
-  const handleChangeDateFrom = (event) => {
     setDateTo(event.target.value);
     console.log(DateTo);
+  };
+  const handleChangeDateFrom = (event) => {
+    setDateFrom(event.target.value);
+    console.log(DateFrom);
   };
   //-----------------------Reload-------------------------
   // const token = JSON.parse(userToken);
@@ -167,7 +167,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
-    console.log(DateTo + " " + DateFrom + " " + subject + " " + batch + " ");
+    console.log(DateFrom + " " + DateTo + " " + subject + " " + batch + " ");
     const data = {
       start: DateFrom,
       end: DateTo,
@@ -175,13 +175,13 @@ const Dashboard = () => {
       batch: batch,
     };
     const url =
-      "http://attendanceportal.pythonanywhere.com/attendance/download-attendance-range/?";
+      "http://attendanceportal.pythonanywhere.com/attendance/download-attendance-range/";
     setLoading(true);
     fetch(url, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        Authorization: "Bearer ${token}",
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     })
