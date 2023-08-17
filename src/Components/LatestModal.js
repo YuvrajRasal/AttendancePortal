@@ -51,7 +51,7 @@ const BoxStyle = {
   marginTop: "1rem",
 };
 
-function LatestModal({onReloadComponent}) {
+function LatestModal({ onReloadComponent }) {
   // const [batch, setBatch] = React.useState("");
   // const [from, setFrom] = React.useState("");
   // const [to, setTo] = React.useState("");
@@ -95,7 +95,7 @@ function LatestModal({onReloadComponent}) {
     userToken,
     setUserToken,
     filterData,
-    setFilterData
+    setFilterData,
   } = useApp();
 
   //////////////////////////////////////////////
@@ -177,9 +177,12 @@ function LatestModal({onReloadComponent}) {
       );
       console.log(newPost);
       console.log(resp);
-      // addingNewPost(newPost)
+      // addingNewPost(newPost)\
       getData();
-      navigate("/teacher");
+      // navigate("/teacher");
+      // SetMyData([newPost, ...MyData]);
+      // navigate("/teacher");
+      // console.log([newPost, ...MyData]);
       closeModal();
       clearModalData();
       //How to reflect the post directly?
@@ -223,8 +226,6 @@ function LatestModal({onReloadComponent}) {
   }, []);
   //-----------------------Reload-------------------------
 
-
-
   const getData = () => {
     let config = {
       method: "get",
@@ -239,8 +240,8 @@ function LatestModal({onReloadComponent}) {
       .request(config)
       .then((response) => {
         console.log(response.data.Lectures);
+        // setFilterData(response.data.Lectures);
         SetMyData(response.data.Lectures);
-        setFilterData(response.data.Lectures)
         // onReloadComponent(response.data.Lectures)
       })
       .catch((error) => {

@@ -12,6 +12,7 @@ import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useApp } from "../context/app-context";
 import "../Pages/Class.css";
+import { logDOM } from "@testing-library/react";
 
 function BatchModal() {
   const style = {
@@ -43,6 +44,7 @@ function BatchModal() {
   useEffect(() => {
     return () => {
       console.log(MyDataNewTemp, "MydataNEw");
+      console.log(BatchData, "BatchData");
     };
   }, []);
   //-----------------------Reload-------------------------

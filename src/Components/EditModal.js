@@ -149,6 +149,7 @@ function EditModal() {
       setFrom(lecture.startTime);
       setTo(lecture.endTime);
       setNote(lecture.note);
+      setRoom(lecture.room);
       console.log(lecture);
     };
   }, []);

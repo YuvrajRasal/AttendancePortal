@@ -100,25 +100,29 @@ const Class = ({}) => {
   if (selectedLecture.length == 0) {
     // lecture = localStorage.getItem("LectureLocalStorage");
     lecture = JSON.parse(localStorage.getItem("LectureLocalStorage"));
-    console.log(lecture);
+    // console.log(lecture);
   } else {
     lecture = selectedLecture;
-    console.log(selectedLecture);
+    // console.log(selectedLecture);
   }
 
-  // SetBatchData(lecture.batch);
-  useEffect(() => {
-    return () => {
-      SetBatchData(lecture.batch);
-      console.log(lecture.batch);
-      console.log(BatchData);
-      console.log(MyDataNew);
-      console.log(
-        JSON.parse(localStorage.getItem("MyDataNewLocal")),
-        "myDataNew"
-      );
-    };
-  }, []);
+  SetBatchData(lecture.batch);
+  //     console.log(lecture.batch);
+  //     console.log(BatchData);
+
+  //Bunch of console logs to check objects and state workings
+  // useEffect(() => {
+  //   return () => {
+  //     SetBatchData(lecture.batch); //*******/
+  //     console.log(lecture.batch);
+  //     console.log(BatchData);
+  //     console.log(MyDataNew);
+  //     console.log(
+  //       JSON.parse(localStorage.getItem("MyDataNewLocal")),
+  //       "myDataNew"
+  //     );
+  //   };
+  // }, []);
 
   //These logs were to check if correct batch value is getting set
   // console.log(BatchData);
@@ -255,13 +259,16 @@ const Class = ({}) => {
         // SetMyData(MyData.filter((item) => item.id !== deleteData));
         console.log(MyData);
       })
-      .then(console.log("success"))
+      // .then(console.log("success"))
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        navigate("/teacher");
       });
-    setTimeout(() => {
-      navigate("/teacher");
-    }, 5000);
+    // setTimeout(() => {
+    //   navigate("/teacher");
+    // }, 5000);
   };
 
   //To check data of csv

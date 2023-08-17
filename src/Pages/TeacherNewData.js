@@ -138,12 +138,13 @@ const TeacherNewData = () => {
   } else {
     token = JSON.parse(userToken);
   }
-  useEffect(() => {
-    return () => {
-      console.log(userToken);
-      console.log("hello");
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     console.log(userToken);
+  //     console.log("hello");
+  //   };
+  // }, []);
+
   //-----------------------Reload-------------------------
   // token = JSON.parse(localStorage.getItem("accessToken"));
 
@@ -208,6 +209,14 @@ const TeacherNewData = () => {
         filterItemLoad(MyData);
         console.log("Onlick func");
       }, 100);
+    };
+  }, [MyData]);
+
+  //Check if anything improves if  this is removed
+  useEffect(() => {
+    return () => {
+      setFilterData(MyData);
+      console.log("here");
     };
   }, [MyData]);
 
