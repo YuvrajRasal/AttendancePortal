@@ -14,7 +14,7 @@ import { useApp } from "../context/app-context";
 import "../Pages/Class.css";
 import { logDOM } from "@testing-library/react";
 
-function BatchModal() {
+function BatchModal(props) {
   const style = {
     position: "absolute",
     top: "50%",
@@ -45,14 +45,17 @@ function BatchModal() {
     return () => {
       console.log(MyDataNewTemp, "MydataNEw");
       console.log(BatchData, "BatchData");
+      console.log(props.BatchDataTeacher);
     };
   }, []);
   //-----------------------Reload-------------------------
   // console.log(BatchData.id);
   // console.log(MyDataNew);
-  const BatchDataTeacher = MyDataNewTemp.find(
-    (element) => element.id === BatchData.id
-  );
+
+  //temperorarily removing this to check for error (view batch)
+  // const BatchDataTeacher = MyDataNewTemp.find(
+  //   (element) => element.id === BatchData.id
+  // );
   // const BatchDataTeacher = BatchData;
 
   // useEffect(() => {
@@ -90,7 +93,7 @@ function BatchModal() {
                     Class Teacher
                   </TableCell>
                   <TableCell align="right">
-                    {BatchDataTeacher.class_teacher}
+                    {props.BatchDataTeacher.class_teacher}
                   </TableCell>
                 </TableRow>
 
@@ -102,7 +105,7 @@ function BatchModal() {
                     Department
                   </TableCell>
                   <TableCell align="right">
-                    {BatchDataTeacher.department}
+                    {props.BatchDataTeacher.department}
                   </TableCell>
                 </TableRow>
 
@@ -113,7 +116,9 @@ function BatchModal() {
                   <TableCell component="th" scope="row">
                     Id
                   </TableCell>
-                  <TableCell align="right">{BatchDataTeacher.id}</TableCell>
+                  <TableCell align="right">
+                    {props.BatchDataTeacher.id}
+                  </TableCell>
                 </TableRow>
 
                 <TableRow
@@ -123,7 +128,9 @@ function BatchModal() {
                   <TableCell component="th" scope="row">
                     Name
                   </TableCell>
-                  <TableCell align="right">{BatchDataTeacher.name}</TableCell>
+                  <TableCell align="right">
+                    {props.BatchDataTeacher.name}
+                  </TableCell>
                 </TableRow>
 
                 <TableRow
@@ -134,7 +141,7 @@ function BatchModal() {
                     Number of students
                   </TableCell>
                   <TableCell align="right">
-                    {BatchDataTeacher.number_of_students}
+                    {props.BatchDataTeacher.number_of_students}
                   </TableCell>
                 </TableRow>
 
@@ -146,7 +153,7 @@ function BatchModal() {
                     Semester
                   </TableCell>
                   <TableCell align="right">
-                    {BatchDataTeacher.semester}
+                    {props.BatchDataTeacher.semester}
                   </TableCell>
                 </TableRow>
 
@@ -157,7 +164,9 @@ function BatchModal() {
                   <TableCell component="th" scope="row">
                     Year
                   </TableCell>
-                  <TableCell align="right">{BatchDataTeacher.year}</TableCell>
+                  <TableCell align="right">
+                    {props.BatchDataTeacher.year}
+                  </TableCell>
                 </TableRow>
 
                 {/* ))} */}

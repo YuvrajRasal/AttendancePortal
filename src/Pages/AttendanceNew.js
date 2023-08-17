@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 // import Button from "@mui/material/Button";
 import "./Class.css";
 
-import { Skeleton,Typography } from "@mui/material";
+import { Skeleton, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useApp } from "../context/app-context";
 import Checkbox from "@mui/material/Checkbox";
@@ -27,6 +27,7 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import Divider from "@mui/joy/Divider";
 // import Typography from "@mui/joy/Typography";
 import Button from "@mui/joy/Button";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const drawerWidth = 120;
 const txtStyle = {
@@ -64,6 +65,8 @@ const Attendance = ({}) => {
     setReflectSubmit,
   } = useApp();
   // console.log(BatchData);
+
+  const navigate = useNavigate();
 
   const [studentId, setStudentId] = useState();
 
@@ -358,6 +361,7 @@ const Attendance = ({}) => {
           icon: "success",
           button: "ok",
         });
+        navigate("/teacher");
       })
       .catch((error) => {
         console.error("Error uploading objects:", error);
@@ -401,20 +405,26 @@ const Attendance = ({}) => {
     for (let i = 0; i < count; i++) {
       skeletonCards.push(
         <Card
-        variant="outlined"
-        sx={{ display: "flex", flexDirection: "row",mb:2}}
-        key={i}
-      >
-        <CardContent>
-          <Typography level="h2" fontSize="md">
-          <Skeleton animation="pulse" sx={{width:"40%"}}/>
-          </Typography>
-          <Typography level="body2" sx={{ mt: 0.5 }}>
-          <Skeleton animation="pulse"  sx={{width:"10%"}}/>
-          </Typography>
-        </CardContent>
-        <Skeleton animation="pulse" variant="circular" width={36} height={36}  sx={{mt:1}}/>
-      </Card>
+          variant="outlined"
+          sx={{ display: "flex", flexDirection: "row", mb: 2 }}
+          key={i}
+        >
+          <CardContent>
+            <Typography level="h2" fontSize="md">
+              <Skeleton animation="pulse" sx={{ width: "40%" }} />
+            </Typography>
+            <Typography level="body2" sx={{ mt: 0.5 }}>
+              <Skeleton animation="pulse" sx={{ width: "10%" }} />
+            </Typography>
+          </CardContent>
+          <Skeleton
+            animation="pulse"
+            variant="circular"
+            width={36}
+            height={36}
+            sx={{ mt: 1 }}
+          />
+        </Card>
       );
     }
     return skeletonCards;
@@ -456,40 +466,35 @@ const Attendance = ({}) => {
 
             {MyDataNew1.length == 0 ? (
               // <div>NO DATA</div>
-              <>
-                {generateSkeletonCards(numberOfSkeletonCards)}
-              </>
+              <>{generateSkeletonCards(numberOfSkeletonCards)}</>
             ) : (
               MyDataNew1?.map((values) => (
                 <>
-                   <Card
-                  variant="outlined"
-                  sx={{ display: "flex", flexDirection: "row",mb:2}}
-                >
-                  <CardContent>
-                    <Typography level="h2" fontSize="md">
-                      {values.name}
-                    </Typography>
-                    <Typography level="body2" sx={{ mt: 0.5 }}>
-                      {values.id}
-                    </Typography>
-                  </CardContent>
-                  <Checkbox
-                          {...label}
-                          icon={
-                            <CancelIcon
-                              fontSize="large"
-                              sx={{ color: red[500] }}
-                            />
-                          }
-                          checkedIcon={<CheckCircleIcon fontSize="large" />}
-                          defaultChecked={false}
-                          onChange={() => {
-                            handleChangeUV(values);
-                          }}
-                          value={isTaken}
-                        />
-                </Card>
+                  <Card
+                    variant="outlined"
+                    sx={{ display: "flex", flexDirection: "row", mb: 2 }}
+                  >
+                    <CardContent>
+                      <Typography level="h2" fontSize="md">
+                        {values.name}
+                      </Typography>
+                      <Typography level="body2" sx={{ mt: 0.5 }}>
+                        {values.id}
+                      </Typography>
+                    </CardContent>
+                    <Checkbox
+                      {...label}
+                      icon={
+                        <CancelIcon fontSize="large" sx={{ color: red[500] }} />
+                      }
+                      checkedIcon={<CheckCircleIcon fontSize="large" />}
+                      defaultChecked={false}
+                      onChange={() => {
+                        handleChangeUV(values);
+                      }}
+                      value={isTaken}
+                    />
+                  </Card>
                 </>
               ))
             )}

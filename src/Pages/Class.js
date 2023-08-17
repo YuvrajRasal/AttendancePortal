@@ -266,9 +266,6 @@ const Class = ({}) => {
       .finally(() => {
         navigate("/teacher");
       });
-    // setTimeout(() => {
-    //   navigate("/teacher");
-    // }, 5000);
   };
 
   //To check data of csv
@@ -292,6 +289,11 @@ const Class = ({}) => {
   //   });
   //       }
   // }, [])
+
+  //Adding this componenet to check for view batch error
+  const BatchDataTeacher = MyDataNew.find(
+    (element) => element.id === BatchData.id
+  );
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -492,7 +494,7 @@ const Class = ({}) => {
         aria-describedby="modal-modal-description"
       >
         {/* <DummyNew/> */}
-        <BatchModal />
+        <BatchModal BatchDataTeacher={BatchDataTeacher} />
       </Modal>
       <Box
         component="main"
