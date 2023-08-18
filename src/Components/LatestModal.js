@@ -250,38 +250,32 @@ function LatestModal({ onReloadComponent }) {
       });
   };
 
-  /*
-    {
-  "room_number": "1",
-  "startTime": "12:12",
-  "endTime": "12:25",
-  "date": "2023-04-28",
-  "note": "string",
-  "attendance_taken": true,
-  "teacher": 1,
-  "batch": 0,
-  "subject": 1
-}
-  const newPost = {
-    userId: 1,
-    title: 'A new post',
-    body: 'This is the body of the new post'
-};
-
-const sendPostRequest = async () => {
-    try {
-        const resp = await axios.post('httpss://jsonplaceholder.typicode.com/posts', newPost);
-        console.log(resp.data);
-    } catch (err) {
-        // Handle Error Here
-        console.error(err);
-    }
-};
-*/
   let items = [];
   for (let index = 0; index < MyDataNew.length; index++) {
+    let year = "";
+    if (MyDataNew[index].semester == 1 || MyDataNew[index].semester == 2) {
+      year = "FE";
+    } else if (
+      MyDataNew[index].semester == 3 ||
+      MyDataNew[index].semester == 4
+    ) {
+      year = "SE";
+    } else if (
+      MyDataNew[index].semester == 5 ||
+      MyDataNew[index].semester == 6
+    ) {
+      year = "TE";
+    } else if (
+      MyDataNew[index].semester == 7 ||
+      MyDataNew[index].semester == 8
+    ) {
+      year = "BE";
+    }
+
     items.push(
-      <MenuItem value={MyDataNew[index].id}>{MyDataNew[index].name}</MenuItem>
+      <MenuItem value={MyDataNew[index].id}>
+        {MyDataNew[index].name + " " + "(" + year + ")"}
+      </MenuItem>
     );
   }
 
@@ -307,23 +301,6 @@ const sendPostRequest = async () => {
               }}
               style={BoxStyle}
             >
-              {/* <TextField
-                className="SmlBtn"
-                // id="From"
-                label="Subject"
-                variant="outlined"
-                // value={subject}
-                // defaultValue="car"
-                onChange={handleChangeSub}
-                sx={{
-                  width: "13.562rem",
-                  height: "50px",
-                  background: "#FFFFFF",
-                  borderRadius: " 10px",
-                  // border: "2px solid #DEDEDE",
-                  //   marginLeft: "10px",
-                }}
-              /> */}
               <FormControl>
                 <InputLabel>Subject</InputLabel>
                 <Select
@@ -342,22 +319,6 @@ const sendPostRequest = async () => {
                   {itemsSubject}
                 </Select>
               </FormControl>
-              {/* <TextField
-                className="SmlBtn"
-                // id="To"
-                label="Batch."
-                variant="outlined"
-                value={batch}
-                onChange={handleChangeBatch}
-                sx={{
-                  width: "13.562rem",
-                  height: "50px",
-                  background: "#FFFFFF",
-                  borderRadius: " 10px",
-                  // border: "2px solid #DEDEDE",
-                  //   marginLeft: "10px",
-                }}
-              /> */}
               <FormControl>
                 <InputLabel>Batch</InputLabel>
                 <Select
