@@ -41,6 +41,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+
 import "./Nav.css";
 
 import x from "../images/djLogo.PNG";
@@ -52,6 +54,8 @@ import Modall from "./Modal";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/app-context";
+
+import UploadOutlinedIcon from "@mui/icons-material/UploadOutlined";
 
 const style = {
   position: "absolute",
@@ -187,9 +191,24 @@ const Nav = (props) => {
           }}
         >
           <ListItemButton>
-            <DateRangeOutlinedIcon fontSize="large" />
+            <DownloadOutlinedIcon fontSize="large" />
           </ListItemButton>
           <ListItemText>Download</ListItemText>
+        </ListItem>
+
+        <ListItem
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+          onClick={() => {
+            navigate("/upload");
+          }}
+        >
+          <ListItemButton>
+            <UploadOutlinedIcon fontSize="large" />
+          </ListItemButton>
+          <ListItemText>Upload</ListItemText>
         </ListItem>
 
         <ListItem

@@ -20,6 +20,7 @@ import { Outlet } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import RangeDownload from "./Pages/RangeDownload";
 import Dashboard from "./Pages/Dashboard";
+import Upload from "./Pages/Upload";
 function App() {
   // const [superSearch,setSuperSearch] = useState({});
   // const [selectedNews, setSelectedNews] = useState({});
@@ -49,6 +50,9 @@ function App() {
         </Route>
         <Route element={<PrivateRoute />} path="/download">
           <Route path="/download" element={<Dashboard />}></Route>
+        </Route>
+        <Route element={<PrivateRoute />} path="/upload">
+          <Route path="/upload" element={<Upload />}></Route>
         </Route>
         <Route
           exact
