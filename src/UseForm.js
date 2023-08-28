@@ -67,24 +67,24 @@ const useForm = (
           console.log("Login Success");
           navigate("/teacher");
           setLoginStatus(true);
-          console.log(res.config.data);
           const check = res.config.data;
-          console.log(check, "check");
           setUser(check);
-          console.log(check);
+          // console.log(res.config.data);
+          // console.log(check, "check");
+          // console.log(check);
           setSap(sap_id);
           console.log(sap);
           localStorage.setItem(
             "refreshToken",
             JSON.stringify(res.data.refresh)
           );
-          console.log("Refresh token", res.data.refresh);
+          // console.log("Refresh token", res.data.refresh);
           const key1 = 2;
           localStorage.setItem("key1", key1);
           localStorage.setItem("accessToken", JSON.stringify(res.data.access));
           const Atoken = JSON.stringify(res.data.access);
           setUserToken(Atoken);
-          console.log(Atoken);
+          // console.log(Atoken);
           console.log(userToken, "usertoken");
           localStorage.setItem("user", JSON.stringify(res.config.data));
           //localStorage.setItem('user', JSON.stringify(user));

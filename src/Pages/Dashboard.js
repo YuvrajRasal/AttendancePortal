@@ -88,11 +88,11 @@ const Dashboard = () => {
   } else {
     token = JSON.parse(userToken);
   }
-  useEffect(() => {
-    return () => {
-      console.log(userToken);
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     console.log(userToken);
+  //   };
+  // }, []);
   //-----------------------Reload-------------------------
 
   useEffect(() => {

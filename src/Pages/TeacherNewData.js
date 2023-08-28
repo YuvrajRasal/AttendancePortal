@@ -162,7 +162,7 @@ const TeacherNewData = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data.Lectures);
+        // console.log(response.data.Lectures);
         SetMyData(response.data.Lectures);
       })
       .catch((error) => {
